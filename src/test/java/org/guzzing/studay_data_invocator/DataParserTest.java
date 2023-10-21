@@ -1,11 +1,13 @@
 package org.guzzing.studay_data_invocator;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.List;
+import org.guzzing.studay_data_invocator.academy.data_parser.AcademyDataParser;
+import org.guzzing.studay_data_invocator.academy.model.Academy;
+import org.guzzing.studay_data_invocator.global.reader.DataFileReader;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class DataParserTest {
 
     @Autowired
-    private DataParser dataParser;
+    private AcademyDataParser dataParser;
 
     @Autowired
     private DataFileReader dataFileReader;
@@ -28,13 +30,13 @@ class DataParserTest {
         String fileName = MessageFormat.format("docs/{0}-표 1.csv", expectCityName);
 
         // When
-        List<List<String>> result = dataParser.parseData(fileName);
+        List<Academy> result = dataParser.parseData(fileName);
 
         // Then
-        String address = result.get(0).get(3);
+        String fullAddress = result.get(0).getFullAddress();
 
         assertThat(result).isNotEmpty();
-        assertThat(address).contains(expectCityName);
+        assertThat(fullAddress).contains(expectCityName);
     }
 
 }

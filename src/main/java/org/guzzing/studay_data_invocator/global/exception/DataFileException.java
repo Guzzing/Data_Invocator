@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator;
+package org.guzzing.studay_data_invocator.global.exception;
 
 public class DataFileException extends RuntimeException {
 
