@@ -1,9 +1,11 @@
 package org.guzzing.studay_data_invocator.academy.model.vo.address;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
-import java.util.List;
+import org.guzzing.studay_data_invocator.academy.model.vo.address.vo.AddressDetail;
+import org.guzzing.studay_data_invocator.academy.model.vo.address.vo.Dosi;
+import org.guzzing.studay_data_invocator.academy.model.vo.address.vo.Sigungu;
+import org.guzzing.studay_data_invocator.academy.model.vo.address.vo.Upmyeondong;
 
 @Embeddable
 public class Address {
@@ -33,5 +35,21 @@ public class Address {
 
     private String[] parseAddress(final String address) {
         return address.split(" ");
+    }
+
+    public String getAddressDetail() {
+        return addressDetail.getValue();
+    }
+
+    public String getDosi() {
+        return dosi.getValue();
+    }
+
+    public String getSigungu() {
+        return sigungu.getValue();
+    }
+
+    public String getUpmyeondong() {
+        return upmyeondong.getValue();
     }
 }
