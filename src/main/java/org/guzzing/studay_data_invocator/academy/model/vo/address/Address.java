@@ -1,33 +1,35 @@
 package org.guzzing.studay_data_invocator.academy.model.vo.address;
 
+import io.micrometer.common.util.StringUtils;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Embedded;
-import org.guzzing.studay_data_invocator.academy.model.vo.address.vo.AddressDetail;
-import org.guzzing.studay_data_invocator.academy.model.vo.address.vo.Dosi;
-import org.guzzing.studay_data_invocator.academy.model.vo.address.vo.Sigungu;
-import org.guzzing.studay_data_invocator.academy.model.vo.address.vo.Upmyeondong;
+import lombok.Getter;
+import org.springframework.util.Assert;
 
+@Getter
 @Embeddable
 public class Address {
 
-    @Embedded
-    private AddressDetail addressDetail;
+    @Column(name = "full_address", nullable = false)
+    private String fullAddress;
 
-    @Embedded
-    private Dosi dosi;
+    @Column(name = "sido", nullable = false)
+    private String sido;
 
-    @Embedded
-    private Sigungu sigungu;
+    @Column(name = "sigungu", nullable = false)
+    private String sigungu;
 
-    @Embedded
-    private Upmyeondong upmyeondong;
+    @Column(name = "upmyeondong", nullable = false)
+    private String upmyeondong;
 
     public Address(final String address) {
-        this.addressDetail = new AddressDetail(address);
-        String[] parsedAddress = addressDetail.parseAddressData();
-        this.dosi = new Dosi(parsedAddress[0]);
-        this.sigungu = new Sigungu(parsedAddress[1]);
-        this.upmyeondong = new Upmyeondong(parsedAddress[2]);
+        Assert.isTrue(StringUtils.isNotBlank(address), "주소 정보는 반드시 주어져야 합니다.");
+        this.fullAddress = address;
+
+        String[] parsedAddress = parseAddress(address);
+        this.sido = parsedAddress[0];
+        this.sigungu = parsedAddress[1];
+        this.upmyeondong = parsedAddress[2];
     }
 
     protected Address() {
@@ -37,19 +39,4 @@ public class Address {
         return address.split(" ");
     }
 
-    public String getAddressDetail() {
-        return addressDetail.getValue();
-    }
-
-    public String getDosi() {
-        return dosi.getValue();
-    }
-
-    public String getSigungu() {
-        return sigungu.getValue();
-    }
-
-    public String getUpmyeondong() {
-        return upmyeondong.getValue();
-    }
 }

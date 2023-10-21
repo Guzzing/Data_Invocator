@@ -1,9 +1,7 @@
 package org.guzzing.studay_data_invocator.academy.model.vo.address;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchException;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.text.MessageFormat;
 import org.junit.jupiter.api.DisplayName;
@@ -18,13 +16,13 @@ class AddressTest {
         String dosi = "경기도";
         String sigungu = "성남시";
         String upmyeondong = "판교동";
-        String addressDetail = MessageFormat.format("{0} {1} {2} 대왕판교로 13323", dosi, sigungu, upmyeondong);
+        String fullAddress = MessageFormat.format("{0} {1} {2} 대왕판교로 13323", dosi, sigungu, upmyeondong);
 
         // When
-        Address result = new Address(addressDetail);
+        Address result = new Address(fullAddress);
 
         // Then
-        assertThat(result.getDosi()).isEqualTo(dosi);
+        assertThat(result.getSido()).isEqualTo(dosi);
         assertThat(result.getSigungu()).isEqualTo(sigungu);
         assertThat(result.getUpmyeondong()).isEqualTo(upmyeondong);
     }
