@@ -30,6 +30,8 @@ public class Address {
         this.sido = parsedAddress[0];
         this.sigungu = parsedAddress[1];
         this.upmyeondong = parsedAddress[2];
+
+        validate(sido, sigungu, upmyeondong);
     }
 
     protected Address() {
@@ -37,6 +39,19 @@ public class Address {
 
     private String[] parseAddress(final String address) {
         return address.split(" ");
+    }
+
+    private void validate(final String sido, final String sigungu, final String upmyeondong) {
+        Assert.isTrue(
+                (sido.contains("시") || sido.contains("도")),
+                "올바르지 않은 시도 구분입니다.");
+        Assert.isTrue(
+                (sigungu.contains("시") || sigungu.contains("군") || sigungu.contains("구")),
+                "올바르지 않은 시군구 구분입니다.");
+        Assert.isTrue(
+                (upmyeondong.contains("읍") || upmyeondong.contains("면") || upmyeondong.contains("동")
+                        || upmyeondong.contains("구")),
+                "올바르지 않은 읍면동 구분입니다.");
     }
 
 }

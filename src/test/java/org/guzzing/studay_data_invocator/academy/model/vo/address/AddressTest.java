@@ -31,10 +31,10 @@ class AddressTest {
     @DisplayName("주소 정보 객체 생성에 실패한다.")
     void instance_address_Fail() {
         // Given
-        String dosi = "판교동";
+        String sido = "판교동";
         String sigungu = "제주도";
         String upmyeondong = "구로구";
-        String addressDetail = dosi + " " + sigungu + " " + upmyeondong + " 대왕판교로 123";
+        String addressDetail = MessageFormat.format("{0} {1} {2} 대왕판교로 123", sido, sigungu, upmyeondong);
 
         // When
         Exception exception = catchException(() -> new Address(addressDetail));

@@ -1,18 +1,22 @@
 package org.guzzing.studay_data_invocator.academy.model.vo.academy_info;
 
+import io.micrometer.common.util.StringUtils;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import org.guzzing.studay_data_invocator.academy.model.vo.academy_info.vo.AcademyName;
+import lombok.Getter;
 import org.guzzing.studay_data_invocator.academy.model.vo.academy_info.vo.PhoneNumber;
 import org.guzzing.studay_data_invocator.academy.model.vo.academy_info.vo.ShuttleAvailability;
+import org.springframework.util.Assert;
 
 @Embeddable
 public class AcademyInfo {
 
-    @Embedded
-    private AcademyName name;
+    @Getter
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @Embedded
     private PhoneNumber contact;
@@ -21,16 +25,18 @@ public class AcademyInfo {
     private ShuttleAvailability shuttle;
 
     public AcademyInfo(final String name, final String contact, final String shuttle) {
-        this.name = new AcademyName(name);
+        Assert.isTrue(StringUtils.isNotBlank(name), "학원명이 주어지지 않았습니다.");
+
+        this.name = name;
         this.contact = new PhoneNumber(contact);
         this.shuttle = ShuttleAvailability.getShuttleAvailability(shuttle);
     }
 
-    protected AcademyInfo() {
+    public static AcademyInfo of(final String name, final String contact, final String shuttle) {
+        return new AcademyInfo(name, contact, shuttle);
     }
 
-    public String getName() {
-        return name.getValue();
+    protected AcademyInfo() {
     }
 
     public String getContact() {
