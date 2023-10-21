@@ -22,7 +22,7 @@ public class Address {
     @Column(name = "upmyeondong", nullable = false)
     private String upmyeondong;
 
-    public Address(final String address) {
+    protected Address(final String address) {
         Assert.isTrue(StringUtils.isNotBlank(address), "주소 정보는 반드시 주어져야 합니다.");
         this.fullAddress = address;
 
@@ -35,6 +35,10 @@ public class Address {
     }
 
     protected Address() {
+    }
+
+    public static Address of(final String address) {
+        return new Address(address);
     }
 
     private String[] parseAddress(final String address) {

@@ -24,7 +24,7 @@ public class Course {
     @Column(name = "total_fee", nullable = true)
     private Long totalFee;
 
-    private Course(
+    protected Course(
             final String curriculum,
             final String subject,
             final Integer capacity,

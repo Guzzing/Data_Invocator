@@ -41,8 +41,8 @@ public class AcademyDataParser {
                                     splitData.get(ACADEMY_CONTACT.ordinal()),
                                     splitData.get(ACADEMY_SHUTTLE_FEE.ordinal())
                             ),
-                            new Address(splitData.get(ACADEMY_ADDRESS.ordinal())),
-                            new Location(splitData.get(ACADEMY_ADDRESS.ordinal())),
+                            Address.of(splitData.get(ACADEMY_ADDRESS.ordinal())),
+                            Location.of(splitData.get(ACADEMY_ADDRESS.ordinal())),
                             Course.of(
                                     splitData.get(COURSE_CURRICULUM.ordinal()),
                                     splitData.get(COURSE_SUBJECT.ordinal()),

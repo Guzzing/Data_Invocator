@@ -1,11 +1,10 @@
-package org.guzzing.studay_data_invocator;
+package org.guzzing.studay_data_invocator.academy.data_parser;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.List;
-import org.guzzing.studay_data_invocator.academy.data_parser.AcademyDataParser;
 import org.guzzing.studay_data_invocator.academy.model.Academy;
 import org.guzzing.studay_data_invocator.global.reader.DataFileReader;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DataParserTest {
+class AcademyDataParserTest {
 
     @Autowired
     private AcademyDataParser dataParser;

@@ -13,12 +13,16 @@ public class Location {
     @Column(name = "longitude", nullable = false)
     private double longitude;
 
-    public Location(final String address) {
+    protected Location(final String address) {
         // todo 지오코딩 모듈 넣기
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
     protected Location() {
+    }
+
+    public static Location of(final String address) {
+        return new Location(address);
     }
 }
