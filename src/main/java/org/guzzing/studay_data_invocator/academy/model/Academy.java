@@ -7,9 +7,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.Objects;
-import org.guzzing.studay_data_invocator.academy.model.vo.academy_info.AcademyInfo;
-import org.guzzing.studay_data_invocator.academy.model.vo.address.Address;
-import org.guzzing.studay_data_invocator.academy.model.vo.location.Location;
+import org.guzzing.studay_data_invocator.academy.model.vo.AcademyInfo;
+import org.guzzing.studay_data_invocator.academy.model.vo.Address;
+import org.guzzing.studay_data_invocator.academy.model.vo.Location;
 import org.guzzing.studay_data_invocator.global.entity.BaseEntity;
 
 @Entity

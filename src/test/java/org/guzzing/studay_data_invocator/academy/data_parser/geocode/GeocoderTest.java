@@ -3,7 +3,7 @@ package org.guzzing.studay_data_invocator.academy.data_parser.geocode;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.guzzing.studay_data_invocator.academy.data_parser.gecode.Geocoder;
-import org.guzzing.studay_data_invocator.academy.model.vo.location.Location;
+import org.guzzing.studay_data_invocator.academy.model.vo.Location;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -19,10 +19,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.guzzing.studay_data_invocator.academy.data_parser.gecode.Geocoder;
 import org.guzzing.studay_data_invocator.academy.data_parser.meta.EscapeToken;
 import org.guzzing.studay_data_invocator.academy.model.Academy;
-import org.guzzing.studay_data_invocator.academy.model.vo.academy_info.AcademyInfo;
-import org.guzzing.studay_data_invocator.academy.model.vo.address.Address;
-import org.guzzing.studay_data_invocator.academy.model.vo.class_info.Course;
-import org.guzzing.studay_data_invocator.academy.model.vo.location.Location;
+import org.guzzing.studay_data_invocator.academy.model.Course;
+import org.guzzing.studay_data_invocator.academy.model.vo.AcademyInfo;
+import org.guzzing.studay_data_invocator.academy.model.vo.Address;
+import org.guzzing.studay_data_invocator.academy.model.vo.Location;
 import org.guzzing.studay_data_invocator.global.reader.DataFileReader;
 import org.springframework.stereotype.Component;
 

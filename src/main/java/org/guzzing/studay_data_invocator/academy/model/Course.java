@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator.academy.model.vo.class_info;
+package org.guzzing.studay_data_invocator.academy.model;
 
 import static jakarta.persistence.FetchType.LAZY;
 
@@ -10,7 +10,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import org.guzzing.studay_data_invocator.academy.model.Academy;
 import org.springframework.util.Assert;
 
 @Entity

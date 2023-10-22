@@ -6,7 +6,7 @@ import java.util.Map;
 import org.guzzing.studay_data_invocator.academy.data_parser.AcademyDataParser;
 import org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataFile;
 import org.guzzing.studay_data_invocator.academy.model.Academy;
-import org.guzzing.studay_data_invocator.academy.model.vo.class_info.Course;
+import org.guzzing.studay_data_invocator.academy.model.Course;
 import org.guzzing.studay_data_invocator.academy.repository.AcademyRepository;
 import org.guzzing.studay_data_invocator.academy.repository.CourseRepository;
 import org.springframework.stereotype.Service;

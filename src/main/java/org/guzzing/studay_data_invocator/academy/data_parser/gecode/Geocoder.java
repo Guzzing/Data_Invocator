@@ -6,7 +6,7 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
-import org.guzzing.studay_data_invocator.academy.model.vo.location.Location;
+import org.guzzing.studay_data_invocator.academy.model.vo.Location;
 import org.guzzing.studay_data_invocator.global.config.GeocodeConfig;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

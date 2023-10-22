@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator.academy.model.vo.academy_info;
+package org.guzzing.studay_data_invocator.academy.model.vo;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.Column;
@@ -7,8 +7,8 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Getter;
-import org.guzzing.studay_data_invocator.academy.model.vo.academy_info.vo.PhoneNumber;
-import org.guzzing.studay_data_invocator.academy.model.vo.academy_info.vo.ShuttleAvailability;
+import org.guzzing.studay_data_invocator.academy.model.vo.academy_info.PhoneNumber;
+import org.guzzing.studay_data_invocator.academy.model.vo.academy_info.ShuttleAvailability;
 import org.springframework.util.Assert;
 
 @Embeddable
