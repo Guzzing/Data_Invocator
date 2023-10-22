@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataFile.SEONGNAM;
 
 import org.guzzing.studay_data_invocator.academy.repository.AcademyRepository;
+import org.guzzing.studay_data_invocator.academy.repository.CourseRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ class AcademyServiceTest {
 
     @Autowired
     private AcademyRepository academyRepository;
+    @Autowired
+    private CourseRepository courseRepository;
 
     @Test
     @DisplayName("모든 데이터를 성공적으로 불러온다.")
@@ -38,10 +41,14 @@ class AcademyServiceTest {
         String fileName = SEONGNAM.getFileName();
 
         // When
-        long savedCount = academyService.importData(fileName);
+        academyService.importData(fileName);
 
         // Then
-        assertThat(savedCount).isPositive();
+        long academyCount = academyRepository.count();
+        long courseCount = courseRepository.count();
+
+        assertThat(academyCount).isGreaterThan(1);
+        assertThat(courseCount).isGreaterThan(1);
     }
 
 }

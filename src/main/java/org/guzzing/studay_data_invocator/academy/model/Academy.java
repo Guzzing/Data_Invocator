@@ -6,9 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.Objects;
 import org.guzzing.studay_data_invocator.academy.model.vo.academy_info.AcademyInfo;
 import org.guzzing.studay_data_invocator.academy.model.vo.address.Address;
-import org.guzzing.studay_data_invocator.academy.model.vo.class_info.Course;
 import org.guzzing.studay_data_invocator.academy.model.vo.location.Location;
 import org.guzzing.studay_data_invocator.global.entity.BaseEntity;
 
@@ -17,10 +17,10 @@ import org.guzzing.studay_data_invocator.global.entity.BaseEntity;
 public class Academy extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Embedded // Todo Academy + Class 테이블로 정규화 @ElementCollection
+    @Embedded
     private AcademyInfo academyInfo;
 
     @Embedded
@@ -29,25 +29,43 @@ public class Academy extends BaseEntity {
     @Embedded
     private Location location;
 
-    @Embedded
-    private Course course;
-
-    public Academy(
+    protected Academy(
             final AcademyInfo academyInfo,
             final Address address,
-            final Location location,
-            final Course course
+            final Location location
     ) {
         this.academyInfo = academyInfo;
         this.address = address;
         this.location = location;
-        this.course = course;
     }
 
     protected Academy() {
     }
 
+    public static Academy of(final AcademyInfo academyInfo, final Address address, final Location location) {
+        return new Academy(academyInfo, address, location);
+    }
+
     public String getFullAddress() {
         return this.address.getFullAddress();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Academy academy = (Academy) o;
+        return Objects.equals(id, academy.id) && Objects.equals(academyInfo, academy.academyInfo)
+                && Objects.equals(address, academy.address) && Objects.equals(location,
+                academy.location);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, academyInfo, address, location);
     }
 }

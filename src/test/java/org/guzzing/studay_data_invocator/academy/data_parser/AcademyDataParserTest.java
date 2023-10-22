@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataFile.SEONGNAM;
 
 import java.util.List;
+import java.util.Map;
 import org.guzzing.studay_data_invocator.academy.model.Academy;
+import org.guzzing.studay_data_invocator.academy.model.vo.class_info.Course;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +25,14 @@ class AcademyDataParserTest {
         String fileName = SEONGNAM.getFileName();
 
         // When
-        List<Academy> result = dataParser.parseData(fileName);
+        Map<Academy, List<Course>> result = dataParser.parseData(fileName);
 
         // Then
-        String fullAddress = result.get(0).getFullAddress();
+        String fullAddress = result.keySet().stream()
+                .findAny().get()
+                .getFullAddress();
 
-        assertThat(result).isNotEmpty();
-        assertThat(fullAddress).contains(SEONGNAM.getRegion());
+        assertThat(fullAddress).isEqualTo(SEONGNAM.getRegion());
     }
 
 }
