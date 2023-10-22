@@ -9,7 +9,7 @@ import org.springframework.util.Assert;
 @Embeddable
 public class Course {
 
-    @Column(name = "curriculm", nullable = true)
+    @Column(name = "curriculum", nullable = true)
     private String curriculum;
 
     @Column(name = "subject", nullable = true)

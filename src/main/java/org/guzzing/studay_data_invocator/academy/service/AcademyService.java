@@ -13,7 +13,7 @@ public class AcademyService {
     private final AcademyRepository academyRepository;
     private final AcademyDataParser dataParser;
 
-    public AcademyService(AcademyRepository academyRepository, AcademyDataParser dataParser) {
+    public AcademyService(final AcademyRepository academyRepository, final AcademyDataParser dataParser) {
         this.academyRepository = academyRepository;
         this.dataParser = dataParser;
     }

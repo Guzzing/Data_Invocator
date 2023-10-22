@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
+import org.guzzing.studay_data_invocator.global.exception.DataFileException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,7 +19,7 @@ public class DataFileReader {
             return reader.lines()
                     .toList();
         } catch (IOException e) {
-            throw new RuntimeException("error", e);
+            throw new DataFileException(e);
         }
     }
 
@@ -28,7 +29,7 @@ public class DataFileReader {
                 reader.readLine();
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new DataFileException(e);
         }
     }
 
