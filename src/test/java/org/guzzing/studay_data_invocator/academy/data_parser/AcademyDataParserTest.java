@@ -1,10 +1,11 @@
 package org.guzzing.studay_data_invocator.academy.data_parser;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataFile.SEONGNAM;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.List;
+import org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataFile;
 import org.guzzing.studay_data_invocator.academy.model.Academy;
 import org.guzzing.studay_data_invocator.global.reader.DataFileReader;
 import org.junit.jupiter.api.DisplayName;
@@ -18,15 +19,11 @@ class AcademyDataParserTest {
     @Autowired
     private AcademyDataParser dataParser;
 
-    @Autowired
-    private DataFileReader dataFileReader;
-
     @Test
     @DisplayName("원본 데이터 라인에서 필요한 컬럼만 추출하여 파싱한다.")
-    void parseData_Success() throws IOException {
+    void parseData_Success() {
         // Given
-        String expectCityName = "성남";
-        String fileName = MessageFormat.format("docs/{0}-표 1.csv", expectCityName);
+        String fileName = SEONGNAM.getFileName();
 
         // When
         List<Academy> result = dataParser.parseData(fileName);
@@ -35,7 +32,7 @@ class AcademyDataParserTest {
         String fullAddress = result.get(0).getFullAddress();
 
         assertThat(result).isNotEmpty();
-        assertThat(fullAddress).contains(expectCityName);
+        assertThat(fullAddress).contains(SEONGNAM.getRegion());
     }
 
 }

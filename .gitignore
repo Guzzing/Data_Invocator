@@ -7,7 +7,7 @@
 HELP.md
 studay_data_invocator.iml
 build/
-docs/
+docs/data/
 src/main/resources/application.yaml
 
 ### Intellij+all ###

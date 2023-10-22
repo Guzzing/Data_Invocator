@@ -26,10 +26,10 @@ class GeocoderTest {
 
         // Then
         assertThat(location.getLatitude())
-                .isBetween(124.0, 128.0);
+                .isBetween(30.0, 40.0);
 
         assertThat(location.getLongitude())
-                .isBetween(30.0, 40.0);
+                .isBetween(124.0, 128.0);
     }
 
     @Test
@@ -43,10 +43,10 @@ class GeocoderTest {
 
         // Then
         assertThat(location.getLatitude())
-                .isBetween(124.0, 128.0);
+                .isBetween(30.0, 40.0);
 
         assertThat(location.getLongitude())
-                .isBetween(30.0, 40.0);
+                .isBetween(124.0, 128.0);
     }
 
 }
