@@ -12,6 +12,8 @@ import static org.guzzing.studay_data_invocator.academy.data_parser.meta.Academy
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import org.guzzing.studay_data_invocator.academy.data_parser.gecode.Geocoder;
 import org.guzzing.studay_data_invocator.academy.data_parser.meta.EscapeToken;
 import org.guzzing.studay_data_invocator.academy.model.Academy;
@@ -34,6 +36,8 @@ public class AcademyDataParser {
     }
 
     public List<Academy> parseData(final String fileName) {
+        final Map<String, Location> cache = new ConcurrentHashMap<>();
+
         return filterData(fileName).stream()
                 .map(dataLine -> {
                     List<String> splitData = Arrays.stream(dataLine.split(",")).toList();
@@ -43,7 +47,8 @@ public class AcademyDataParser {
                             splitData.get(ACADEMY_CONTACT.ordinal()),
                             splitData.get(ACADEMY_SHUTTLE_FEE.ordinal()));
                     Address address = Address.of(splitData.get(ACADEMY_ADDRESS.ordinal()));
-                    Location location = geocoder.addressToLocationV2(splitData.get(ACADEMY_ADDRESS.ordinal()));
+                    String fullAddress = splitData.get(ACADEMY_ADDRESS.ordinal());
+                    Location location = getLocation(cache, fullAddress);
                     Course course = Course.of(
                             splitData.get(COURSE_CURRICULUM.ordinal()),
                             splitData.get(COURSE_SUBJECT.ordinal()),
@@ -54,6 +59,10 @@ public class AcademyDataParser {
                     return new Academy(academyInfo, address, location, course);
                 })
                 .toList();
+    }
+
+    private Location getLocation(Map<String, Location> cache, String fullAddress) {
+        return cache.computeIfAbsent(fullAddress, geocoder::addressToLocationV2);
     }
 
     private List<String> filterData(final String fileName) {

@@ -5,7 +5,6 @@ import static org.guzzing.studay_data_invocator.academy.data_parser.meta.Academy
 
 import java.io.IOException;
 import java.util.List;
-import org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataFile;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

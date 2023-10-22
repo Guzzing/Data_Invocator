@@ -3,8 +3,6 @@ package org.guzzing.studay_data_invocator.academy.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataFile.SEONGNAM;
 
-import java.text.MessageFormat;
-import org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataFile;
 import org.guzzing.studay_data_invocator.academy.repository.AcademyRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

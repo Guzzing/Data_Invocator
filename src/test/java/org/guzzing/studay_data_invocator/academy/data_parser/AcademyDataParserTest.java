@@ -3,11 +3,8 @@ package org.guzzing.studay_data_invocator.academy.data_parser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataFile.SEONGNAM;
 
-import java.io.IOException;
 import java.util.List;
-import org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataFile;
 import org.guzzing.studay_data_invocator.academy.model.Academy;
-import org.guzzing.studay_data_invocator.global.reader.DataFileReader;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

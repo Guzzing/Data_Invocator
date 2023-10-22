@@ -2,6 +2,7 @@ package org.guzzing.studay_data_invocator.academy.model.vo.location;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import java.util.Objects;
 import lombok.Getter;
 
 @Getter
@@ -23,5 +24,23 @@ public class Location {
 
     public static Location of(final double latitude, final double longitude) {
         return new Location(latitude, longitude);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Location location = (Location) o;
+        return Double.compare(latitude, location.latitude) == 0
+                && Double.compare(longitude, location.longitude) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(latitude, longitude);
     }
 }
