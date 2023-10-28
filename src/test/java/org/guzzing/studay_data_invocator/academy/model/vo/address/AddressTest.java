@@ -16,16 +16,16 @@ class AddressTest {
         // Given
         String dosi = "경기도";
         String sigungu = "성남시";
-        String upmyeondong = "판교동";
-        String fullAddress = MessageFormat.format("{0} {1} {2} 대왕판교로 13323", dosi, sigungu, upmyeondong);
+        String beopjungdong = "판교동";
+        String fullAddress = MessageFormat.format("{0} {1} {2} 대왕판교로 13323", dosi, sigungu, beopjungdong);
 
         // When
-        Address result = new Address(fullAddress);
+        Address result = Address.of(fullAddress);
 
         // Then
         assertThat(result.getSido()).isEqualTo(dosi);
         assertThat(result.getSigungu()).isEqualTo(sigungu);
-        assertThat(result.getUpmyeondong()).isEqualTo(upmyeondong);
+        assertThat(result.getBeopjungdong()).isEqualTo(beopjungdong);
     }
 
     @Test
@@ -34,11 +34,11 @@ class AddressTest {
         // Given
         String sido = "판교동";
         String sigungu = "제주도";
-        String upmyeondong = "구로구";
-        String addressDetail = MessageFormat.format("{0} {1} {2} 대왕판교로 123", sido, sigungu, upmyeondong);
+        String beopjungdong = "구로구";
+        String addressDetail = MessageFormat.format("{0} {1} {2} 대왕판교로 123", sido, sigungu, beopjungdong);
 
         // When
-        Exception exception = catchException(() -> new Address(addressDetail));
+        Exception exception = catchException(() -> Address.of(addressDetail));
 
         // Then
         assertThat(exception).isInstanceOf(IllegalArgumentException.class);

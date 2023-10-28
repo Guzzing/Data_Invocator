@@ -19,7 +19,7 @@ class AcademyInfoTest {
         String shuttle = "0";
 
         // When
-        AcademyInfo academyInfo = new AcademyInfo(name, contact, shuttle);
+        AcademyInfo academyInfo = AcademyInfo.of(name, contact, shuttle);
 
         // Then
         assertThat(academyInfo.getName()).isEqualTo(name);
@@ -36,7 +36,7 @@ class AcademyInfoTest {
         String shuttle = "-1";
 
         // When
-        Exception exception = catchException(() -> new AcademyInfo(name, contact, shuttle));
+        Exception exception = catchException(() -> AcademyInfo.of(name, contact, shuttle));
 
         // Then
         assertThat(exception).isInstanceOf(IllegalArgumentException.class);

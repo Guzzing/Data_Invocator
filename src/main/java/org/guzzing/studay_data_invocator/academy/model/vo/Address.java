@@ -19,8 +19,8 @@ public class Address {
     @Column(name = "sigungu", nullable = false)
     private String sigungu;
 
-    @Column(name = "upmyeondong", nullable = false)
-    private String upmyeondong;
+    @Column(name = "beopjungdong", nullable = false)
+    private String beopjungdong;
 
     protected Address(final String address) {
         Assert.isTrue(StringUtils.isNotBlank(address), "주소 정보는 반드시 주어져야 합니다.");
@@ -29,9 +29,9 @@ public class Address {
         String[] parsedAddress = parseAddress(address);
         this.sido = parsedAddress[0];
         this.sigungu = parsedAddress[1];
-        this.upmyeondong = parsedAddress[2];
+        this.beopjungdong = parsedAddress[2];
 
-        validate(sido, sigungu, upmyeondong);
+        validate(sido, sigungu, beopjungdong);
     }
 
     protected Address() {
@@ -45,7 +45,7 @@ public class Address {
         return address.split(" ");
     }
 
-    private void validate(final String sido, final String sigungu, final String upmyeondong) {
+    private void validate(final String sido, final String sigungu, final String beopjungdong) {
         Assert.isTrue(
                 (sido.contains("시") || sido.contains("도")),
                 "올바르지 않은 시도 구분입니다.");
@@ -53,8 +53,8 @@ public class Address {
                 (sigungu.contains("시") || sigungu.contains("군") || sigungu.contains("구")),
                 "올바르지 않은 시군구 구분입니다.");
         Assert.isTrue(
-                (upmyeondong.contains("읍") || upmyeondong.contains("면") || upmyeondong.contains("동")
-                        || upmyeondong.contains("구")),
+                (beopjungdong.contains("읍") || beopjungdong.contains("면") || beopjungdong.contains("동")
+                        || beopjungdong.contains("구")),
                 "올바르지 않은 읍면동 구분입니다.");
     }
 

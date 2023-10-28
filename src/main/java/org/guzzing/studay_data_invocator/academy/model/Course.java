@@ -24,11 +24,11 @@ public class Course {
     @JoinColumn(name = "academies_id")
     private Academy academy;
 
-    @Column(name = "curriculum", nullable = true)
-    private String curriculum;
-
     @Column(name = "subject", nullable = true)
     private String subject;
+
+    @Column(name = "curriculum", nullable = true)
+    private String curriculum;
 
     @Column(name = "capacity", nullable = true)
     private Integer capacity;
@@ -41,8 +41,8 @@ public class Course {
 
     protected Course(
             final Academy academy,
-            final String curriculum,
             final String subject,
+            final String curriculum,
             final Integer capacity,
             final String duration,
             final Long totalFee
@@ -52,8 +52,8 @@ public class Course {
         Assert.isTrue((totalFee == null || totalFee >= 0), "교육비는 반드시 양수여야 합니다.");
 
         this.academy = academy;
-        this.curriculum = curriculum;
         this.subject = subject;
+        this.curriculum = curriculum;
         this.capacity = capacity;
         this.duration = duration;
         this.totalFee = totalFee;
@@ -64,16 +64,16 @@ public class Course {
 
     public static Course of(
             final Academy academy,
-            final String curriculum,
             final String subject,
+            final String curriculum,
             final String capacity,
             final String duration,
             final String totalFee
     ) {
         return new Course(
                 academy,
-                curriculum,
                 subject,
+                curriculum,
                 capacity.isBlank() ? null : Integer.parseInt(capacity),
                 duration,
                 totalFee.isBlank() ? null : Long.parseLong(totalFee)
