@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class AcademyService {
 
     private final AcademyRepository academyRepository;
@@ -29,13 +30,11 @@ public class AcademyService {
         this.dataParser = dataParser;
     }
 
-    @Transactional
     public void importAllData() {
         Arrays.stream(AcademyDataFile.values())
                 .forEach(file -> this.importData(file.getFileName()));
     }
 
-    @Transactional
     public void importData(final String fileName) {
         Map<Academy, List<Course>> dataMap = dataParser.parseData(fileName);
 
@@ -43,7 +42,6 @@ public class AcademyService {
         dataMap.values().forEach(courseRepository::saveAll);
     }
 
-    @Transactional
     public void deleteAllData() {
         academyRepository.deleteAll();
     }

@@ -60,8 +60,8 @@ public class AcademyDataParser {
     private Course getCourse(Academy academy, List<String> splitData) {
         return Course.of(academy,
                 splitData.get(COURSE_CURRICULUM.ordinal()),
-                splitData.get(COURSE_CAPACITY.ordinal()),
                 splitData.get(COURSE_SUBJECT.ordinal()),
+                splitData.get(COURSE_CAPACITY.ordinal()),
                 splitData.get(COURSE_DURATION.ordinal()),
                 splitData.get(COURSE_TOTAL_FEE.ordinal()));
     }

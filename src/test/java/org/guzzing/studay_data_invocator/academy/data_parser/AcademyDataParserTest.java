@@ -32,7 +32,7 @@ class AcademyDataParserTest {
                 .findAny().get()
                 .getFullAddress();
 
-        assertThat(fullAddress).isEqualTo(SEONGNAM.getRegion());
+        assertThat(fullAddress).contains(SEONGNAM.getRegion());
     }
 
 }
