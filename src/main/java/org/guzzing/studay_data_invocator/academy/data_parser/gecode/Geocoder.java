@@ -1,15 +1,17 @@
 package org.guzzing.studay_data_invocator.academy.data_parser.gecode;
 
+import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.guzzing.studay_data_invocator.academy.model.vo.Location;
 import org.guzzing.studay_data_invocator.global.config.GeocodeConfig;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -17,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
+@Slf4j
 @Component
 public class Geocoder {
 
@@ -49,7 +52,7 @@ public class Geocoder {
     public Location addressToLocationV2(final String address) {
         WebClient webClient = WebClient.builder()
                 .baseUrl(geocodeConfig.getApiUrl())
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .defaultHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
                 .defaultHeader(geocodeConfig.getClientIdProperty(), geocodeConfig.getClientId())
                 .defaultHeader(geocodeConfig.getClientSecretProperty(), geocodeConfig.getClientSecret())
                 .build();
@@ -63,7 +66,12 @@ public class Geocoder {
                 .bodyToMono(String.class)
                 .block();
 
-        return extractLocationFromResponse(response);
+        try {
+            return extractLocationFromResponse(response);
+        } catch (IndexOutOfBoundsException e) {
+            log.warn("{} is not searched by Naver Map API", address);
+            throw e;
+        }
     }
 
     private Location extractLocationFromResponse(final String jsonResponse) {
