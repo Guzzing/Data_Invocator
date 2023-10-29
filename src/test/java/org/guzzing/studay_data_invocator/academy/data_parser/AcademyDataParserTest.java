@@ -6,7 +6,7 @@ import static org.guzzing.studay_data_invocator.academy.data_parser.meta.Academy
 import java.util.List;
 import java.util.Map;
 import org.guzzing.studay_data_invocator.academy.model.Academy;
-import org.guzzing.studay_data_invocator.academy.model.Course;
+import org.guzzing.studay_data_invocator.academy.model.Lesson;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ class AcademyDataParserTest {
         String fileName = SEONGNAM.getFileName();
 
         // When
-        Map<Academy, List<Course>> result = dataParser.parseData(fileName);
+        Map<Academy, List<Lesson>> result = dataParser.parseData(fileName);
 
         // Then
         String fullAddress = result.keySet().stream()
