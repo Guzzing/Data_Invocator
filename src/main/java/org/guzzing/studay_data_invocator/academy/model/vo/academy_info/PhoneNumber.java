@@ -14,21 +14,19 @@ public class PhoneNumber {
     @Transient
     private final String REGEX = "^\\d{2,3}-\\d{3,4}-\\d{3,4}$";
 
-    @Column(name = "contact", nullable = true, length = 20)
+    @Column(name = "contact", nullable = true)
     private String contact;
 
     public PhoneNumber(final String contact) {
-        validate(contact);
-        this.contact = regulate(contact);
+        this.contact =  validate(contact)? regulate(contact) :  "잘못된 형식: "+contact;
     }
 
     protected PhoneNumber() {
     }
 
-    private void validate(final String contact) {
-        if (!contact.isBlank()) {
-            Assert.isTrue(Pattern.matches(REGEX, contact), "올바른 전화번호 형식이 아닙니다.");
-        }
+    private boolean validate(final String contact) {
+        return !contact.isBlank() && Pattern.matches(REGEX, contact) ;
+
     }
 
     private String regulate(final String contact) {

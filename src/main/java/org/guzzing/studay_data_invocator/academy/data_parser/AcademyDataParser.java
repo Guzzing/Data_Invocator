@@ -16,69 +16,76 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
 import org.guzzing.studay_data_invocator.academy.data_parser.gecode.Geocoder;
 import org.guzzing.studay_data_invocator.academy.data_parser.meta.EscapeToken;
 import org.guzzing.studay_data_invocator.academy.model.Academy;
-import org.guzzing.studay_data_invocator.academy.model.Course;
+import org.guzzing.studay_data_invocator.academy.model.Lesson;
 import org.guzzing.studay_data_invocator.academy.model.vo.AcademyInfo;
 import org.guzzing.studay_data_invocator.academy.model.vo.Address;
 import org.guzzing.studay_data_invocator.academy.model.vo.Location;
+import org.guzzing.studay_data_invocator.academy.repository.NotValidAddressRepository;
 import org.guzzing.studay_data_invocator.global.reader.DataFileReader;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AcademyDataParser {
 
+    private static final int CELL_SIZE = 22;
     private final DataFileReader dataFileReader;
     private final Geocoder geocoder;
+    private final NotValidAddressRepository notValidAddressRepository;
 
-    public AcademyDataParser(DataFileReader dataFileReader, Geocoder geocoder) {
+    public AcademyDataParser(DataFileReader dataFileReader, Geocoder geocoder, NotValidAddressRepository notValidAddressRepository) {
         this.dataFileReader = dataFileReader;
         this.geocoder = geocoder;
+        this.notValidAddressRepository = notValidAddressRepository;
     }
 
-    public Map<Academy, List<Course>> parseData(final String fileName) {
-        final Map<Academy, List<Course>> dataMap = new ConcurrentHashMap<>();
+    public Map<Academy, List<Lesson>> parseData(final String fileName) {
+        final Map<Academy, List<Lesson>> dataMap = new ConcurrentHashMap<>();
         final Map<String, Location> cache = new ConcurrentHashMap<>();
 
         filterData(fileName).forEach(dataLine -> {
             List<String> splitData = Arrays.stream(dataLine.split(",")).toList();
 
-            Academy academy = getAcademy(splitData, cache);
-            Course course = getCourse(academy, splitData);
+            if (splitData.size() >= CELL_SIZE) {
 
-            List<Course> courses = dataMap.getOrDefault(academy,
-                    Collections.synchronizedList(new ArrayList<Course>()));
-            courses.add(course);
+                Academy academy = getAcademy(splitData, cache);
+                Lesson lesson = getCourse(academy, splitData);
+                List<Lesson> cours = dataMap.getOrDefault(academy,
+                        Collections.synchronizedList(new ArrayList<Lesson>()));
+                cours.add(lesson);
 
-            dataMap.put(academy, courses);
+                dataMap.put(academy, cours);
+            }
         });
 
         return dataMap;
     }
 
-    private Course getCourse(Academy academy, List<String> splitData) {
-        return Course.of(academy,
-                splitData.get(COURSE_CURRICULUM.ordinal()),
-                splitData.get(COURSE_SUBJECT.ordinal()),
-                splitData.get(COURSE_CAPACITY.ordinal()),
-                splitData.get(COURSE_DURATION.ordinal()),
-                splitData.get(COURSE_TOTAL_FEE.ordinal()));
+    private Lesson getCourse(Academy academy, List<String> splitData) {
+        return Lesson.of(academy,
+                splitData.get(COURSE_CURRICULUM.getIndex()),
+                splitData.get(COURSE_SUBJECT.getIndex()),
+                splitData.get(COURSE_CAPACITY.getIndex()),
+                splitData.get(COURSE_DURATION.getIndex()),
+                splitData.get(COURSE_TOTAL_FEE.getIndex()));
     }
 
     private Academy getAcademy(List<String> splitData, Map<String, Location> cache) {
         AcademyInfo academyInfo = AcademyInfo.of(
-                splitData.get(ACADEMY_NAME.ordinal()),
-                splitData.get(ACADEMY_CONTACT.ordinal()),
-                splitData.get(ACADEMY_SHUTTLE_FEE.ordinal()));
-        Address address = Address.of(splitData.get(ACADEMY_ADDRESS.ordinal()));
-        Location location = getLocation(cache, splitData.get(ACADEMY_ADDRESS.ordinal()));
+                splitData.get(ACADEMY_NAME.getIndex()),
+                splitData.get(ACADEMY_CONTACT.getIndex()),
+                splitData.get(ACADEMY_SHUTTLE_FEE.getIndex()));
+        Address address = Address.of(splitData.get(ACADEMY_ADDRESS.getIndex()));
+        Location location = getLocation(cache, splitData.get(ACADEMY_ADDRESS.getIndex()), splitData.get(ACADEMY_NAME.getIndex()));
 
         return Academy.of(academyInfo, address, location);
     }
 
-    private Location getLocation(Map<String, Location> cache, String fullAddress) {
-        return cache.computeIfAbsent(fullAddress, geocoder::addressToLocationV2);
+    private Location getLocation(Map<String, Location> cache, String fullAddress, String academyName) {
+        return geocoder.addressToLocationV2(fullAddress, academyName);
     }
 
     private List<String> filterData(final String fileName) {

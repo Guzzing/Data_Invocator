@@ -25,9 +25,7 @@ public class AcademyInfo {
     private ShuttleAvailability shuttle;
 
     protected AcademyInfo(final String name, final String contact, final String shuttle) {
-        Assert.isTrue(StringUtils.isNotBlank(name), "학원명이 주어지지 않았습니다.");
-
-        this.name = name;
+        this.name=(StringUtils.isBlank(name))? "학원명이 주어지지 않았습니다." : name;
         this.contact = new PhoneNumber(contact);
         this.shuttle = ShuttleAvailability.getShuttleAvailability(shuttle);
     }
