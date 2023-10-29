@@ -13,8 +13,8 @@ import jakarta.persistence.Table;
 import org.springframework.util.Assert;
 
 @Entity
-@Table(name = "coures")
-public class Course {
+@Table(name = "lessons")
+public class Lesson {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +39,7 @@ public class Course {
     @Column(name = "total_fee", nullable = true)
     private Long totalFee;
 
-    protected Course(
+    protected Lesson(
             final Academy academy,
             final String subject,
             final String curriculum,
@@ -59,10 +59,10 @@ public class Course {
         this.totalFee = totalFee;
     }
 
-    protected Course() {
+    protected Lesson() {
     }
 
-    public static Course of(
+    public static Lesson of(
             final Academy academy,
             final String subject,
             final String curriculum,
@@ -70,7 +70,7 @@ public class Course {
             final String duration,
             final String totalFee
     ) {
-        return new Course(
+        return new Lesson(
                 academy,
                 subject,
                 curriculum,
