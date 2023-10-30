@@ -34,4 +34,8 @@ public class Region {
     public static Region of(final Address address, final Location location) {
         return new Region(address, location);
     }
+
+    public String getSido() {
+        return address.getSido();
+    }
 }
