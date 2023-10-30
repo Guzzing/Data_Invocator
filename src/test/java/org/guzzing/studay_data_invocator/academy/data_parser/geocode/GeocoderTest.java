@@ -33,23 +33,23 @@ class GeocoderTest {
  //              .isBetween(124.0, 128.0);
  //  }
 
-  //  @Test
-  //  @DisplayName("WebClient 방식으로 네이버 지오코드를 이용해 주소를 위경도로 바꿔준다.")
-  //  void addressToLocationV2_Success() {
-  //      // Given
-  //      String address = "경기도 성남시 분당구 운중로277번길 46-8";
+    // @Test
+    // @DisplayName("WebClient 방식으로 네이버 지오코드를 이용해 주소를 위경도로 바꿔준다.")
+    // void addressToLocationV2_Success() {
+    //     // Given
+    //     String address = "경기도 수원시 영통구 망포로 142 ";
 //
-  //      // When
-  //      Location location = geocoder.addressToLocationV2(address,"어쩌구");
+    //     // When
+    //     Location location = geocoder.addressToLocationV2(address);
 //
-  //      // Then
-  //      assertThat(location.getLatitude())
-  //              .isBetween(30.0, 40.0);
+    //     // Then
+    //     assertThat(location.getLatitude())
+    //             .isBetween(30.0, 40.0);
 //
-  //      assertThat(location.getLongitude())
-  //              .isBetween(124.0, 128.0);
-  //  }
-
+    //     assertThat(location.getLongitude())
+    //             .isBetween(124.0, 128.0);
+    // }
+//
   // @Test
   // @DisplayName("WebClient 방식으로 네이버 지오코드를 이용해 주소를 위경도로 바꿔줬는데 못 찾으면 실패한다.")
   // void addressToLocationV2_Fail() {

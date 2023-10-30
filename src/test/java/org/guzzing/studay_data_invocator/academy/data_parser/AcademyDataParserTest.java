@@ -1,16 +1,7 @@
 package org.guzzing.studay_data_invocator.academy.data_parser;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataFile.SEONGNAM;
 
-import java.util.List;
-import java.util.Map;
-import org.guzzing.studay_data_invocator.academy.model.Academy;
-import org.guzzing.studay_data_invocator.academy.model.Institute;
-import org.guzzing.studay_data_invocator.academy.model.Lesson;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
