@@ -8,11 +8,12 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import lombok.extern.slf4j.Slf4j;
-import org.guzzing.studay_data_invocator.academy.model.NotValidAddress;
+import org.guzzing.studay_data_invocator.academy.model.InvalidAcademy;
 import org.guzzing.studay_data_invocator.academy.model.vo.Location;
-import org.guzzing.studay_data_invocator.academy.repository.NotValidAddressRepository;
+import org.guzzing.studay_data_invocator.academy.repository.InvalidAddressRepository;
 import org.guzzing.studay_data_invocator.global.config.GeocodeConfig;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -22,14 +23,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class Geocoder {
 
     private final GeocodeConfig geocodeConfig;
-    private final NotValidAddressRepository notValidAddressRepository;
 
-    public Geocoder(GeocodeConfig geocodeConfig, NotValidAddressRepository notValidAddressRepository) {
+    public Geocoder(GeocodeConfig geocodeConfig) {
         this.geocodeConfig = geocodeConfig;
-        this.notValidAddressRepository = notValidAddressRepository;
     }
 
-    public Location addressToLocationV2(final String address, final String academyName) {
+    public Optional<Location> addressToLocationV2(final String address) {
         WebClient webClient = WebClient.builder()
                 .baseUrl(geocodeConfig.getApiUrl())
                 .defaultHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
@@ -46,10 +45,10 @@ public class Geocoder {
                 .bodyToMono(String.class)
                 .block();
 
-        return extractLocationFromResponse(response, academyName, address);
+        return extractLocationFromResponse(response);
     }
 
-    private Location extractLocationFromResponse(final String jsonResponse, String academyName, String address) {
+    private Optional<Location> extractLocationFromResponse(final String jsonResponse) {
         Gson gson = new Gson();
 
         Map<String, Object> mapData = gson.fromJson(
@@ -62,10 +61,9 @@ public class Geocoder {
             double x = Double.parseDouble(addressInfo.get("x").toString());
             double y = Double.parseDouble(addressInfo.get("y").toString());
 
-            return Location.of(y, x);
+            return Optional.of(Location.of(y, x));
         }
-        notValidAddressRepository.save(NotValidAddress.of(address, academyName));
-        return Location.of(0,0);
+        return Optional.empty();
     }
 
 }
