@@ -5,8 +5,8 @@ import lombok.Getter;
 
 @Getter
 public enum AcademyDataFile {
-    SEONGNAM("성남");
-    //SUWON("수원");
+    SEONGNAM("성남"),
+    SUWON("수원");
 
     private static final String PREFIX = "docs/data/";
     private static final String POSTFIX = "-표 1.csv";
