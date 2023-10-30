@@ -6,6 +6,8 @@ import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import org.springframework.util.Assert;
 
+import java.util.Objects;
+
 @Getter
 @Embeddable
 public class Address {
@@ -78,7 +80,17 @@ public class Address {
         }
     }
 
-    public static Address createInvalidAddress(String address) {
-        return new Address("시도 시군구 읍면동 "+ address);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return Objects.equals(fullAddress, address.fullAddress) && Objects.equals(sido, address.sido) && Objects.equals(sigungu, address.sigungu) && Objects.equals(beopjungdong, address.beopjungdong);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(fullAddress, sido, sigungu, beopjungdong);
+    }
+
 }
