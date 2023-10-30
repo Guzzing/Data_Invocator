@@ -23,11 +23,11 @@ public class Address {
     private String beopjungdong;
 
     protected Address(final String address) {
-        this.fullAddress = StringUtils.isNotBlank(address) ? address : "주소 정보는 반드시 주어져야 합니다. " + address;
+        Assert.isTrue(StringUtils.isNotBlank(address), "주소 정보는 반드시 주어져야 합니다.");
+        validateParser(address);
+        String[] parsedAddress = address.split(" ");
 
-        String[] notValidAddress = address.split(" ");
-        String[] parsedAddress = notValidAddress.length >= 3 ? notValidAddress : "시도 시군구 읍면동".split(" ");
-
+        this.fullAddress = address;
         this.sido = makeSido(parsedAddress[0]);
         this.sigungu = makeSigungu(parsedAddress[1]);
         this.beopjungdong = makeBeopjungdong(parsedAddress[2]);
@@ -54,7 +54,7 @@ public class Address {
 
     private String validateAndReturn(final String input, final String type) {
         if (StringUtils.isBlank(input) || !isValidType(input, type)) {
-            return "올바르지 않은 " + type + " 구분입니다.";
+            throw new IllegalArgumentException("올바르지 않은 " + type + " 구분입니다.");
         }
         return input;
     }
@@ -70,5 +70,15 @@ public class Address {
             default:
                 return false;
         }
+    }
+
+    private void validateParser(String address) {
+        if (address.split(" ").length < 3) {
+            throw new IllegalArgumentException("주소 정보는 최소한 시도, 시군구, 읍면동 세 가지 요소를 가져야 합니다.");
+        }
+    }
+
+    public static Address createInvalidAddress(String address) {
+        return new Address("시도 시군구 읍면동 "+ address);
     }
 }

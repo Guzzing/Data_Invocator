@@ -25,7 +25,9 @@ public class AcademyInfo {
     private ShuttleAvailability shuttle;
 
     protected AcademyInfo(final String name, final String contact, final String shuttle) {
-        this.name=(StringUtils.isBlank(name))? "학원명이 주어지지 않았습니다." : name;
+        Assert.isTrue(StringUtils.isNotBlank(name), "학원명이 주어지지 않았습니다.");
+
+        this.name = name;
         this.contact = new PhoneNumber(contact);
         this.shuttle = ShuttleAvailability.getShuttleAvailability(shuttle);
     }
@@ -43,5 +45,10 @@ public class AcademyInfo {
 
     public String getShuttle() {
         return shuttle.name();
+    }
+
+    public static AcademyInfo createNotValidAcademyInfo(String name, String contact, String shuttle) {
+        String invalidName = "잘못된 형식:" + name;
+        return new AcademyInfo(invalidName, "000-0000-0000", shuttle);
     }
 }
