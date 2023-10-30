@@ -109,7 +109,7 @@ public class AcademyDataParser {
     }
 
     private Location getLocation(Map<String, Location> cache, String fullAddress, String academyName) {
-        return geocoder.addressToLocationV2(fullAddress, academyName);
+        return cache.computeIfAbsent(fullAddress, k -> geocoder.addressToLocation(fullAddress, academyName));
     }
 
     private List<String> filterData(final String fileName) {
