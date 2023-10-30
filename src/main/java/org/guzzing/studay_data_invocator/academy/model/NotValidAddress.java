@@ -1,7 +1,10 @@
 package org.guzzing.studay_data_invocator.academy.model;
 
-import jakarta.persistence.*;
-import org.guzzing.studay_data_invocator.academy.model.vo.AcademyInfo;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "not_valid_addresses")
@@ -15,7 +18,7 @@ public class NotValidAddress {
 
     private String academy_name;
 
-    protected NotValidAddress () {
+    protected NotValidAddress() {
     }
 
     protected NotValidAddress(String address, String academy_name) {

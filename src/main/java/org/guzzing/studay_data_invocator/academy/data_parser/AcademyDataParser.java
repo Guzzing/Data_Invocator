@@ -16,14 +16,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.guzzing.studay_data_invocator.global.gecode.Geocoder;
 import org.guzzing.studay_data_invocator.academy.data_parser.meta.EscapeToken;
 import org.guzzing.studay_data_invocator.academy.model.Academy;
 import org.guzzing.studay_data_invocator.academy.model.Institute;
 import org.guzzing.studay_data_invocator.academy.model.Lesson;
 import org.guzzing.studay_data_invocator.academy.model.NotValidAcademy;
 import org.guzzing.studay_data_invocator.academy.model.vo.AcademyInfo;
+import org.guzzing.studay_data_invocator.global.gecode.Geocoder;
 import org.guzzing.studay_data_invocator.global.location.Address;
 import org.guzzing.studay_data_invocator.global.location.Location;
 import org.guzzing.studay_data_invocator.global.reader.DataFileReader;

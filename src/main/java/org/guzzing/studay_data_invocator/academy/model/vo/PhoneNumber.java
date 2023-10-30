@@ -5,8 +5,6 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.Transient;
 import java.util.regex.Pattern;
 import lombok.Getter;
-import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 
 @Getter
 @Embeddable
@@ -27,7 +25,7 @@ public class PhoneNumber {
     }
 
     private void validate(final String contact) {
-        if(!contact.isBlank()) {
+        if (!contact.isBlank()) {
             if (!Pattern.matches(REGEX, contact)) {
                 throw new IllegalArgumentException("올바른 전화번호 형식이 아닙니다.");
             }

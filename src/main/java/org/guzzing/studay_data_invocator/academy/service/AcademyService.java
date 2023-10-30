@@ -43,11 +43,12 @@ public class AcademyService {
     public void importData(final String fileName) {
         Map<Institute, List<Lesson>> dataMap = dataParser.parseData(fileName);
 
-        for(Institute institute :dataMap.keySet()) {
-            if(institute instanceof Academy) {
+        for (Institute institute : dataMap.keySet()) {
+            if (institute instanceof Academy) {
                 academyRepository.save((Academy) institute);
-                if(dataMap.get(institute)!=null) {
-                    dataMap.get(institute).stream().filter(lesson -> lesson != null).forEach(lesson -> lessonRepository.save(lesson));
+                if (dataMap.get(institute) != null) {
+                    dataMap.get(institute).stream().filter(lesson -> lesson != null)
+                            .forEach(lesson -> lessonRepository.save(lesson));
                 }
                 continue;
             }
