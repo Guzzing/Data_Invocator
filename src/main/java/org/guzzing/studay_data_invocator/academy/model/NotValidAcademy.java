@@ -3,8 +3,8 @@ package org.guzzing.studay_data_invocator.academy.model;
 
 import jakarta.persistence.*;
 import org.guzzing.studay_data_invocator.academy.model.vo.AcademyInfo;
-import org.guzzing.studay_data_invocator.academy.model.vo.Address;
-import org.guzzing.studay_data_invocator.academy.model.vo.Location;
+import org.guzzing.studay_data_invocator.global.location.Address;
+import org.guzzing.studay_data_invocator.global.location.Location;
 
 @Entity
 @Table(name = "notValidAcademies")

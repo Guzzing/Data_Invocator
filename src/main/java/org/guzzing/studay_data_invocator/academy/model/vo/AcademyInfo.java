@@ -7,8 +7,6 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Getter;
-import org.guzzing.studay_data_invocator.academy.model.vo.academy_info.PhoneNumber;
-import org.guzzing.studay_data_invocator.academy.model.vo.academy_info.ShuttleAvailability;
 import org.springframework.util.Assert;
 
 @Embeddable

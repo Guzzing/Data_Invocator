@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator.academy.model.vo.address;
+package org.guzzing.studay_data_invocator.global.location;
 
 import java.util.List;
 

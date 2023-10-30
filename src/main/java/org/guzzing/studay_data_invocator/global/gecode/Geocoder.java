@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator.academy.data_parser.gecode;
+package org.guzzing.studay_data_invocator.global.gecode;
 
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -11,7 +11,7 @@ import java.util.Map;
 
 import lombok.extern.slf4j.Slf4j;
 import org.guzzing.studay_data_invocator.academy.model.NotValidAddress;
-import org.guzzing.studay_data_invocator.academy.model.vo.Location;
+import org.guzzing.studay_data_invocator.global.location.Location;
 import org.guzzing.studay_data_invocator.academy.repository.NotValidAddressRepository;
 import org.guzzing.studay_data_invocator.global.config.GeocodeConfig;
 import org.springframework.stereotype.Component;

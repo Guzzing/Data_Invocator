@@ -1,14 +1,13 @@
-package org.guzzing.studay_data_invocator.academy.model.vo;
+package org.guzzing.studay_data_invocator.global.location;
 
-import static org.guzzing.studay_data_invocator.academy.model.vo.address.RegionUnit.SIDO;
-import static org.guzzing.studay_data_invocator.academy.model.vo.address.RegionUnit.SIGUNGU;
-import static org.guzzing.studay_data_invocator.academy.model.vo.address.RegionUnit.UPMYEONDONG;
+import static org.guzzing.studay_data_invocator.global.location.RegionUnit.SIDO;
+import static org.guzzing.studay_data_invocator.global.location.RegionUnit.SIGUNGU;
+import static org.guzzing.studay_data_invocator.global.location.RegionUnit.UPMYEONDONG;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
-import org.guzzing.studay_data_invocator.academy.model.vo.address.RegionUnit;
 import org.springframework.util.Assert;
 
 @Getter
