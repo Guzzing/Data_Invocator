@@ -29,7 +29,7 @@ public class Geocoder {
         this.notValidAddressRepository = notValidAddressRepository;
     }
 
-    public Location addressToLocationV2(final String address, final String academyName) {
+    public Location addressToLocation(final String address, final String academyName) {
         WebClient webClient = WebClient.builder()
                 .baseUrl(geocodeConfig.getApiUrl())
                 .defaultHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
