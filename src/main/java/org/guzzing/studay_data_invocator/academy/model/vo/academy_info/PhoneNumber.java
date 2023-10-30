@@ -8,8 +8,6 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 import lombok.Getter;
-import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 
 @Getter
 @Embeddable

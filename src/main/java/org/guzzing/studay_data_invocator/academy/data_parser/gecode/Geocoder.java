@@ -11,9 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import lombok.extern.slf4j.Slf4j;
-import org.guzzing.studay_data_invocator.academy.model.InvalidAcademy;
 import org.guzzing.studay_data_invocator.academy.model.vo.Location;
-import org.guzzing.studay_data_invocator.academy.repository.InvalidAddressRepository;
 import org.guzzing.studay_data_invocator.global.config.GeocodeConfig;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -29,6 +27,7 @@ public class Geocoder {
     }
 
     public Optional<Location> addressToLocationV2(final String address) {
+
         WebClient webClient = WebClient.builder()
                 .baseUrl(geocodeConfig.getApiUrl())
                 .defaultHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)

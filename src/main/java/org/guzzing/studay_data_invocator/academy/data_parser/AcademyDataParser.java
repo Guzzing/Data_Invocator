@@ -56,9 +56,10 @@ public class AcademyDataParser {
                 if (institute.isPresent()) {
                     Institute existedInstitute =  institute.get();
                     if (institute.isPresent() && institute.get() instanceof Academy) {
-                        Lesson lesson = getCourse((Academy) existedInstitute, splitData);
+                        Lesson lesson = getLesson((Academy) existedInstitute, splitData);
                         List<Lesson> lessons = dataMap.getOrDefault(existedInstitute, new ArrayList<>());
                         lessons.add(lesson);
+
 
                         dataMap.put(existedInstitute, lessons);
                         continue;
@@ -72,7 +73,7 @@ public class AcademyDataParser {
         return dataMap;
     }
 
-    private Lesson getCourse(Academy academy, List<String> splitData) {
+    private Lesson getLesson(Academy academy, List<String> splitData) {
         return Lesson.of(academy,
                 splitData.get(COURSE_CURRICULUM.getIndex()),
                 splitData.get(COURSE_SUBJECT.getIndex()),
@@ -108,7 +109,7 @@ public class AcademyDataParser {
     }
 
     private Optional<Location> getLocation(Map<String, Location> cache, String fullAddress) {
-        return geocoder.addressToLocationV2(fullAddress);
+        return  geocoder.addressToLocationV2(fullAddress);
     }
 
     private List<String> filterData(final String fileName) {
