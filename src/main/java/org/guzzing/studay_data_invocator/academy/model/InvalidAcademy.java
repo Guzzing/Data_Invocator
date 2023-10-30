@@ -3,7 +3,7 @@ package org.guzzing.studay_data_invocator.academy.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "not_valid_addresses")
+@Table(name = "invalid_addresses")
 public class InvalidAcademy implements Institute {
 
     @Id

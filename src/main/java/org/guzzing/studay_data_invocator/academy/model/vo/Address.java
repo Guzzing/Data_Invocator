@@ -6,7 +6,6 @@ import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import org.springframework.util.Assert;
 
-import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -40,7 +39,5 @@ public class Address {
     public int hashCode() {
         return Objects.hash(fullAddress);
     }
-    
+
 }
-
-
