@@ -8,6 +8,7 @@ import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
+import org.guzzing.studay_data_invocator.global.exception.AddressException;
 import org.springframework.util.Assert;
 
 @Getter
@@ -26,6 +27,9 @@ public class Address {
     @Column(name = "beopjungdong", nullable = false)
     private String beopjungdong;
 
+    protected Address() {
+    }
+
     protected Address(final String address) {
         Assert.isTrue(StringUtils.isNotBlank(address), "주소 정보는 반드시 주어져야 합니다.");
         validateParser(address);
@@ -35,9 +39,6 @@ public class Address {
         this.sido = makeSido(parsedAddress[0]);
         this.sigungu = makeSigungu(parsedAddress[1]);
         this.beopjungdong = makeBeopjungdong(parsedAddress[2]);
-    }
-
-    protected Address() {
     }
 
     public static Address of(final String address) {
@@ -58,18 +59,18 @@ public class Address {
 
     private String validateAndReturn(final String input, final RegionUnit regionUnit) {
         if (StringUtils.isBlank(input) || !regionUnit.isMatched(input)) {
-            throw new IllegalArgumentException("올바르지 않은 " + regionUnit + " 구분입니다.");
+            throw new AddressException("올바르지 않은 " + regionUnit + " 구분입니다.");
         }
         return input;
     }
 
     private void validateParser(String address) {
         if (address.split(" ").length < 3) {
-            throw new IllegalArgumentException("주소 정보는 최소한 시도, 시군구, 읍면동 세 가지 요소를 가져야 합니다.");
+            throw new AddressException("주소 정보는 최소한 시도, 시군구, 읍면동 세 가지 요소를 가져야 합니다.");
         }
     }
 
     public static Address createInvalidAddress(String address) {
-        return new Address("시도 시군구 읍면동 "+ address);
+        return new Address("시도 시군구 읍면동 " + address);
     }
 }
