@@ -1,9 +1,14 @@
 package org.guzzing.studay_data_invocator.academy.model.vo;
 
+import static org.guzzing.studay_data_invocator.academy.model.vo.address.RegionUnit.SIDO;
+import static org.guzzing.studay_data_invocator.academy.model.vo.address.RegionUnit.SIGUNGU;
+import static org.guzzing.studay_data_invocator.academy.model.vo.address.RegionUnit.UPMYEONDONG;
+
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
+import org.guzzing.studay_data_invocator.academy.model.vo.address.RegionUnit;
 import org.springframework.util.Assert;
 
 @Getter
@@ -41,35 +46,22 @@ public class Address {
     }
 
     private String makeSido(final String sido) {
-        return validateAndReturn(sido, "시도");
+        return validateAndReturn(sido, SIDO);
     }
 
     private String makeSigungu(final String sigungu) {
-        return validateAndReturn(sigungu, "시군구");
+        return validateAndReturn(sigungu, SIGUNGU);
     }
 
     private String makeBeopjungdong(final String beopjungdong) {
-        return validateAndReturn(beopjungdong, "읍면동");
+        return validateAndReturn(beopjungdong, UPMYEONDONG);
     }
 
-    private String validateAndReturn(final String input, final String type) {
-        if (StringUtils.isBlank(input) || !isValidType(input, type)) {
-            throw new IllegalArgumentException("올바르지 않은 " + type + " 구분입니다.");
+    private String validateAndReturn(final String input, final RegionUnit regionUnit) {
+        if (StringUtils.isBlank(input) || !regionUnit.isMatched(input)) {
+            throw new IllegalArgumentException("올바르지 않은 " + regionUnit + " 구분입니다.");
         }
         return input;
-    }
-
-    private boolean isValidType(final String input, final String type) {
-        switch (type) {
-            case "시도":
-                return input.contains("시") || input.contains("도");
-            case "시군구":
-                return input.contains("시") || input.contains("군") || input.contains("구");
-            case "읍면동":
-                return input.contains("읍") || input.contains("면") || input.contains("동") || input.contains("구");
-            default:
-                return false;
-        }
     }
 
     private void validateParser(String address) {
