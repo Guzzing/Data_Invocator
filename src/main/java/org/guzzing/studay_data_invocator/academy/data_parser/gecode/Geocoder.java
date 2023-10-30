@@ -5,51 +5,31 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
+
 import java.util.List;
 import java.util.Map;
+
 import lombok.extern.slf4j.Slf4j;
+import org.guzzing.studay_data_invocator.academy.model.NotValidAddress;
 import org.guzzing.studay_data_invocator.academy.model.vo.Location;
+import org.guzzing.studay_data_invocator.academy.repository.NotValidAddressRepository;
 import org.guzzing.studay_data_invocator.global.config.GeocodeConfig;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @Slf4j
 @Component
 public class Geocoder {
 
     private final GeocodeConfig geocodeConfig;
+    private final NotValidAddressRepository notValidAddressRepository;
 
-    public Geocoder(GeocodeConfig geocodeConfig) {
+    public Geocoder(GeocodeConfig geocodeConfig, NotValidAddressRepository notValidAddressRepository) {
         this.geocodeConfig = geocodeConfig;
+        this.notValidAddressRepository = notValidAddressRepository;
     }
 
-    public Location addressToLocationV1(final String address) {
-        URI uri = UriComponentsBuilder
-                .fromUriString(geocodeConfig.getApiUrl())
-                .queryParam("query", address)
-                .encode(StandardCharsets.UTF_8)
-                .build()
-                .toUri();
-
-        RequestEntity<Void> req = RequestEntity
-                .get(uri)
-                .header(geocodeConfig.getClientIdProperty(), geocodeConfig.getClientId())
-                .header(geocodeConfig.getClientSecretProperty(), geocodeConfig.getClientSecret())
-                .build();
-
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> result = restTemplate.exchange(req, String.class);
-
-        return extractLocationFromResponse(result.getBody());
-    }
-
-    public Location addressToLocationV2(final String address) {
+    public Location addressToLocationV2(final String address, final String academyName) {
         WebClient webClient = WebClient.builder()
                 .baseUrl(geocodeConfig.getApiUrl())
                 .defaultHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
@@ -66,15 +46,10 @@ public class Geocoder {
                 .bodyToMono(String.class)
                 .block();
 
-        try {
-            return extractLocationFromResponse(response);
-        } catch (IndexOutOfBoundsException e) {
-            log.warn("{} is not searched by Naver Map API", address);
-            throw e;
-        }
+        return extractLocationFromResponse(response, academyName, address);
     }
 
-    private Location extractLocationFromResponse(final String jsonResponse) {
+    private Location extractLocationFromResponse(final String jsonResponse, String academyName, String address) {
         Gson gson = new Gson();
 
         Map<String, Object> mapData = gson.fromJson(
@@ -82,11 +57,15 @@ public class Geocoder {
                 }.getType());
         List<Object> addresses = (List<Object>) mapData.get("addresses");
 
-        Map<String, Object> addressInfo = (Map<String, Object>) addresses.get(0);
-        double x = Double.parseDouble(addressInfo.get("x").toString());
-        double y = Double.parseDouble(addressInfo.get("y").toString());
+        if(addresses!=null && addresses.size()>0) {
+            Map<String, Object> addressInfo = (Map<String, Object>) addresses.get(0);
+            double x = Double.parseDouble(addressInfo.get("x").toString());
+            double y = Double.parseDouble(addressInfo.get("y").toString());
 
-        return Location.of(y, x);
+            return Location.of(y, x);
+        }
+        notValidAddressRepository.save(NotValidAddress.of(address, academyName));
+        return Location.of(0,0);
     }
 
 }

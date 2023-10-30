@@ -46,4 +46,9 @@ public class AcademyInfo {
     public String getShuttle() {
         return shuttle.name();
     }
+
+    public static AcademyInfo createNotValidAcademyInfo(String name, String contact, String shuttle) {
+        String invalidName = "잘못된 형식:" + name;
+        return new AcademyInfo(invalidName, "000-0000-0000", shuttle);
+    }
 }
