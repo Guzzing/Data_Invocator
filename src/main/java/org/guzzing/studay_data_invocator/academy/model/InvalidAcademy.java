@@ -1,11 +1,10 @@
 package org.guzzing.studay_data_invocator.academy.model;
 
 import jakarta.persistence.*;
-import org.guzzing.studay_data_invocator.academy.model.vo.AcademyInfo;
 
 @Entity
 @Table(name = "not_valid_addresses")
-public class NotValidAddress {
+public class NotFullAddressAcademy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,16 +14,16 @@ public class NotValidAddress {
 
     private String academy_name;
 
-    protected NotValidAddress () {
+    protected NotFullAddressAcademy() {
     }
 
-    protected NotValidAddress(String address, String academy_name) {
+    protected NotFullAddressAcademy(String address, String academy_name) {
         this.address = address;
         this.academy_name = academy_name;
     }
 
-    public static NotValidAddress of(String address, String academy_name) {
-        return new NotValidAddress(address, academy_name);
+    public static NotFullAddressAcademy of(String address, String academy_name) {
+        return new NotFullAddressAcademy(address, academy_name);
     }
 
 }
