@@ -56,7 +56,7 @@ public class AcademyDataParser {
                 Institute institute = getAcademy(splitData, cache);
 
                 if (institute instanceof Academy) {
-                    Lesson lesson = getCourse((Academy) institute, splitData);
+                    Lesson lesson = getLesson((Academy) institute, splitData);
                     List<Lesson> lessons = dataMap.getOrDefault(institute,
                             Collections.synchronizedList(new ArrayList<Lesson>()));
                     lessons.add(lesson);
@@ -73,7 +73,7 @@ public class AcademyDataParser {
         return dataMap;
     }
 
-    private Lesson getCourse(Academy academy, List<String> splitData) {
+    private Lesson getLesson(Academy academy, List<String> splitData) {
         return Lesson.of(academy,
                 splitData.get(COURSE_CURRICULUM.getIndex()),
                 splitData.get(COURSE_SUBJECT.getIndex()),
