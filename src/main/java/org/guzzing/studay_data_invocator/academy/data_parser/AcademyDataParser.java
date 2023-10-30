@@ -10,25 +10,23 @@ import static org.guzzing.studay_data_invocator.academy.data_parser.meta.Academy
 import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.COURSE_SUBJECT;
 import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.COURSE_TOTAL_FEE;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+import lombok.extern.slf4j.Slf4j;
 import org.guzzing.studay_data_invocator.academy.data_parser.gecode.Geocoder;
 import org.guzzing.studay_data_invocator.academy.data_parser.meta.EscapeToken;
 import org.guzzing.studay_data_invocator.academy.model.Academy;
 import org.guzzing.studay_data_invocator.academy.model.Institute;
+import org.guzzing.studay_data_invocator.academy.model.InvalidAcademy;
 import org.guzzing.studay_data_invocator.academy.model.Lesson;
-import org.guzzing.studay_data_invocator.academy.model.NotValidAcademy;
 import org.guzzing.studay_data_invocator.academy.model.vo.AcademyInfo;
 import org.guzzing.studay_data_invocator.academy.model.vo.Address;
 import org.guzzing.studay_data_invocator.academy.model.vo.Location;
 import org.guzzing.studay_data_invocator.global.reader.DataFileReader;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class AcademyDataParser {
 
@@ -53,19 +51,20 @@ public class AcademyDataParser {
             List<String> splitData = Arrays.asList(dataLine.split(","));
 
             if (splitData.size() >= REQUIRED_CELL_SIZE) {
-                Institute institute = getAcademy(splitData, cache);
+                Optional<Institute> institute = getAcademy(splitData, cache);
 
-                if (institute instanceof Academy) {
-                    Lesson lesson = getCourse((Academy) institute, splitData);
-                    List<Lesson> lessons = dataMap.getOrDefault(institute,
-                            Collections.synchronizedList(new ArrayList<Lesson>()));
-                    lessons.add(lesson);
+                if (institute.isPresent()) {
+                    Institute existedInstitute =  institute.get();
+                    if (institute.isPresent() && institute.get() instanceof Academy) {
+                        Lesson lesson = getCourse((Academy) existedInstitute, splitData);
+                        List<Lesson> lessons = dataMap.getOrDefault(existedInstitute, new ArrayList<>());
+                        lessons.add(lesson);
 
-                    dataMap.put(institute, lessons);
-                    continue;
+                        dataMap.put(existedInstitute, lessons);
+                        continue;
+                    }
+                    dataMap.put(existedInstitute,new ArrayList<>());
                 }
-
-                dataMap.put(institute, new ArrayList<>());
 
             }
         }
@@ -82,34 +81,34 @@ public class AcademyDataParser {
                 splitData.get(COURSE_TOTAL_FEE.getIndex()));
     }
 
-    private Institute getAcademy(List<String> splitData, Map<String, Location> cache) {
-        String academyName = splitData.get(ACADEMY_NAME.getIndex());
-        String contact = splitData.get(ACADEMY_CONTACT.getIndex());
-        String shuttleFee = splitData.get(ACADEMY_SHUTTLE_FEE.getIndex());
-        String academyAddress = splitData.get(ACADEMY_ADDRESS.getIndex());
+    private Optional<Institute> getAcademy(List<String> splitData, Map<String, Location> cache) {
+        int academyNameIndex = ACADEMY_NAME.getIndex();
+        int contactIndex = ACADEMY_CONTACT.getIndex();
+        int shuttleFeeIndex = ACADEMY_SHUTTLE_FEE.getIndex();
+        int addressIndex = ACADEMY_ADDRESS.getIndex();
 
         try {
-            AcademyInfo academyInfo = AcademyInfo.of(
-                    academyName,
-                    contact,
-                    shuttleFee);
-            Address address = Address.of(academyAddress);
-            Location location = getLocation(cache, academyAddress, academyName);
+            String academyName = splitData.get(academyNameIndex);
+            String contact = splitData.get(contactIndex);
+            String shuttleFee = splitData.get(shuttleFeeIndex);
+            String academyAddress = splitData.get(addressIndex);
 
-            return Academy.of(academyInfo, address, location);
-        } catch (Exception e) {
-            AcademyInfo academyInfo = AcademyInfo.createNotValidAcademyInfo(
-                    academyName,
-                    contact,
-                    shuttleFee);
-            Address address = Address.createInvalidAddress(academyAddress);
-            Location location = getLocation(cache, academyAddress, academyName);
-            return NotValidAcademy.of(academyInfo, address, location);
+            AcademyInfo academyInfo = AcademyInfo.of(academyName, contact, shuttleFee);
+            Address address = Address.of(academyAddress);
+            Optional<Location> location = getLocation(cache, academyAddress);
+
+            if(location.isPresent()) {
+                return Optional.of(Academy.of(academyInfo, address, location.get()));
+            }
+            return Optional.of(InvalidAcademy.of(academyAddress, academyName));
+
+        } catch (IndexOutOfBoundsException | IllegalArgumentException e) {
+            return Optional.empty();
         }
     }
 
-    private Location getLocation(Map<String, Location> cache, String fullAddress, String academyName) {
-        return geocoder.addressToLocationV2(fullAddress, academyName);
+    private Optional<Location> getLocation(Map<String, Location> cache, String fullAddress) {
+        return geocoder.addressToLocationV2(fullAddress);
     }
 
     private List<String> filterData(final String fileName) {
