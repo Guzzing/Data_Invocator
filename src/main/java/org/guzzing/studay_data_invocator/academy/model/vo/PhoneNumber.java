@@ -1,12 +1,10 @@
-package org.guzzing.studay_data_invocator.academy.model.vo.academy_info;
+package org.guzzing.studay_data_invocator.academy.model.vo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Transient;
-
 import java.util.Objects;
 import java.util.regex.Pattern;
-
 import lombok.Getter;
 
 @Getter
@@ -37,8 +35,12 @@ public class PhoneNumber {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         PhoneNumber that = (PhoneNumber) o;
         return Objects.equals(REGEX, that.REGEX) && Objects.equals(contact, that.contact);
     }
