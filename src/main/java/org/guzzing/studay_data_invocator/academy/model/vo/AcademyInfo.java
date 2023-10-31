@@ -9,6 +9,8 @@ import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import org.springframework.util.Assert;
 
+import java.util.Objects;
+
 @Embeddable
 public class AcademyInfo {
 
@@ -45,8 +47,17 @@ public class AcademyInfo {
         return shuttle.name();
     }
 
-    public static AcademyInfo createNotValidAcademyInfo(String name, String contact, String shuttle) {
-        String invalidName = "잘못된 형식:" + name;
-        return new AcademyInfo(invalidName, "000-0000-0000", shuttle);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AcademyInfo that = (AcademyInfo) o;
+        return Objects.equals(name, that.name) && Objects.equals(contact, that.contact) && shuttle == that.shuttle;
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, contact, shuttle);
+    }
+
 }
