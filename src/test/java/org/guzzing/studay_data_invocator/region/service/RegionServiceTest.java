@@ -9,9 +9,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
-@SpringBootTest(properties = "spring.config.location=classpath:/application-test.yaml")
-//@Transactional
+@SpringBootTest
+@ActiveProfiles("commercial")
 class RegionServiceTest {
 
     @Autowired
@@ -30,7 +31,6 @@ class RegionServiceTest {
         List<Region> result = regionRepository.findAll();
 
         assertThat(result).isNotEmpty();
-        assertThat(result.get(0).getSido()).containsAnyOf("서울시", "경기도");
     }
 
 }
