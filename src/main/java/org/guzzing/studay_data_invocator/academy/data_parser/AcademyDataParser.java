@@ -104,7 +104,7 @@ public class AcademyDataParser {
     }
 
     private Optional<Location> getLocation(Map<String, Location> cache, String fullAddress) {
-        return  geocoder.addressToLocationV2(fullAddress);
+        return  geocoder.addressToLocation(fullAddress);
     }
 
     private List<String> filterData(final String fileName) {

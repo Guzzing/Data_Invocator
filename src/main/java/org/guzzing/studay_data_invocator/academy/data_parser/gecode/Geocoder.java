@@ -26,7 +26,7 @@ public class Geocoder {
         this.geocodeConfig = geocodeConfig;
     }
 
-    public Optional<Location> addressToLocationV2(final String address) {
+    public Optional<Location> addressToLocation(final String address) {
 
         WebClient webClient = WebClient.builder()
                 .baseUrl(geocodeConfig.getApiUrl())
