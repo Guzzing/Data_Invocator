@@ -1,10 +1,11 @@
 package org.guzzing.studay_data_invocator.region.service;
 
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.guzzing.studay_data_invocator.global.exception.AddressException;
 import org.guzzing.studay_data_invocator.global.exception.GeocoderException;
 import org.guzzing.studay_data_invocator.global.gecode.GeocoderV2;
-import org.guzzing.studay_data_invocator.global.location.Address;
+import org.guzzing.studay_data_invocator.region.model.vo.Address;
 import org.guzzing.studay_data_invocator.global.location.Location;
 import org.guzzing.studay_data_invocator.region.data_parser.BeopjungdongDataParser;
 import org.guzzing.studay_data_invocator.region.data_parser.dto.BeopjungdongDto;
@@ -18,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class RegionService {
+
+    private static final List<String> targetRegion = List.of("서울", "경기");
 
     private final BeopjungdongDataParser beopjungdongDataParser;
     private final RegionRepository regionRepository;
@@ -33,15 +36,11 @@ public class RegionService {
     public void importAllData() {
         int pageNumber = 1;
 
-        int currentCount = 1;
-        int totalCount = currentCount + 1;
-
-        while (currentCount != 0) {
+        while (true) {
             BeopjungdongResponses beopjungdongResponses = beopjungdongDataParser.parseData(pageNumber);
 
             beopjungdongResponses.data().stream()
                     .filter(this::isTargetRegion)
-                    .filter(beopjungdongDto -> beopjungdongDto.읍면동명() != null)
                     .forEach(beopjungdongDto -> {
                         try {
                             Address address = Address.of(
@@ -60,16 +59,21 @@ public class RegionService {
                         }
                     });
 
-            currentCount = (int) beopjungdongResponses.currentCount() * pageNumber;
-            totalCount = (int) beopjungdongResponses.totalCount();
+            int currentCount = (int) beopjungdongResponses.currentCount() * pageNumber;
+            int totalCount = (int) beopjungdongResponses.totalCount();
 
             pageNumber++;
 
             log.info("currentCount : {} / totalCount : {}", currentCount, totalCount);
+
+            if (currentCount == 0) {
+                break;
+            }
         }
     }
 
     private boolean isTargetRegion(BeopjungdongDto beopjungdongDto) {
-        return beopjungdongDto.시도명().contains("서울시") || beopjungdongDto.시도명().contains("경기도");
+        return targetRegion.stream()
+                .anyMatch(target -> beopjungdongDto.시도명().contains(target));
     }
 }
