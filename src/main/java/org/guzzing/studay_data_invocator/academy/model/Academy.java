@@ -59,12 +59,11 @@ public class Academy extends BaseEntity implements Institute{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Academy academy = (Academy) o;
-        return Objects.equals(id, academy.id) && Objects.equals(academyInfo, academy.academyInfo) && Objects.equals(address, academy.address) && Objects.equals(location, academy.location);
+        return Objects.equals(id, academy.id) && Objects.equals(academyInfo, academy.academyInfo) && Objects.equals(address, academy.address) && Objects.equals(location, academy.location) && Objects.equals(maxEducationFee, academy.maxEducationFee);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, academyInfo, address, location);
+        return Objects.hash(id, academyInfo, address, location, maxEducationFee);
     }
-
 }
