@@ -16,14 +16,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+
 import org.guzzing.studay_data_invocator.academy.data_parser.gecode.Geocoder;
 import org.guzzing.studay_data_invocator.academy.data_parser.meta.EscapeToken;
 import org.guzzing.studay_data_invocator.academy.model.Academy;
-import org.guzzing.studay_data_invocator.academy.model.Institute;
-import org.guzzing.studay_data_invocator.academy.model.InvalidAcademy;
 import org.guzzing.studay_data_invocator.academy.model.Lesson;
 import org.guzzing.studay_data_invocator.academy.model.vo.AcademyInfo;
 import org.guzzing.studay_data_invocator.academy.model.vo.Address;
+import org.guzzing.studay_data_invocator.global.exception.GeocoderException;
 import org.guzzing.studay_data_invocator.global.location.Location;
 import org.guzzing.studay_data_invocator.global.reader.DataFileReader;
 import org.springframework.stereotype.Component;
@@ -40,8 +40,8 @@ public class AcademyDataParser {
         this.geocoder = geocoder;
     }
 
-    public Map<Institute, List<Lesson>> parseData(final String fileName) {
-        final Map<Institute, List<Lesson>> dataMap = new ConcurrentHashMap<>();
+    public Map<Academy, List<Lesson>> parseData(final String fileName) {
+        final Map<Academy, List<Lesson>> dataMap = new ConcurrentHashMap<>();
         final Map<String, Location> cache = new ConcurrentHashMap<>();
 
         List<String> filteredData = filterData(fileName);
@@ -52,21 +52,16 @@ public class AcademyDataParser {
             List<String> splitData = Arrays.asList(dataLine.split(","));
 
             if (splitData.size() >= REQUIRED_CELL_SIZE) {
-                Optional<Institute> institute = getAcademy(splitData, cache);
+                Optional<Academy> institute = getAcademy(splitData, cache);
 
                 if (institute.isPresent()) {
-                    Institute existedInstitute = institute.get();
-                    if (institute.isPresent() && institute.get() instanceof Academy) {
-                        Lesson lesson = getLesson((Academy) existedInstitute, splitData);
-                        List<Lesson> lessons = dataMap.getOrDefault(existedInstitute, new ArrayList<>());
-                        lessons.add(lesson);
+                    Academy existedInstitute = institute.get();
+                    Lesson lesson = getLesson(existedInstitute, splitData);
+                    List<Lesson> lessons = dataMap.getOrDefault(existedInstitute, new ArrayList<>());
+                    lessons.add(lesson);
 
-                        dataMap.put(existedInstitute, lessons);
-                        continue;
-                    }
-                    dataMap.put(existedInstitute, new ArrayList<>());
+                    dataMap.put(existedInstitute, lessons);
                 }
-
             }
         }
 
@@ -82,7 +77,7 @@ public class AcademyDataParser {
                 splitData.get(COURSE_TOTAL_FEE.getIndex()));
     }
 
-    private Optional<Institute> getAcademy(List<String> splitData, Map<String, Location> cache) {
+    private Optional<Academy> getAcademy(List<String> splitData, Map<String, Location> cache) {
         try {
             String academyName = splitData.get(ACADEMY_NAME.getIndex());
             String contact = splitData.get(ACADEMY_CONTACT.getIndex());
@@ -91,19 +86,17 @@ public class AcademyDataParser {
 
             AcademyInfo academyInfo = AcademyInfo.of(academyName, contact, shuttleFee);
             Address address = Address.of(academyAddress);
-            Optional<Location> location = getLocation(cache, academyAddress);
+            Location location = getLocation(cache, academyAddress);
 
-            if (location.isPresent()) {
-                return Optional.of(Academy.of(academyInfo, address, location.get()));
-            }
-            return Optional.of(InvalidAcademy.of(academyAddress, academyName));
-
+            return Optional.of(Academy.of(academyInfo, address, location));
         } catch (IndexOutOfBoundsException | IllegalArgumentException e) {
+            return Optional.empty();
+        } catch (GeocoderException e) {
             return Optional.empty();
         }
     }
 
-    private Optional<Location> getLocation(Map<String, Location> cache, String fullAddress) {
+    private Location getLocation(Map<String, Location> cache, String fullAddress) {
         return geocoder.addressToLocation(fullAddress);
     }
 
