@@ -39,6 +39,10 @@ dependencies {
     // jackson
     implementation 'com.google.code.gson:gson'
 
+    //test
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:3.12.4'
+
 }
 
 tasks.named('test') {
