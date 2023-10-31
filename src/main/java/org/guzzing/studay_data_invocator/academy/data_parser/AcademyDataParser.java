@@ -83,16 +83,11 @@ public class AcademyDataParser {
     }
 
     private Optional<Institute> getAcademy(List<String> splitData, Map<String, Location> cache) {
-        int academyNameIndex = ACADEMY_NAME.getIndex();
-        int contactIndex = ACADEMY_CONTACT.getIndex();
-        int shuttleFeeIndex = ACADEMY_SHUTTLE_FEE.getIndex();
-        int addressIndex = ACADEMY_ADDRESS.getIndex();
-
         try {
-            String academyName = splitData.get(academyNameIndex);
-            String contact = splitData.get(contactIndex);
-            String shuttleFee = splitData.get(shuttleFeeIndex);
-            String academyAddress = splitData.get(addressIndex);
+            String academyName = splitData.get(ACADEMY_NAME.getIndex());
+            String contact = splitData.get(ACADEMY_CONTACT.getIndex());
+            String shuttleFee = splitData.get(ACADEMY_SHUTTLE_FEE.getIndex());
+            String academyAddress = splitData.get(ACADEMY_ADDRESS.getIndex());
 
             AcademyInfo academyInfo = AcademyInfo.of(academyName, contact, shuttleFee);
             Address address = Address.of(academyAddress);
