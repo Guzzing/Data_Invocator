@@ -14,13 +14,10 @@ class AddressTest {
     @DisplayName("주소 정보 객체 생성에 실패한다.")
     void instance_address_Fail() {
         // Given
-        String sido = "판교동";
-        String sigungu = "제주도";
-        String beopjungdong = "구로구";
-        String addressDetail = MessageFormat.format("{0} {1} {2} 대왕판교로 123", sido, sigungu, beopjungdong);
+        String fullAddress = " ";
 
         // When
-        Exception exception = catchException(() -> Address.of(addressDetail));
+        Exception exception = catchException(() -> Address.of(fullAddress));
 
         // Then
         assertThat(exception).isInstanceOf(IllegalArgumentException.class);
