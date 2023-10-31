@@ -12,6 +12,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import org.springframework.util.Assert;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "lessons")
 public class Lesson {
@@ -79,4 +81,36 @@ public class Lesson {
                 totalFee.isBlank() ? null : Long.parseLong(totalFee)
         );
     }
+
+    public void addAcademy(Academy academy) {
+        this.academy = academy;
+    }
+
+    private boolean isExistedTotalFee() {
+        return this.totalFee != null;
+    }
+
+    public Long biggerThanTotalFee(Long valueToBeCompared) {
+        totalFee = isExistedTotalFee() ? totalFee : 0L;
+
+        if (totalFee >= valueToBeCompared) {
+            return totalFee;
+        }
+
+        return valueToBeCompared;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Lesson lesson = (Lesson) o;
+        return Objects.equals(id, lesson.id) && Objects.equals(academy, lesson.academy) && Objects.equals(subject, lesson.subject) && Objects.equals(curriculum, lesson.curriculum) && Objects.equals(capacity, lesson.capacity) && Objects.equals(duration, lesson.duration) && Objects.equals(totalFee, lesson.totalFee);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, academy, subject, curriculum, capacity, duration, totalFee);
+    }
+
 }
