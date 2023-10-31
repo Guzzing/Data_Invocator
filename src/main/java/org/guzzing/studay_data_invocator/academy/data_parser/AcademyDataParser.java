@@ -10,10 +10,12 @@ import static org.guzzing.studay_data_invocator.academy.data_parser.meta.Academy
 import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.COURSE_SUBJECT;
 import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.COURSE_TOTAL_FEE;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-
-import lombok.extern.slf4j.Slf4j;
 import org.guzzing.studay_data_invocator.academy.data_parser.gecode.Geocoder;
 import org.guzzing.studay_data_invocator.academy.data_parser.meta.EscapeToken;
 import org.guzzing.studay_data_invocator.academy.model.Academy;
@@ -22,11 +24,10 @@ import org.guzzing.studay_data_invocator.academy.model.InvalidAcademy;
 import org.guzzing.studay_data_invocator.academy.model.Lesson;
 import org.guzzing.studay_data_invocator.academy.model.vo.AcademyInfo;
 import org.guzzing.studay_data_invocator.academy.model.vo.Address;
-import org.guzzing.studay_data_invocator.academy.model.vo.Location;
+import org.guzzing.studay_data_invocator.global.location.Location;
 import org.guzzing.studay_data_invocator.global.reader.DataFileReader;
 import org.springframework.stereotype.Component;
 
-@Slf4j
 @Component
 public class AcademyDataParser {
 
@@ -54,17 +55,16 @@ public class AcademyDataParser {
                 Optional<Institute> institute = getAcademy(splitData, cache);
 
                 if (institute.isPresent()) {
-                    Institute existedInstitute =  institute.get();
+                    Institute existedInstitute = institute.get();
                     if (institute.isPresent() && institute.get() instanceof Academy) {
                         Lesson lesson = getLesson((Academy) existedInstitute, splitData);
                         List<Lesson> lessons = dataMap.getOrDefault(existedInstitute, new ArrayList<>());
                         lessons.add(lesson);
 
-
                         dataMap.put(existedInstitute, lessons);
                         continue;
                     }
-                    dataMap.put(existedInstitute,new ArrayList<>());
+                    dataMap.put(existedInstitute, new ArrayList<>());
                 }
 
             }
@@ -93,7 +93,7 @@ public class AcademyDataParser {
             Address address = Address.of(academyAddress);
             Optional<Location> location = getLocation(cache, academyAddress);
 
-            if(location.isPresent()) {
+            if (location.isPresent()) {
                 return Optional.of(Academy.of(academyInfo, address, location.get()));
             }
             return Optional.of(InvalidAcademy.of(academyAddress, academyName));
@@ -104,7 +104,7 @@ public class AcademyDataParser {
     }
 
     private Optional<Location> getLocation(Map<String, Location> cache, String fullAddress) {
-        return  geocoder.addressToLocation(fullAddress);
+        return geocoder.addressToLocation(fullAddress);
     }
 
     private List<String> filterData(final String fileName) {
