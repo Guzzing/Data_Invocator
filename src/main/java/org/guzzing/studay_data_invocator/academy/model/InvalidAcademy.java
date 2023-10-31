@@ -1,7 +1,10 @@
 package org.guzzing.studay_data_invocator.academy.model;
 
-import jakarta.persistence.*;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.util.Objects;
 
 @Entity
@@ -30,10 +33,15 @@ public class InvalidAcademy implements Institute {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         InvalidAcademy that = (InvalidAcademy) o;
-        return Objects.equals(id, that.id) && Objects.equals(address, that.address) && Objects.equals(academy_name, that.academy_name);
+        return Objects.equals(id, that.id) && Objects.equals(address, that.address) && Objects.equals(academy_name,
+                that.academy_name);
     }
 
     @Override

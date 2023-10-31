@@ -2,7 +2,7 @@ package org.guzzing.studay_data_invocator.academy.model.vo.academy_info;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchException;
-import static org.guzzing.studay_data_invocator.academy.model.vo.academy_info.ShuttleAvailability.NEED_INQUIRE;
+import static org.guzzing.studay_data_invocator.academy.model.vo.ShuttleAvailability.NEED_INQUIRE;
 
 import org.guzzing.studay_data_invocator.academy.model.vo.AcademyInfo;
 import org.junit.jupiter.api.DisplayName;

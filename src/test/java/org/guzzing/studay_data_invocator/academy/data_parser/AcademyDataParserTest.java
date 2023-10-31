@@ -1,32 +1,5 @@
 package org.guzzing.studay_data_invocator.academy.data_parser;
 
-
-
-import org.guzzing.studay_data_invocator.academy.data_parser.gecode.Geocoder;
-import org.guzzing.studay_data_invocator.academy.model.Academy;
-import org.guzzing.studay_data_invocator.academy.model.Institute;
-import org.guzzing.studay_data_invocator.academy.model.Lesson;
-import org.guzzing.studay_data_invocator.academy.model.vo.AcademyInfo;
-import org.guzzing.studay_data_invocator.academy.model.vo.Address;
-import org.guzzing.studay_data_invocator.academy.model.vo.Location;
-import org.guzzing.studay_data_invocator.global.reader.DataFileReader;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-
-import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 //@ExtendWith(MockitoExtension.class)
 //public class AcademyDataParserTest {
 //

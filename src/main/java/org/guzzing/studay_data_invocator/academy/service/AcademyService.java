@@ -3,7 +3,6 @@ package org.guzzing.studay_data_invocator.academy.service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
 import org.guzzing.studay_data_invocator.academy.data_parser.AcademyDataParser;
 import org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataFile;
 import org.guzzing.studay_data_invocator.academy.model.Academy;
@@ -44,7 +43,7 @@ public class AcademyService {
         Map<Institute, List<Lesson>> dataMap = dataParser.parseData(fileName);
 
         for (Institute institute : dataMap.keySet()) {
-            if(institute instanceof Academy) {
+            if (institute instanceof Academy) {
                 List<Lesson> lessons = dataMap.get(institute);
                 Academy savedAcademy = academyRepository.save((Academy) institute);
 
