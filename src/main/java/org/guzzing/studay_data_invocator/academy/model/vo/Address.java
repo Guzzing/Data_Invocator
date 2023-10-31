@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator.global.location;
+package org.guzzing.studay_data_invocator.academy.model.vo;
 
 import static org.guzzing.studay_data_invocator.global.location.RegionUnit.SIDO;
 import static org.guzzing.studay_data_invocator.global.location.RegionUnit.SIGUNGU;
@@ -9,6 +9,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import org.guzzing.studay_data_invocator.global.exception.AddressException;
+import org.guzzing.studay_data_invocator.global.location.RegionUnit;
 import org.springframework.util.Assert;
 
 @Getter

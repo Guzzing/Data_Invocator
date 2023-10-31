@@ -44,18 +44,19 @@ public class RegionService {
                     .filter(beopjungdongDto -> beopjungdongDto.읍면동명() != null)
                     .forEach(beopjungdongDto -> {
                         try {
-                            String fullAddress = beopjungdongDto.getFullAddress();
-
-                            Address address = Address.of(fullAddress);
-                            Location location = geocoder.addressToLocation(fullAddress);
+                            Address address = Address.of(
+                                    beopjungdongDto.시도명(),
+                                    beopjungdongDto.시군구명(),
+                                    beopjungdongDto.읍면동명());
+                            Location location = geocoder.addressToLocation(address.getFullAddress());
 
                             Region region = Region.of(address, location);
 
                             regionRepository.save(region);
                         } catch (GeocoderException e) {
-
+                            log.debug("해당 주소에 매핑되는 위경도 조회에 실패하여 넘어갑니다 : {}", beopjungdongDto);
                         } catch (AddressException e) {
-
+                            log.debug("올바르지 않은 주소는 정보를 생성하지 않고 넘어갑니다  : {}", beopjungdongDto);
                         }
                     });
 

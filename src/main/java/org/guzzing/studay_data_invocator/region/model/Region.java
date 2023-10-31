@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import org.guzzing.studay_data_invocator.global.location.Address;
+import org.guzzing.studay_data_invocator.region.model.vo.Address;
 import org.guzzing.studay_data_invocator.global.location.Location;
 
 @Entity
@@ -35,7 +35,4 @@ public class Region {
         return new Region(address, location);
     }
 
-    public String getSido() {
-        return address.getSido();
-    }
 }
