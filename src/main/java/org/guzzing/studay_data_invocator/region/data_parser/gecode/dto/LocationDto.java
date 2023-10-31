@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator.global.gecode.dto;
+package org.guzzing.studay_data_invocator.region.data_parser.dto;
 
 public record LocationDto(
         String roadAddress,

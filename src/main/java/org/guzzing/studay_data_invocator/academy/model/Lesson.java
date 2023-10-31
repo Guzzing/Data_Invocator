@@ -10,9 +10,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import org.springframework.util.Assert;
-
 import java.util.Objects;
+import org.springframework.util.Assert;
 
 @Entity
 @Table(name = "lessons")
@@ -102,10 +101,17 @@ public class Lesson {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Lesson lesson = (Lesson) o;
-        return Objects.equals(id, lesson.id) && Objects.equals(academy, lesson.academy) && Objects.equals(subject, lesson.subject) && Objects.equals(curriculum, lesson.curriculum) && Objects.equals(capacity, lesson.capacity) && Objects.equals(duration, lesson.duration) && Objects.equals(totalFee, lesson.totalFee);
+        return Objects.equals(id, lesson.id) && Objects.equals(academy, lesson.academy) && Objects.equals(subject,
+                lesson.subject) && Objects.equals(curriculum, lesson.curriculum) && Objects.equals(capacity,
+                lesson.capacity) && Objects.equals(duration, lesson.duration) && Objects.equals(totalFee,
+                lesson.totalFee);
     }
 
     @Override

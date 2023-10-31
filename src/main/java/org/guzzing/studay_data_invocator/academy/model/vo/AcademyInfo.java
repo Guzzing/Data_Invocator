@@ -6,10 +6,9 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import java.util.Objects;
 import lombok.Getter;
 import org.springframework.util.Assert;
-
-import java.util.Objects;
 
 @Embeddable
 public class AcademyInfo {
@@ -49,8 +48,12 @@ public class AcademyInfo {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         AcademyInfo that = (AcademyInfo) o;
         return Objects.equals(name, that.name) && Objects.equals(contact, that.contact) && shuttle == that.shuttle;
     }

@@ -6,9 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
 import java.util.Objects;
-
 import org.guzzing.studay_data_invocator.academy.model.vo.AcademyInfo;
 import org.guzzing.studay_data_invocator.academy.model.vo.Address;
 import org.guzzing.studay_data_invocator.global.entity.BaseEntity;
@@ -16,7 +14,7 @@ import org.guzzing.studay_data_invocator.global.location.Location;
 
 @Entity
 @Table(name = "academies")
-public class Academy extends BaseEntity implements Institute{
+public class Academy extends BaseEntity implements Institute {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,10 +54,16 @@ public class Academy extends BaseEntity implements Institute{
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Academy academy = (Academy) o;
-        return Objects.equals(id, academy.id) && Objects.equals(academyInfo, academy.academyInfo) && Objects.equals(address, academy.address) && Objects.equals(location, academy.location) && Objects.equals(maxEducationFee, academy.maxEducationFee);
+        return Objects.equals(id, academy.id) && Objects.equals(academyInfo, academy.academyInfo) && Objects.equals(
+                address, academy.address) && Objects.equals(location, academy.location) && Objects.equals(
+                maxEducationFee, academy.maxEducationFee);
     }
 
     @Override

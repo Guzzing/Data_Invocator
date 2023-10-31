@@ -6,8 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import org.guzzing.studay_data_invocator.region.model.vo.Address;
 import org.guzzing.studay_data_invocator.global.location.Location;
+import org.guzzing.studay_data_invocator.region.model.vo.Address;
 
 @Entity
 @Table(name = "regions")
