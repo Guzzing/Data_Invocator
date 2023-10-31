@@ -7,8 +7,10 @@ import org.guzzing.studay_data_invocator.academy.data_parser.AcademyDataParser;
 import org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataFile;
 import org.guzzing.studay_data_invocator.academy.model.Academy;
 import org.guzzing.studay_data_invocator.academy.model.Lesson;
+import org.guzzing.studay_data_invocator.academy.model.ReviewCount;
 import org.guzzing.studay_data_invocator.academy.repository.AcademyRepository;
 import org.guzzing.studay_data_invocator.academy.repository.LessonRepository;
+import org.guzzing.studay_data_invocator.academy.repository.ReviewCountJpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,14 +20,16 @@ public class AcademyService {
 
     private final AcademyRepository academyRepository;
     private final LessonRepository lessonRepository;
+    private final ReviewCountJpaRepository reviewCountJpaRepository;
     private final AcademyDataParser dataParser;
 
     public AcademyService(
             final AcademyRepository academyRepository,
             final LessonRepository lessonRepository,
-            final AcademyDataParser dataParser) {
+            ReviewCountJpaRepository reviewCountJpaRepository, final AcademyDataParser dataParser) {
         this.academyRepository = academyRepository;
         this.lessonRepository = lessonRepository;
+        this.reviewCountJpaRepository = reviewCountJpaRepository;
         this.dataParser = dataParser;
     }
 
@@ -57,6 +61,14 @@ public class AcademyService {
             maxEducationFee = lesson.biggerThanTotalFee(maxEducationFee);
         }
         return maxEducationFee;
+    }
+
+    public void makeReviewCount() {
+        List<Academy> academies = academyRepository.findAll();
+
+        academies.stream()
+                .forEach(academy -> reviewCountJpaRepository.save(ReviewCount.makeDefaultReviewCount(academy)));
+
     }
 
 }
