@@ -60,7 +60,6 @@ public class AcademyDataParser {
                         List<Lesson> lessons = dataMap.getOrDefault(existedInstitute, new ArrayList<>());
                         lessons.add(lesson);
 
-
                         dataMap.put(existedInstitute, lessons);
                         continue;
                     }
