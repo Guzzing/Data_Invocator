@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator.region.data_parser;
+package org.guzzing.studay_data_invocator.region.data_parser.gecode;
 
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -8,8 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.guzzing.studay_data_invocator.global.config.GeocodeConfig;
 import org.guzzing.studay_data_invocator.global.exception.GeocoderException;
 import org.guzzing.studay_data_invocator.global.location.Location;
-import org.guzzing.studay_data_invocator.region.data_parser.dto.LocationDto;
-import org.guzzing.studay_data_invocator.region.data_parser.dto.LocationResponse;
+import org.guzzing.studay_data_invocator.region.data_parser.gecode.dto.LocationDto;
+import org.guzzing.studay_data_invocator.region.data_parser.gecode.dto.LocationResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -37,6 +37,10 @@ public class GeocoderV2 {
                 .retrieve()
                 .bodyToMono(LocationResponse.class)
                 .block();
+
+        if (response == null) {
+            throw new GeocoderException("위치 정보 요청에 실패했습니다.");
+        }
 
         return extractLocationFromResponse(response);
     }

@@ -95,10 +95,7 @@ public class Address {
             return false;
         }
         Address address = (Address) o;
-        return Objects.equals(sido, address.sido)
-                && (Objects.equals(sigungu, address.sigungu)
-                || sigungu.contains(address.sigungu)
-                || address.sigungu.contains(sigungu))
+        return Objects.equals(sido, address.sido) && Objects.equals(sigungu, address.sigungu)
                 && Objects.equals(upmyeondong, address.upmyeondong);
     }
 
