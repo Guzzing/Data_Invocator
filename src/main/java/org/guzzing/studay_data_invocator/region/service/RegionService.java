@@ -69,6 +69,8 @@ public class RegionService {
             if (currentCount == 0) {
                 break;
             }
+
+            break;
         }
     }
 

@@ -42,11 +42,11 @@ public class AcademyService {
         Map<Academy, List<Lesson>> dataMap = dataParser.parseData(fileName);
 
         for (Academy institute : dataMap.keySet()) {
-                List<Lesson> lessons = dataMap.get(institute);
-                Academy savedAcademy = academyRepository.save(institute);
+            List<Lesson> lessons = dataMap.get(institute);
+            Academy savedAcademy = academyRepository.save(institute);
 
-                Long maxEducationFee = saveLessonsAndCalculateMaxFee(savedAcademy, lessons);
-                savedAcademy.changeEducationFee(maxEducationFee);
+            Long maxEducationFee = saveLessonsAndCalculateMaxFee(savedAcademy, lessons);
+            savedAcademy.changeEducationFee(maxEducationFee);
         }
 
     }

@@ -6,9 +6,7 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-
 import java.util.Objects;
-
 import lombok.Getter;
 import org.springframework.util.Assert;
 
@@ -36,7 +34,8 @@ public class AcademyInfo {
         this.areaOfExpertise = areaOfExpertise;
     }
 
-    public static AcademyInfo of(final String name, final String contact, final String shuttle, final String areaOfExpertise) {
+    public static AcademyInfo of(final String name, final String contact, final String shuttle,
+            final String areaOfExpertise) {
         return new AcademyInfo(name, contact, shuttle, areaOfExpertise);
     }
 
