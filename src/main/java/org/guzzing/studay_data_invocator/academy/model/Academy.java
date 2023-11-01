@@ -14,7 +14,7 @@ import org.guzzing.studay_data_invocator.global.location.Location;
 
 @Entity
 @Table(name = "academies")
-public class Academy extends BaseEntity implements Institute {
+public class Academy extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
