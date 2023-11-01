@@ -6,7 +6,9 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+
 import java.util.Objects;
+
 import lombok.Getter;
 import org.springframework.util.Assert;
 
@@ -23,16 +25,19 @@ public class AcademyInfo {
     @Enumerated(value = EnumType.STRING)
     private ShuttleAvailability shuttle;
 
-    protected AcademyInfo(final String name, final String contact, final String shuttle) {
+    private String areaOfExpertise;
+
+    protected AcademyInfo(final String name, final String contact, final String shuttle, final String areaOfExpertise) {
         Assert.isTrue(StringUtils.isNotBlank(name), "학원명이 주어지지 않았습니다.");
 
         this.name = name;
         this.contact = new PhoneNumber(contact);
         this.shuttle = ShuttleAvailability.getShuttleAvailability(shuttle);
+        this.areaOfExpertise = areaOfExpertise;
     }
 
-    public static AcademyInfo of(final String name, final String contact, final String shuttle) {
-        return new AcademyInfo(name, contact, shuttle);
+    public static AcademyInfo of(final String name, final String contact, final String shuttle, final String areaOfExpertise) {
+        return new AcademyInfo(name, contact, shuttle, areaOfExpertise);
     }
 
     protected AcademyInfo() {

@@ -18,4 +18,10 @@ class StudayDataInvocatorApplicationTests {
         academyService.importAllData();
     }
 
+    @Test
+    @DisplayName("리뷰 Count 실행기")
+    void contextReviewCount() {
+        academyService.makeReviewCount();
+    }
+
 }
