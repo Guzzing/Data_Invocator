@@ -97,7 +97,7 @@ public class AcademyDataParser {
     }
 
     private Location getLocation(Map<String, Location> cache, String fullAddress) {
-        return geocoder.addressToLocation(fullAddress);
+        return cache.computeIfAbsent(fullAddress,geocoder::addressToLocation);
     }
 
     private List<String> filterData(final String fileName) {
