@@ -8,6 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Transient;
 import java.text.MessageFormat;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import lombok.Getter;
@@ -44,16 +45,17 @@ public class Address {
         validate(sigungu, SIGUNGU);
         validate(upmyeondong, UPMYEONDONG);
 
-        String regulatedSigungu = regulate(sigungu);
+        String regulatedSigungu = regulateSigungu(sigungu);
+        String regulatedUpmyeondong = regulateUpmyeondong(upmyeondong);
 
-        return new Address(sido, regulatedSigungu, upmyeondong);
+        return new Address(sido, regulatedSigungu, regulatedUpmyeondong);
     }
 
     public String getFullAddress() {
         return MessageFormat.format("{0} {1} {2}", this.sido, this.sigungu, this.upmyeondong);
     }
 
-    private static String regulate(final String sigungu) {
+    private static String regulateSigungu(final String sigungu) {
         StringBuilder regulatedSigungu = new StringBuilder();
 
         Pattern pattern = Pattern.compile(SIGUNGU_REGEXP);
@@ -68,6 +70,13 @@ public class Address {
                 .trim();
     }
 
+    private static String regulateUpmyeondong(final String upmyeondong) {
+        return upmyeondong.chars()
+                .filter(codePoint -> !Character.isDigit(codePoint))
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+    }
+
     private static void validate(final String data, final RegionUnit regionUnit) {
         if (data == null) {
             throw new AddressException("지역 데이터는 반드시 주어져야 합니다.");
@@ -75,5 +84,26 @@ public class Address {
         if (!regionUnit.isMatched(data)) {
             throw new AddressException(regionUnit + "에 매칭되지 않은 지역 데이터입니다.");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Address address = (Address) o;
+        return Objects.equals(sido, address.sido)
+                && (Objects.equals(sigungu, address.sigungu)
+                || sigungu.contains(address.sigungu)
+                || address.sigungu.contains(sigungu))
+                && Objects.equals(upmyeondong, address.upmyeondong);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sido, sigungu, upmyeondong);
     }
 }
