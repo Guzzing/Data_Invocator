@@ -25,19 +25,19 @@ public class Lesson {
     @JoinColumn(name = "academies_id")
     private Academy academy;
 
-    @Column(name = "subject", nullable = true)
+    @Column(name = "subject")
     private String subject;
 
-    @Column(name = "curriculum", nullable = true)
+    @Column(name = "curriculum")
     private String curriculum;
 
-    @Column(name = "capacity", nullable = true)
+    @Column(name = "capacity")
     private Integer capacity;
 
-    @Column(name = "duration", nullable = true)
+    @Column(name = "duration")
     private String duration;
 
-    @Column(name = "total_fee", nullable = true)
+    @Column(name = "total_fee")
     private Long totalFee;
 
     protected Lesson(

@@ -17,9 +17,10 @@ class AcademyInfoTest {
         String name = "학원1";
         String contact = "010-1234-4321";
         String shuttle = "0";
+        String areaOfExpertise = "예능";
 
         // When
-        AcademyInfo academyInfo = AcademyInfo.of(name, contact, shuttle);
+        AcademyInfo academyInfo = AcademyInfo.of(name, contact, shuttle, areaOfExpertise);
 
         // Then
         assertThat(academyInfo.getName()).isEqualTo(name);
@@ -34,9 +35,10 @@ class AcademyInfoTest {
         String name = " ";
         String contact = "";
         String shuttle = "-1";
+        String areaOfExpertise = "예능";
 
         // When
-        Exception exception = catchException(() -> AcademyInfo.of(name, contact, shuttle));
+        Exception exception = catchException(() -> AcademyInfo.of(name, contact, shuttle, areaOfExpertise));
 
         // Then
         assertThat(exception).isInstanceOf(IllegalArgumentException.class);

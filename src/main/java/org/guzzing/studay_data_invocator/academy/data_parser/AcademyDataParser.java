@@ -1,15 +1,5 @@
 package org.guzzing.studay_data_invocator.academy.data_parser;
 
-import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.ACADEMY_ADDRESS;
-import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.ACADEMY_CONTACT;
-import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.ACADEMY_NAME;
-import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.ACADEMY_SHUTTLE_FEE;
-import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.COURSE_CAPACITY;
-import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.COURSE_CURRICULUM;
-import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.COURSE_DURATION;
-import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.COURSE_SUBJECT;
-import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.COURSE_TOTAL_FEE;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +17,8 @@ import org.guzzing.studay_data_invocator.global.exception.GeocoderException;
 import org.guzzing.studay_data_invocator.global.location.Location;
 import org.guzzing.studay_data_invocator.global.reader.DataFileReader;
 import org.springframework.stereotype.Component;
+
+import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.*;
 
 @Component
 public class AcademyDataParser {
@@ -83,8 +75,9 @@ public class AcademyDataParser {
             String contact = splitData.get(ACADEMY_CONTACT.getIndex());
             String shuttleFee = splitData.get(ACADEMY_SHUTTLE_FEE.getIndex());
             String academyAddress = splitData.get(ACADEMY_ADDRESS.getIndex());
+            String areaOfExpertise = splitData.get(COURSE_TYPE.getIndex());
 
-            AcademyInfo academyInfo = AcademyInfo.of(academyName, contact, shuttleFee);
+            AcademyInfo academyInfo = AcademyInfo.of(academyName, contact, shuttleFee, areaOfExpertise);
             Address address = Address.of(academyAddress);
             Location location = getLocation(cache, academyAddress);
 
@@ -97,7 +90,7 @@ public class AcademyDataParser {
     }
 
     private Location getLocation(Map<String, Location> cache, String fullAddress) {
-        return cache.computeIfAbsent(fullAddress,geocoder::addressToLocation);
+        return cache.computeIfAbsent(fullAddress, geocoder::addressToLocation);
     }
 
     private List<String> filterData(final String fileName) {
