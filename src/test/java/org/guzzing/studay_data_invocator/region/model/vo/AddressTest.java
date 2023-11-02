@@ -2,6 +2,7 @@ package org.guzzing.studay_data_invocator.region.model.vo;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Objects;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -37,6 +38,20 @@ class AddressTest {
         String regulatedSigungu = "수원시 팔달구";
 
         assertThat(result).hasFieldOrPropertyWithValue("sigungu", regulatedSigungu);
+    }
+
+    @Test
+    @DisplayName("주소 정보가 같으면 같은 주소로 판단한다.")
+    void instance_ContainsOtherData_SameAddress() {
+        // Given
+        Address address1 = Address.of("경기도", "여주시", "금사면");
+        Address address2 = Address.of("경기도", "여주시", "금사면");
+
+        // When
+        boolean result = Objects.equals(address1, address2);
+
+        // Then
+        assertThat(result).isTrue();
     }
 
 }

@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.guzzing.studay_data_invocator.global.config.GeocodeConfig;
 import org.guzzing.studay_data_invocator.global.exception.GeocoderException;

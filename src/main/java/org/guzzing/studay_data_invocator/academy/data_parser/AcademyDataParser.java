@@ -1,12 +1,22 @@
 package org.guzzing.studay_data_invocator.academy.data_parser;
 
+import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.ACADEMY_ADDRESS;
+import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.ACADEMY_CONTACT;
+import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.ACADEMY_NAME;
+import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.ACADEMY_SHUTTLE_FEE;
+import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.COURSE_CAPACITY;
+import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.COURSE_CURRICULUM;
+import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.COURSE_DURATION;
+import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.COURSE_SUBJECT;
+import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.COURSE_TOTAL_FEE;
+import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.COURSE_TYPE;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-
 import org.guzzing.studay_data_invocator.academy.data_parser.gecode.Geocoder;
 import org.guzzing.studay_data_invocator.academy.data_parser.meta.EscapeToken;
 import org.guzzing.studay_data_invocator.academy.model.Academy;
@@ -17,8 +27,6 @@ import org.guzzing.studay_data_invocator.global.exception.GeocoderException;
 import org.guzzing.studay_data_invocator.global.location.Location;
 import org.guzzing.studay_data_invocator.global.reader.DataFileReader;
 import org.springframework.stereotype.Component;
-
-import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataColumnIndex.*;
 
 @Component
 public class AcademyDataParser {
