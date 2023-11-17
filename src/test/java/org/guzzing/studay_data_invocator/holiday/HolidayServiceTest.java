@@ -11,10 +11,14 @@ class HolidayServiceTest {
     private HolidayService holidayService;
 
     @Test
-    void fetchAndSaveHolidays() {
-        String year = "2023";
-        String month = "01";
+    void fetchAndSaveHolidaysForMultipleYears() throws InterruptedException {
+        for (int year = 2004; year <= 2025; year++) {
+            for (int month = 1; month <= 12; month++) {
+                String yearStr = String.valueOf(year);
+                String monthStr = String.format("%02d", month);
 
-        holidayService.fetchAndSaveHolidays(year, month);
+                holidayService.fetchAndSaveHolidays(yearStr, monthStr);
+            }
+        }
     }
 }
