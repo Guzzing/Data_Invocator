@@ -22,7 +22,7 @@ public class KoreanHoliday {
     @Column(name = "date_name", nullable = false)
     private String dateName;
 
-    @Column(name = "date", nullable = false, unique = true)
+    @Column(name = "date", nullable = false)
     private LocalDate date;
 
     public KoreanHoliday(String dateName, LocalDate date) {
