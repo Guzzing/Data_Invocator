@@ -5,6 +5,8 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +14,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name="response")
+@XmlRootElement(name = "response")
 public class KoreanHolidayResponse {
 
     private Body body;
@@ -43,7 +45,9 @@ public class KoreanHolidayResponse {
         private String dateKind;
         private String dateName;
         private String isHoliday;
-        private String locdate;
+
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate locdate;
         private int seq;
     }
 }
