@@ -11,10 +11,10 @@ import org.guzzing.studay_data_invocator.academy.data_parser.gecode.Geocoder;
 import org.guzzing.studay_data_invocator.academy.data_parser.meta.EscapeToken;
 import org.guzzing.studay_data_invocator.academy.model.Academy;
 import org.guzzing.studay_data_invocator.academy.model.Lesson;
-import org.guzzing.studay_data_invocator.academy.model.vo.AcademyInfo;
 import org.guzzing.studay_data_invocator.academy.model.vo.Address;
+import org.guzzing.studay_data_invocator.academy.model.vo.Location;
+import org.guzzing.studay_data_invocator.academy.model.vo.academyinfo.AcademyInfo;
 import org.guzzing.studay_data_invocator.global.exception.GeocoderException;
-import org.guzzing.studay_data_invocator.global.location.Location;
 import org.guzzing.studay_data_invocator.global.reader.DataFileReader;
 import org.springframework.stereotype.Component;
 
