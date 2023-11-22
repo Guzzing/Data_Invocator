@@ -65,7 +65,7 @@ public class AcademyService {
         }
 
     }
-     
+
     private Long saveLessonsAndCalculateMaxFee(Academy academy, List<Lesson> lessons) {
         Long maxEducationFee = Long.MIN_VALUE;
 
