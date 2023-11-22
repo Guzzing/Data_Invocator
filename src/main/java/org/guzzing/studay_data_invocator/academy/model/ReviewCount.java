@@ -12,7 +12,7 @@ import lombok.Getter;
 
 @Getter
 @Entity
-@Table(name = "review_counts")
+@Table(name = "review_counts.sql")
 public class ReviewCount {
 
     private static final int INIT_VALUE = 0;

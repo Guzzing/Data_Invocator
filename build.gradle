@@ -43,6 +43,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:3.12.4'
 
+    // spring-boot-starter-web-services
+    implementation 'org.springframework.boot:spring-boot-starter-web-services'
+
+    // apache httpclient5
+    implementation 'org.apache.httpcomponents.client5:httpclient5:5.2.1'
 }
 
 tasks.named('test') {
