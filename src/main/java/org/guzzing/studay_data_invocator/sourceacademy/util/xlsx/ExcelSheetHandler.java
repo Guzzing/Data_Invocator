@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator.sourceacademy.util;
+package org.guzzing.studay_data_invocator.sourceacademy.util.xlsx;
 
 import lombok.Getter;
 import lombok.Setter;

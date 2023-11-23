@@ -1,16 +1,17 @@
-package org.guzzing.studay_data_invocator.sourceacademy.util;
+package org.guzzing.studay_data_invocator.sourceacademy.util.xlsx;
 
 import org.apache.poi.ss.usermodel.Cell;
-import org.guzzing.studay_data_invocator.sourceacademy.model.SourceAcademy;
+import org.guzzing.studay_data_invocator.sourceacademy.model.GyeonggiSourceAcademy;
+
 
 import java.util.List;
 
-import static org.guzzing.studay_data_invocator.sourceacademy.AcademyColumnIndex.*;
-import static org.guzzing.studay_data_invocator.sourceacademy.AcademyColumnIndex.TEACHER_COUNT;
+import static org.guzzing.studay_data_invocator.sourceacademy.util.xlsx.AcademyColumnIndex.*;
+import static org.guzzing.studay_data_invocator.sourceacademy.util.xlsx.AcademyColumnIndex.TEACHER_COUNT;
 
 public class CellParser {
 
-    public static SourceAcademy parseCell(List<String> cells) {
+    public static GyeonggiSourceAcademy parseCell(List<String> cells) {
         String regionName = cells.get(REGION_NAME.ordinal());
         String academyName = cells.get(ACADEMY_NAME.ordinal());
         String academyType = cells.get(ACADEMY_TYPE.ordinal());
@@ -34,7 +35,7 @@ public class CellParser {
         long totalFee = getInt(cells.get(TOTAL_FEE.ordinal()));
         long teacherCount = getInt(cells.get(TEACHER_COUNT.ordinal()));
 
-        SourceAcademy sourceAcademy = SourceAcademy.of(
+        GyeonggiSourceAcademy gyeonggiSourceAcademy = GyeonggiSourceAcademy.of(
                 regionName,
                 academyName,
                 academyType,
@@ -58,9 +59,9 @@ public class CellParser {
                 totalFee,
                 teacherCount
         );
-        sourceAcademy.setHashCodeValue();
+        gyeonggiSourceAcademy.setHashCodeValue();
 
-        return sourceAcademy;
+        return gyeonggiSourceAcademy;
     }
 
     private static String getString(Cell cell) {

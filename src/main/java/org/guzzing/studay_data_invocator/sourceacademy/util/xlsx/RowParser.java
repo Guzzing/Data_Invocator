@@ -1,13 +1,13 @@
-package org.guzzing.studay_data_invocator.sourceacademy.util;
+package org.guzzing.studay_data_invocator.sourceacademy.util.xlsx;
 
-import org.guzzing.studay_data_invocator.sourceacademy.model.SourceAcademy;
+import org.guzzing.studay_data_invocator.sourceacademy.model.GyeonggiSourceAcademy;
 
 import java.io.File;
 import java.util.List;
 
 public class RowParser {
 
-    public static List<List<SourceAcademy>> parser(String fileLocation) throws Exception {
+    public static List<List<GyeonggiSourceAcademy>> parser(String fileLocation) throws Exception {
         File file = new File(fileLocation);
 
         return ExcelSheetHandler

@@ -8,8 +8,8 @@ import java.util.Objects;
 
 @Getter
 @Entity
-@Table(name = "source_academies")
-public class SourceAcademy extends BaseEntity {
+@Table(name = "gyeonggi_source_academies")
+public class GyeonggiSourceAcademy extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -84,10 +84,10 @@ public class SourceAcademy extends BaseEntity {
     @Column(name = "hash_code_value")
     private int hashCodeValue;
 
-    protected SourceAcademy() {
+    protected GyeonggiSourceAcademy() {
     }
 
-    public SourceAcademy(
+    public GyeonggiSourceAcademy(
             String regionName, String academyName, String academyType,
             String areaOfExpert, String address, String representative,
             String contact, String lessonLine, String lessonSubject,
@@ -121,7 +121,7 @@ public class SourceAcademy extends BaseEntity {
         this.teacherCount = teacherCount;
     }
 
-    public static SourceAcademy of(
+    public static GyeonggiSourceAcademy of(
             String regionName, String academyName, String academyType,
             String areaOfExpert, String address, String representative,
             String contact, String lessonLine, String lessonSubject,
@@ -131,7 +131,7 @@ public class SourceAcademy extends BaseEntity {
             long shuttleFee, long clothingFee, long totalFee,
             long teacherCount
     ) {
-        return new SourceAcademy(
+        return new GyeonggiSourceAcademy(
                 regionName,
                 academyName,
                 academyType,
@@ -164,7 +164,7 @@ public class SourceAcademy extends BaseEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SourceAcademy that = (SourceAcademy) o;
+        GyeonggiSourceAcademy that = (GyeonggiSourceAcademy) o;
         return Objects.equals(regionName, that.regionName)
                 && Objects.equals(academyName, that.academyName)
                 && Objects.equals(address, that.address)
