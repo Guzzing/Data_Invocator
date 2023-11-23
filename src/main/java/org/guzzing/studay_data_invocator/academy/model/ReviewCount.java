@@ -57,6 +57,7 @@ public class ReviewCount {
 
     protected ReviewCount(int kindnessCount, int goodFacilityCount, int cheapFeeCount, int goodManagementCount,
                           int lovelyTeachingCount, int reviewersCount, Academy academy) {
+
         this.kindnessCount = kindnessCount;
         this.goodFacilityCount = goodFacilityCount;
         this.cheapFeeCount = cheapFeeCount;

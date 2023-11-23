@@ -1,11 +1,14 @@
 package org.guzzing.studay_data_invocator.academy.model.vo.academyinfo;
 
 import io.micrometer.common.util.StringUtils;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import java.util.Objects;
 import lombok.Getter;
 import org.springframework.util.Assert;
-
-import java.util.Objects;
 
 @Embeddable
 public class AcademyInfo {
@@ -34,6 +37,7 @@ public class AcademyInfo {
 
     public static AcademyInfo of(final String name, final String contact, final String shuttle,
                                  final String areaOfExpertise) {
+
         return new AcademyInfo(name, contact, shuttle, areaOfExpertise);
     }
 

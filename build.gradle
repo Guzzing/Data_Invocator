@@ -51,6 +51,12 @@ dependencies {
     implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.2'
     implementation group: 'org.apache.tika', name: 'tika-core', version: '2.3.0'
 
+    // spring-boot-starter-web-services
+    implementation 'org.springframework.boot:spring-boot-starter-web-services'
+
+    // apache httpclient5
+    implementation 'org.apache.httpcomponents.client5:httpclient5:5.2.1'
+
 }
 
 tasks.named('test') {

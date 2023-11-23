@@ -1,0 +1,70 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  config:
+    activate:
+      on-profile: test
+
+
+spring:
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+    properties:
+      hibernate:
+        format_sql: true #To beautify or pretty print the SQL
+        show_sql: false #show sql
+        search:
+          enabled: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  sql:
+    init:
+      mode: always
+      continue-on-error: true
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://studay.ccffdvvcdhfd.ap-northeast-1.rds.amazonaws.com:3306/studay?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    #url: jdbc:mysql://localhost:3306/studay?serverTimezone=Asia/Seoul
+    username: studay
+    password: gmrrn123
+    redis:
+      host: localhost
+      sport: 6379
+
+logging:
+  level:
+    org.hibernate:
+      type.descriptor.sql: trace #show parameter binding
+      SQL: DEBUG
+    org.springframework: debug
+    org.springframework.web: debug
+
+app:
+  auth:
+    tokenSecret: 04ca023b39512e46d0c2cf4b48d5aac61d34302994c87ed4eff225dcf3b0a218739f3897051a057f9b846a69ea2927a587044164b7bae5e1306219d50b588cb1
+    accessTokenExpiry: 8640000000000
+    refreshTokenExpiry: 864000000000
+
+redis:
+  host: localhost
+  port: 6379
+
+geocode:
+  clientId: ujxd24s42f
+  clientSecret: 9y48glIQWs8BHmeGttck5gcYS684JWjqxzmceIwx
+  clientIdProperty: X-NCP-APIGW-API-KEY-ID
+  clientSecretProperty: X-NCP-APIGW-API-KEY
+  apiUrl: https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode
+springdoc:
+  default-consumes-media-type: application/yml;charset=UTF-8
+  default-produces-media-type: application/yml;charset=UTF-8

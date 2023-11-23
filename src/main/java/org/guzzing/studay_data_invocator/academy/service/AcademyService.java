@@ -47,7 +47,6 @@ public class AcademyService {
     public void importData(final String fileName) {
         Map<Academy, List<Lesson>> dataMap = dataParser.parseData(fileName);
 
-
         for (Academy institute : dataMap.keySet()) {
             List<Lesson> lessons = dataMap.get(institute);
             Point point = GeometryTypeFactory.createPoint(
@@ -62,6 +61,7 @@ public class AcademyService {
             savedAcademy.changeEducationFee(maxEducationFee);
 
             reviewCountJpaRepository.save(ReviewCount.makeDefaultReviewCount(savedAcademy));
+
         }
 
     }

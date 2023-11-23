@@ -1,0 +1,15 @@
+server:
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+oauth:
+  kakao:
+    clientId: 96cdc0049bd5838e27c13579b4ea6979
+    clientSecret: TSoYfxaURTfOnrxywtOW0jKayeWE4pjn
+  google:
+    clientId: "999513273898-9fa6iu0cm3jbeancg8f82mjs53trr355.apps.googleusercontent.com"
+    clientSecret: "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"
