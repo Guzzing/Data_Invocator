@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Setter
 @Configuration
-@ConfigurationProperties(value = "location")
-public class RegionLocationConfig {
+@ConfigurationProperties(value = "openapi")
+public class OpenApiConfig {
 
-    private String baseUrl;
+    private String apiUrl;
     private String apiKey;
 
 }
