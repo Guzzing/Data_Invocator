@@ -3,7 +3,6 @@ package org.guzzing.studay_data_invocator.region.parser;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-import java.util.List;
 import java.util.Objects;
 import org.guzzing.studay_data_invocator.global.config.OpenApiConfig;
 import org.guzzing.studay_data_invocator.region.model.Address;

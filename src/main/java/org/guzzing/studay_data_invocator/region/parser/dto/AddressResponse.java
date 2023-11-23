@@ -7,14 +7,16 @@ public record AddressResponse(
 ) {
 
     public record AddressDtos(
-        List<AddressDto> admVOList
+            List<AddressDto> admVOList
     ) {
 
         public record AddressDto(
-           String lowestAdmCodeNm,
-           String admCodeNm,
-           String admCode
-        ) {}
+                String lowestAdmCodeNm,
+                String admCodeNm,
+                String admCode
+        ) {
+
+        }
 
     }
 

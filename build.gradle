@@ -13,7 +13,7 @@ java {
 }
 
 repositories {
-    maven { url "https://repo.osgeo.org/repository/release/"}
+    maven { url "https://repo.osgeo.org/repository/release/" }
     mavenCentral()
 }
 

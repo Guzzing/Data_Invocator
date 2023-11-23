@@ -1,7 +1,6 @@
 package org.guzzing.studay_data_invocator.region.parser;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.guzzing.studay_data_invocator.region.model.Address;
 import org.guzzing.studay_data_invocator.region.model.Area;
