@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator.global.location;
+package org.guzzing.studay_data_invocator.region.model;
 
 import java.util.List;
 

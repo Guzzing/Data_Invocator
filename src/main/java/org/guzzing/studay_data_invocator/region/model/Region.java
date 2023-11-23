@@ -35,4 +35,8 @@ public class Region {
         this.point = point;
         this.area = area;
     }
+
+    public static Region of(Area area, Address address, Point point) {
+        return new Region(area.code(), address, point, area.geometry());
+    }
 }

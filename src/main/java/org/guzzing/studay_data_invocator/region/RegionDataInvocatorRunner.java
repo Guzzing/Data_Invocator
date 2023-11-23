@@ -1,10 +1,21 @@
 package org.guzzing.studay_data_invocator.region;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.Set;
+import org.geotools.api.feature.simple.SimpleFeature;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureIterator;
+import org.geotools.geojson.feature.FeatureJSON;
+import org.guzzing.studay_data_invocator.global.config.GeoJsonConfig;
+import org.guzzing.studay_data_invocator.region.model.Address;
+import org.guzzing.studay_data_invocator.region.model.Area;
+import org.guzzing.studay_data_invocator.region.model.Region;
 import org.guzzing.studay_data_invocator.region.parser.AddressDataParser;
-import org.guzzing.studay_data_invocator.region.parser.AreaDataParser;
 import org.guzzing.studay_data_invocator.region.parser.PointDataParser;
-import org.guzzing.studay_data_invocator.region.service.RegionService;
+import org.guzzing.studay_data_invocator.region.repository.RegionJpaRepository;
+import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,25 +23,61 @@ public class RegionDataInvocatorRunner {
 
     public static final Set<String> TARGET_REGION = Set.of("서울특별시", "경기도");
 
-    private final AreaDataParser areaDataParser;
+    private final GeoJsonConfig config;
     private final AddressDataParser addressDataParser;
     private final PointDataParser pointDataParser;
-    private final RegionService service;
+    private final RegionJpaRepository repository;
 
     public RegionDataInvocatorRunner(
-            AreaDataParser areaDataParser,
+            GeoJsonConfig config,
             AddressDataParser addressDataParser,
             PointDataParser pointDataParser,
-            RegionService service
+            RegionJpaRepository repository
     ) {
-        this.areaDataParser = areaDataParser;
+        this.config = config;
         this.addressDataParser = addressDataParser;
         this.pointDataParser = pointDataParser;
-        this.service = service;
+        this.repository = repository;
     }
 
     public void invocateData() {
+        SimpleFeatureIterator iterator = getSimpleFeatureIterator();
 
+        while (iterator.hasNext()) {
+            Area area = getArea(iterator);
+            Address address = addressDataParser.parseData(area);
+            Point point = pointDataParser.parseData(address);
+
+            Region region = Region.of(area, address, point);
+
+            repository.save(region);
+        }
+
+        iterator.close();
+    }
+
+    private Area getArea(SimpleFeatureIterator iterator) {
+        SimpleFeature feature = iterator.next();
+
+        String emdCd = feature.getAttribute("EMD_CD").toString();
+        String emdNm = feature.getAttribute("EMD_NM").toString();
+
+        Object geometry = feature.getDefaultGeometry();
+
+        return Area.of(emdCd, emdNm, geometry);
+    }
+
+    private SimpleFeatureIterator getSimpleFeatureIterator() {
+        try {
+            File geoJsonFile = new File(config.getPath());
+
+            SimpleFeatureCollection collection = (SimpleFeatureCollection) new FeatureJSON()
+                    .readFeatureCollection(geoJsonFile);
+
+            return collection.features();
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
     }
 
 }
