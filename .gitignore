@@ -8,7 +8,7 @@ HELP.md
 studay_data_invocator.iml
 build/
 docs/data/
-*.yaml
+*.yml
 
 ### Intellij+all ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider

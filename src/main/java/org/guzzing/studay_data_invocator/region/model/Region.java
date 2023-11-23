@@ -1,14 +1,20 @@
 package org.guzzing.studay_data_invocator.region.model;
 
+import static lombok.AccessLevel.PROTECTED;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.NoArgsConstructor;
 import org.guzzing.studay_data_invocator.global.location.Location;
-import org.guzzing.studay_data_invocator.region.model.vo.Address;
+import org.guzzing.studay_data_invocator.region.model.vo.Beopjeongdong;
+import org.locationtech.jts.geom.MultiPolygon;
 
+@NoArgsConstructor(access = PROTECTED)
 @Entity
 @Table(name = "regions")
 public class Region {
@@ -18,21 +24,18 @@ public class Region {
     private Long id;
 
     @Embedded
-    private Address address;
+    private Beopjeongdong beopjeongdong;
 
     @Embedded
     private Location location;
 
-    protected Region() {
-    }
+    @Column(name = "geometry", nullable = true)
+    private MultiPolygon geometry;
 
-    protected Region(Address address, Location location) {
-        this.address = address;
+    public Region(Beopjeongdong beopjeongdong, Location location, MultiPolygon geometry) {
+        this.beopjeongdong = beopjeongdong;
         this.location = location;
-    }
-
-    public static Region of(final Address address, final Location location) {
-        return new Region(address, location);
+        this.geometry = geometry;
     }
 
 }
