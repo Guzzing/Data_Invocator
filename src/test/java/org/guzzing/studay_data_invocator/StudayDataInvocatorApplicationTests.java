@@ -12,6 +12,6 @@ class StudayDataInvocatorApplicationTests {
     @Autowired
     private RegionDataInvocatorRunner runner;
 
-    
+
 
 }

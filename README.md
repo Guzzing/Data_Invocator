@@ -68,7 +68,7 @@
     - full_address : `경기도 성남시 중랑구 서구로6번길 4 / 3층 일부 (하서원동)`
     - sido : `경기도`
     - sigungu : `성남시`
-    - beopjeongdong : `중랑구`
+    - address : `중랑구`
 
 ### 주소 위경도 변환
 
