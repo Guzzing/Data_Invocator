@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator.sourceacademy.util.xlsx;
+package org.guzzing.studay_data_invocator.sourceacademy.infra.xlsx;
 
 public enum AcademyColumnIndex {
     REGION_NAME(0),

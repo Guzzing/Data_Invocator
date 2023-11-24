@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator.sourceacademy.util.xlsx;
+package org.guzzing.studay_data_invocator.sourceacademy.infra.xlsx;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.guzzing.studay_data_invocator.sourceacademy.model.GyeonggiSourceAcademy;
@@ -6,8 +6,8 @@ import org.guzzing.studay_data_invocator.sourceacademy.model.GyeonggiSourceAcade
 
 import java.util.List;
 
-import static org.guzzing.studay_data_invocator.sourceacademy.util.xlsx.AcademyColumnIndex.*;
-import static org.guzzing.studay_data_invocator.sourceacademy.util.xlsx.AcademyColumnIndex.TEACHER_COUNT;
+import static org.guzzing.studay_data_invocator.sourceacademy.infra.xlsx.AcademyColumnIndex.*;
+import static org.guzzing.studay_data_invocator.sourceacademy.infra.xlsx.AcademyColumnIndex.TEACHER_COUNT;
 
 public class CellParser {
 
