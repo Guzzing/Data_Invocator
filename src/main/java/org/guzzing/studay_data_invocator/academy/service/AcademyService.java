@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.guzzing.studay_data_invocator.academy.data_parser.AcademyDataParser;
-import org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataFile;
+import org.guzzing.studay_data_invocator.academy.parser.AcademyDataParser;
+import org.guzzing.studay_data_invocator.academy.parser.AcademyDataFile;
 import org.guzzing.studay_data_invocator.academy.model.Academy;
 import org.guzzing.studay_data_invocator.academy.model.Lesson;
 import org.guzzing.studay_data_invocator.academy.model.ReviewCount;
