@@ -2,9 +2,9 @@ package org.guzzing.studay_data_invocator.academy.model.vo.academy_info;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchException;
-import static org.guzzing.studay_data_invocator.academy.model.vo.ShuttleAvailability.NEED_INQUIRE;
+import static org.guzzing.studay_data_invocator.academy.model.vo.academyinfo.ShuttleAvailability.NEED_INQUIRE;
 
-import org.guzzing.studay_data_invocator.academy.model.vo.AcademyInfo;
+import org.guzzing.studay_data_invocator.academy.model.vo.academyinfo.AcademyInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +23,7 @@ class AcademyInfoTest {
         AcademyInfo academyInfo = AcademyInfo.of(name, contact, shuttle, areaOfExpertise);
 
         // Then
-        assertThat(academyInfo.getName()).isEqualTo(name);
+        assertThat(academyInfo.getAcademyName()).isEqualTo(name);
         assertThat(academyInfo.getContact()).isEqualTo(contact);
         assertThat(academyInfo.getShuttle()).isEqualTo(NEED_INQUIRE.name());
     }

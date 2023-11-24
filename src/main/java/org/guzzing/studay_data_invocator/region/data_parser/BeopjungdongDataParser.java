@@ -7,11 +7,11 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import org.guzzing.studay_data_invocator.global.config.BeopjungdongConfig;
 import org.guzzing.studay_data_invocator.region.data_parser.dto.BeopjungdongDto;
-import org.guzzing.studay_data_invocator.region.data_parser.dto.BeopjungdongResponses;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.guzzing.studay_data_invocator.region.data_parser.dto.BeopjungdongResponses;
 
 @Component
 public class BeopjungdongDataParser {

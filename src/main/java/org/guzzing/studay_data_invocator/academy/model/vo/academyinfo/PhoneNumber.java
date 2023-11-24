@@ -1,11 +1,12 @@
-package org.guzzing.studay_data_invocator.academy.model.vo;
+package org.guzzing.studay_data_invocator.academy.model.vo.academyinfo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Transient;
+import lombok.Getter;
+
 import java.util.Objects;
 import java.util.regex.Pattern;
-import lombok.Getter;
 
 @Getter
 @Embeddable
@@ -14,12 +15,12 @@ public class PhoneNumber {
     @Transient
     private final String REGEX = "^\\d{2,3}-\\d{3,4}-\\d{3,4}$";
 
-    @Column(name = "contact", nullable = true)
-    private String contact;
+    @Column(name = "phone_number", nullable = true)
+    private String phone_number;
 
-    public PhoneNumber(final String contact) {
-        validate(contact);
-        this.contact = contact;
+    public PhoneNumber(final String phone_number) {
+        validate(phone_number);
+        this.phone_number = phone_number;
     }
 
     protected PhoneNumber() {
@@ -42,12 +43,12 @@ public class PhoneNumber {
             return false;
         }
         PhoneNumber that = (PhoneNumber) o;
-        return Objects.equals(REGEX, that.REGEX) && Objects.equals(contact, that.contact);
+        return Objects.equals(REGEX, that.REGEX) && Objects.equals(phone_number, that.phone_number);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(REGEX, contact);
+        return Objects.hash(REGEX, phone_number);
     }
 
 }

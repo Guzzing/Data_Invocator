@@ -3,9 +3,10 @@ package org.guzzing.studay_data_invocator.academy.model.vo;
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import java.util.Objects;
 import lombok.Getter;
 import org.springframework.util.Assert;
+
+import java.util.Objects;
 
 @Getter
 @Embeddable
@@ -17,7 +18,6 @@ public class Address {
     protected Address(final String address) {
         Assert.isTrue(StringUtils.isNotBlank(address), "주소 정보는 반드시 주어져야 합니다.");
         this.fullAddress = address;
-
     }
 
     protected Address() {
@@ -43,4 +43,5 @@ public class Address {
     public int hashCode() {
         return Objects.hash(fullAddress);
     }
+
 }

@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.guzzing.studay_data_invocator.academy.data_parser.gecode.Geocoder;
+import org.guzzing.studay_data_invocator.academy.model.vo.Location;
 import org.guzzing.studay_data_invocator.global.exception.GeocoderException;
-import org.guzzing.studay_data_invocator.global.location.Location;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

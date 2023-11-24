@@ -8,9 +8,9 @@ import com.google.gson.reflect.TypeToken;
 import java.util.List;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import org.guzzing.studay_data_invocator.academy.model.vo.Location;
 import org.guzzing.studay_data_invocator.global.config.GeocodeConfig;
 import org.guzzing.studay_data_invocator.global.exception.GeocoderException;
-import org.guzzing.studay_data_invocator.global.location.Location;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 

@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator.academy.model.vo;
+package org.guzzing.studay_data_invocator.academy.model.vo.academyinfo;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.Column;
@@ -14,8 +14,8 @@ import org.springframework.util.Assert;
 public class AcademyInfo {
 
     @Getter
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "academy_name")
+    private String academyName;
 
     @Embedded
     private PhoneNumber contact;
@@ -23,19 +23,21 @@ public class AcademyInfo {
     @Enumerated(value = EnumType.STRING)
     private ShuttleAvailability shuttle;
 
+    @Column(name = "area_of_expertise", nullable = false)
     private String areaOfExpertise;
 
-    protected AcademyInfo(final String name, final String contact, final String shuttle, final String areaOfExpertise) {
-        Assert.isTrue(StringUtils.isNotBlank(name), "학원명이 주어지지 않았습니다.");
+    protected AcademyInfo(final String academyName, final String contact, final String shuttle, final String areaOfExpertise) {
+        Assert.isTrue(StringUtils.isNotBlank(academyName), "학원명이 주어지지 않았습니다.");
 
-        this.name = name;
+        this.academyName = academyName;
         this.contact = new PhoneNumber(contact);
         this.shuttle = ShuttleAvailability.getShuttleAvailability(shuttle);
         this.areaOfExpertise = areaOfExpertise;
     }
 
     public static AcademyInfo of(final String name, final String contact, final String shuttle,
-            final String areaOfExpertise) {
+                                 final String areaOfExpertise) {
+
         return new AcademyInfo(name, contact, shuttle, areaOfExpertise);
     }
 
@@ -43,11 +45,15 @@ public class AcademyInfo {
     }
 
     public String getContact() {
-        return contact.getContact();
+        return contact.getPhone_number();
     }
 
     public String getShuttle() {
         return shuttle.name();
+    }
+
+    public String getAreaOfExpertise() {
+        return areaOfExpertise;
     }
 
     @Override
@@ -59,12 +65,13 @@ public class AcademyInfo {
             return false;
         }
         AcademyInfo that = (AcademyInfo) o;
-        return Objects.equals(name, that.name) && Objects.equals(contact, that.contact) && shuttle == that.shuttle;
+        return Objects.equals(academyName, that.academyName) && Objects.equals(contact, that.contact) && shuttle == that.shuttle;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, contact, shuttle);
+        return Objects.hash(academyName, contact, shuttle);
     }
 
 }
+

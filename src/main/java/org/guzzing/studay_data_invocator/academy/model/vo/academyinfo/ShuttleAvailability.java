@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator.academy.model.vo;
+package org.guzzing.studay_data_invocator.academy.model.vo.academyinfo;
 
 import java.util.Objects;
 
