@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator.sourceacademy.model;
+package org.guzzing.studay_data_invocator.academy.model.source;
 
 import jakarta.persistence.*;
 import lombok.Getter;

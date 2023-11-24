@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator.sourceacademy.infra.api.dto;
+package org.guzzing.studay_data_invocator.academy.infra.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

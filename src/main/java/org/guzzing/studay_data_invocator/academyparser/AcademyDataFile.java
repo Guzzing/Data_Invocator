@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator.academy.parser;
+package org.guzzing.studay_data_invocator.academyparser;
 
 import java.text.MessageFormat;
 import lombok.Getter;

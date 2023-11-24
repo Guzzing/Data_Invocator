@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator.sourceacademy.infra.api;
+package org.guzzing.studay_data_invocator.academy.infra.api;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

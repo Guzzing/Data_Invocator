@@ -1,9 +1,9 @@
-package org.guzzing.studay_data_invocator.academy.data_parser.geocode;
+package org.guzzing.studay_data_invocator.academy.filter.geocode;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import org.guzzing.studay_data_invocator.academy.data_parser.gecode.Geocoder;
+import org.guzzing.studay_data_invocator.academy.infra.geocode.Geocoder;
 import org.guzzing.studay_data_invocator.academy.model.vo.Location;
 import org.guzzing.studay_data_invocator.global.exception.GeocoderException;
 import org.junit.jupiter.api.DisplayName;

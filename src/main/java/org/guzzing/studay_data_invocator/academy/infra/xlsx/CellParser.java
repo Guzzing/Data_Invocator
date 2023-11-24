@@ -1,13 +1,13 @@
-package org.guzzing.studay_data_invocator.sourceacademy.infra.xlsx;
+package org.guzzing.studay_data_invocator.academy.infra.xlsx;
 
 import org.apache.poi.ss.usermodel.Cell;
-import org.guzzing.studay_data_invocator.sourceacademy.model.GyeonggiSourceAcademy;
+import org.guzzing.studay_data_invocator.academy.model.source.GyeonggiSourceAcademy;
 
 
 import java.util.List;
 
-import static org.guzzing.studay_data_invocator.sourceacademy.infra.xlsx.AcademyColumnIndex.*;
-import static org.guzzing.studay_data_invocator.sourceacademy.infra.xlsx.AcademyColumnIndex.TEACHER_COUNT;
+import static org.guzzing.studay_data_invocator.academy.infra.xlsx.AcademyColumnIndex.*;
+import static org.guzzing.studay_data_invocator.academy.infra.xlsx.AcademyColumnIndex.TEACHER_COUNT;
 
 public class CellParser {
 

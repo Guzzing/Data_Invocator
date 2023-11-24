@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator.academy.data_parser;
+package org.guzzing.studay_data_invocator.academy.filter;
 
 //@ExtendWith(MockitoExtension.class)
 //public class AcademyDataParserTest {

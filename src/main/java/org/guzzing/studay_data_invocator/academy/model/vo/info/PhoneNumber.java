@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator.academy.model.vo.academyinfo;
+package org.guzzing.studay_data_invocator.academy.model.vo.info;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

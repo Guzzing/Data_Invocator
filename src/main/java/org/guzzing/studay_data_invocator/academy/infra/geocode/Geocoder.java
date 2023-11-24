@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator.academy.geocode;
+package org.guzzing.studay_data_invocator.academy.infra.geocode;
 
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;

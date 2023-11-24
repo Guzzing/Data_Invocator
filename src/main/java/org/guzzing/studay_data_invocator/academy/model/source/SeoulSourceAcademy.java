@@ -1,8 +1,8 @@
-package org.guzzing.studay_data_invocator.sourceacademy.model;
+package org.guzzing.studay_data_invocator.academy.model.source;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.guzzing.studay_data_invocator.sourceacademy.infra.api.dto.SeoulAcademyInfo;
+import org.guzzing.studay_data_invocator.academy.infra.api.dto.SeoulAcademyInfo;
 
 @Getter
 @Table(name = "seoul_source_academies")

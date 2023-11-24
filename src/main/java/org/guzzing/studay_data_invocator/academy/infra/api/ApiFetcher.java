@@ -1,8 +1,8 @@
-package org.guzzing.studay_data_invocator.sourceacademy.infra.api;
+package org.guzzing.studay_data_invocator.academy.infra.api;
 
 import org.guzzing.studay_data_invocator.global.config.WebClientConfig;
-import org.guzzing.studay_data_invocator.sourceacademy.infra.api.dto.SeoulAcademyInfo;
-import org.guzzing.studay_data_invocator.sourceacademy.infra.api.dto.SeoulAcademyInfoResponse;
+import org.guzzing.studay_data_invocator.academy.infra.api.dto.SeoulAcademyInfo;
+import org.guzzing.studay_data_invocator.academy.infra.api.dto.SeoulAcademyInfoResponse;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;

@@ -1,6 +1,6 @@
-package org.guzzing.studay_data_invocator.sourceacademy.infra.xlsx;
+package org.guzzing.studay_data_invocator.academy.infra.xlsx;
 
-import org.guzzing.studay_data_invocator.sourceacademy.model.GyeonggiSourceAcademy;
+import org.guzzing.studay_data_invocator.academy.model.source.GyeonggiSourceAcademy;
 
 import java.io.File;
 import java.util.List;

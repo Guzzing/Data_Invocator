@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator.academy.parser;
+package org.guzzing.studay_data_invocator.academyparser;
 
 public enum AcademyDataColumnIndex {
     ACADEMY_REGION(0),

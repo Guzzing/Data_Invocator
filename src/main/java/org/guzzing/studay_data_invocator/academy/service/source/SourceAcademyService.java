@@ -1,16 +1,15 @@
-package org.guzzing.studay_data_invocator.sourceacademy.service;
+package org.guzzing.studay_data_invocator.academy.service.source;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.guzzing.studay_data_invocator.sourceacademy.infra.api.ApiEndPointProvider;
-import org.guzzing.studay_data_invocator.sourceacademy.infra.api.ApiFetcher;
-import org.guzzing.studay_data_invocator.sourceacademy.infra.api.dto.SeoulAcademyInfo;
-import org.guzzing.studay_data_invocator.sourceacademy.infra.api.dto.SeoulAcademyInfoResponse;
-import org.guzzing.studay_data_invocator.sourceacademy.model.GyeonggiSourceAcademy;
-import org.guzzing.studay_data_invocator.sourceacademy.model.SeoulSourceAcademy;
-import org.guzzing.studay_data_invocator.sourceacademy.repository.GyeonggiSourceAcademyJpaRepository;
-import org.guzzing.studay_data_invocator.sourceacademy.infra.xlsx.RowParser;
-import org.guzzing.studay_data_invocator.sourceacademy.repository.SeoulSourceAcademyRepository;
+import org.guzzing.studay_data_invocator.academy.infra.api.ApiEndPointProvider;
+import org.guzzing.studay_data_invocator.academy.infra.api.ApiFetcher;
+import org.guzzing.studay_data_invocator.academy.infra.api.dto.SeoulAcademyInfo;
+import org.guzzing.studay_data_invocator.academy.model.source.GyeonggiSourceAcademy;
+import org.guzzing.studay_data_invocator.academy.model.source.SeoulSourceAcademy;
+import org.guzzing.studay_data_invocator.academy.repository.source.GyeonggiSourceAcademyJpaRepository;
+import org.guzzing.studay_data_invocator.academy.infra.xlsx.RowParser;
+import org.guzzing.studay_data_invocator.academy.repository.source.SeoulSourceAcademyRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
