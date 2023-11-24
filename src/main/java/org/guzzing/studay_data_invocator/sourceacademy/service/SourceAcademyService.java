@@ -7,32 +7,40 @@ import org.guzzing.studay_data_invocator.sourceacademy.infra.api.ApiFetcher;
 import org.guzzing.studay_data_invocator.sourceacademy.infra.api.dto.SeoulAcademyInfo;
 import org.guzzing.studay_data_invocator.sourceacademy.infra.api.dto.SeoulAcademyInfoResponse;
 import org.guzzing.studay_data_invocator.sourceacademy.model.GyeonggiSourceAcademy;
+import org.guzzing.studay_data_invocator.sourceacademy.model.SeoulSourceAcademy;
 import org.guzzing.studay_data_invocator.sourceacademy.repository.GyeonggiSourceAcademyJpaRepository;
 import org.guzzing.studay_data_invocator.sourceacademy.infra.xlsx.RowParser;
+import org.guzzing.studay_data_invocator.sourceacademy.repository.SeoulSourceAcademyRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
-import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Stream;
 
+import reactor.core.scheduler.Schedulers;
+import reactor.core.publisher.Mono;
 
 @Service
 public class SourceAcademyService {
 
+    private static final int START_PAGE = 1;
+    private static final int PLUS_PAGE = 5;
     private final ObjectMapper objectMapper;
     private final ApiEndPointProvider apiEndPointProvider;
     private final ApiFetcher apiFetcher;
-    private final GyeonggiSourceAcademyJpaRepository sourceAcademyRepository;
+    private final GyeonggiSourceAcademyJpaRepository gyeonggiSourceAcademyJpaRepository;
+    private final SeoulSourceAcademyRepository seoulSourceAcademyRepository;
 
     public SourceAcademyService(
             ObjectMapper objectMapper,
-            ApiEndPointProvider apiEndPointProvider, ApiFetcher apiFetcher, GyeonggiSourceAcademyJpaRepository sourceAcademyRepository) {
+            ApiEndPointProvider apiEndPointProvider, ApiFetcher apiFetcher, GyeonggiSourceAcademyJpaRepository gyeonggiSourceAcademyJpaRepository, SeoulSourceAcademyRepository seoulSourceAcademyRepository) {
         this.objectMapper = objectMapper;
         this.apiEndPointProvider = apiEndPointProvider;
         this.apiFetcher = apiFetcher;
-        this.sourceAcademyRepository = sourceAcademyRepository;
+        this.gyeonggiSourceAcademyJpaRepository = gyeonggiSourceAcademyJpaRepository;
+        this.seoulSourceAcademyRepository = seoulSourceAcademyRepository;
     }
 
     @Transactional
@@ -41,24 +49,45 @@ public class SourceAcademyService {
         List<List<GyeonggiSourceAcademy>> parser = RowParser.parser(fileLocation);
 
         parser.forEach(
-                sourceAcademies -> sourceAcademyRepository.saveAll(sourceAcademies)
+                sourceAcademies -> gyeonggiSourceAcademyJpaRepository.saveAll(sourceAcademies)
         );
     }
 
+    public void saveSeoulSourceAcademyAsync() {
+        int startPage = START_PAGE;
+        AtomicBoolean continueFetching = new AtomicBoolean(true);
+
+        Flux.fromStream(Stream.iterate(startPage, page -> page + PLUS_PAGE + 1))
+                .takeWhile(page -> continueFetching.get())
+                .flatMap(page -> {
+                    String buildSeoulUrl = apiEndPointProvider.buildSeoulUrl(page, page + PLUS_PAGE);
+                    return apiFetcher.getResponseBodyByAsync(buildSeoulUrl)
+                            .flatMap(seoulAcademyInfo ->
+                                    Mono.fromRunnable(() ->
+                                                    seoulSourceAcademyRepository.save(SeoulSourceAcademy.to(seoulAcademyInfo)))
+                                            .subscribeOn(Schedulers.parallel()) // Use a different scheduler
+                            )
+                            .doOnComplete(() -> continueFetching.set(false))
+                            .retry(100);
+                })
+                .then()
+                .subscribe();
+    }
+
+    @Transactional
     public void saveSeoulSourceAcademy() {
-        String buildSeoulUrl = apiEndPointProvider.buildSeoulUrl(26046, 26070);
+        int startPage = START_PAGE;
+        String buildSeoulUrl = apiEndPointProvider.buildSeoulUrl(startPage, startPage + PLUS_PAGE);
+        List<SeoulAcademyInfo> responseBody = apiFetcher.getResponseBody(buildSeoulUrl);
 
-        Flux<SeoulAcademyInfo> flux = apiFetcher.getResponseBody(buildSeoulUrl);
-
-
-    }
-
-    private SeoulAcademyInfoResponse parseResponse(String jsonResponse) {
-        try {
-            return objectMapper.readValue(jsonResponse, SeoulAcademyInfoResponse.class);
-        } catch (IOException e) {
-            throw new RuntimeException("Error parsing JSON response", e);
+        while (!responseBody.isEmpty()) {
+            responseBody.forEach(seoulAcademyInfo ->
+                    seoulSourceAcademyRepository.save(SeoulSourceAcademy.to(seoulAcademyInfo))
+            );
+            startPage += PLUS_PAGE + 1;
+            buildSeoulUrl = apiEndPointProvider.buildSeoulUrl(startPage, startPage + PLUS_PAGE);
+            responseBody = apiFetcher.getResponseBody(buildSeoulUrl);
         }
-    }
 
+    }
 }
