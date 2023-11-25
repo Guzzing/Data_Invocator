@@ -8,9 +8,10 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Setter
 @Configuration
-@ConfigurationProperties(prefix = "geojson")
+@ConfigurationProperties(prefix = "geojson.path")
 public class GeoJsonConfig {
 
-    private String path;
+    private String gyeongGi;
+    private String seoul;
 
 }
