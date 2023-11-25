@@ -7,8 +7,9 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.guzzing.studay_data_invocator.global.config.GeocodeConfig;
 import org.guzzing.studay_data_invocator.global.exception.GeocoderException;
-import org.guzzing.studay_data_invocator.region.parser.dto.LocationDto;
-import org.guzzing.studay_data_invocator.region.parser.dto.LocationResponse;
+import org.guzzing.studay_data_invocator.region.model.Address;
+import org.guzzing.studay_data_invocator.region.parser.dto.PointResponses;
+import org.guzzing.studay_data_invocator.region.parser.dto.PointResponse;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
@@ -25,8 +26,18 @@ public class PointDataParser {
         this.geocodeConfig = geocodeConfig;
     }
 
-    public Point addressToPoint(final String address) {
-        LocationResponse response = WebClient.builder()
+    public Point parseData(final Address address) {
+        PointResponses response = requestData(address.getFullAddress());
+
+        if (response == null) {
+            throw new GeocoderException("위치 정보 요청에 실패했습니다.");
+        }
+
+        return extractLocationFromResponse(response);
+    }
+
+    private PointResponses requestData(String address) {
+        return WebClient.builder()
                 .baseUrl(geocodeConfig.getApiUrl())
                 .defaultHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
                 .defaultHeader(geocodeConfig.getClientIdProperty(), geocodeConfig.getClientId())
@@ -37,32 +48,26 @@ public class PointDataParser {
                         .queryParam("query", address)
                         .build())
                 .retrieve()
-                .bodyToMono(LocationResponse.class)
+                .bodyToMono(PointResponses.class)
                 .block();
-
-        if (response == null) {
-            throw new GeocoderException("위치 정보 요청에 실패했습니다.");
-        }
-
-        return extractLocationFromResponse(response);
     }
 
-    private Point extractLocationFromResponse(final LocationResponse locationResponse) {
-        List<LocationDto> addresses = locationResponse.addresses();
+    private Point extractLocationFromResponse(final PointResponses pointResponses) {
+        List<PointResponse> addresses = pointResponses.addresses();
         if (addresses == null || addresses.isEmpty()) {
             throw new GeocoderException("해당 주소에 매핑되는 위경도 값 요청에 실패했습니다.");
         }
 
-        LocationDto locationDto = addresses.get(0);
+        PointResponse pointResponse = addresses.get(0);
 
-        return getPoint(locationDto);
+        return getPoint(pointResponse);
     }
 
-    private Point getPoint(LocationDto locationDto) {
+    private Point getPoint(PointResponse pointResponse) {
         GeometryFactory geometryFactory = new GeometryFactory();
 
-        double latitude = Double.parseDouble(locationDto.y());
-        double longitude = Double.parseDouble(locationDto.x());
+        double latitude = Double.parseDouble(pointResponse.y());
+        double longitude = Double.parseDouble(pointResponse.x());
 
         Coordinate coordinate = new Coordinate(latitude, longitude);
 

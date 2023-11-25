@@ -2,9 +2,9 @@ package org.guzzing.studay_data_invocator.region.parser.dto;
 
 import java.util.List;
 
-public record LocationResponse(
+public record PointResponses(
         String status,
-        List<LocationDto> addresses,
+        List<PointResponse> addresses,
         String errorMessage
 ) {
 

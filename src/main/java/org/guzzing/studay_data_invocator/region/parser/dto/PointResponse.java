@@ -1,6 +1,6 @@
 package org.guzzing.studay_data_invocator.region.parser.dto;
 
-public record LocationDto(
+public record PointResponse(
         String roadAddress,
         String jibunAddress,
         String englishAddress,
