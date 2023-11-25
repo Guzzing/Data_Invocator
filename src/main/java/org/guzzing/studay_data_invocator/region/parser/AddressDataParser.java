@@ -4,6 +4,8 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import java.util.Objects;
+import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 import org.guzzing.studay_data_invocator.global.config.OpenApiConfig;
 import org.guzzing.studay_data_invocator.region.model.Address;
 import org.guzzing.studay_data_invocator.region.model.Area;
@@ -11,6 +13,7 @@ import org.guzzing.studay_data_invocator.region.parser.dto.AddressResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
+@Slf4j
 @Component
 public class AddressDataParser {
 
@@ -23,9 +26,15 @@ public class AddressDataParser {
     public Address parseData(Area area) {
         AddressResponse addressResponse = requestData(area.code());
 
-        validateData(area, addressResponse);
+        try {
+            validateData(area, addressResponse);
 
-        return Address.of(addressResponse.admCodeNm());
+            return Address.of(addressResponse.admCodeNm());
+        } catch (NullPointerException e) {
+            log.warn("area: {}", area);
+            log.warn("addressResponse: {}", addressResponse);
+            throw e;
+        }
     }
 
     private void validateData(Area area, AddressResponse addressResponse) {

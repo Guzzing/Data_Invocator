@@ -48,6 +48,10 @@ public class Address {
         return new Address(split[0], split[1], split[2]);
     }
 
+    public String getFullAddress() {
+        return MessageFormat.format("{0} {1} {2}", sido, sigungu, upmyeondong);
+    }
+
     private static void validateSplitLength(String[] split) {
         if (split.length < 3) {
             throw new IllegalArgumentException("유효하지 않은 주소입니다.");
