@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.Set;
+import lombok.extern.slf4j.Slf4j;
 import org.geotools.api.feature.simple.SimpleFeature;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
@@ -15,9 +16,11 @@ import org.guzzing.studay_data_invocator.region.model.Region;
 import org.guzzing.studay_data_invocator.region.parser.AddressDataParser;
 import org.guzzing.studay_data_invocator.region.parser.PointDataParser;
 import org.guzzing.studay_data_invocator.region.repository.RegionJpaRepository;
+import org.guzzing.studay_data_invocator.region.service.RegionService;
 import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class RegionDataInvocatorRunner {
 
@@ -26,31 +29,35 @@ public class RegionDataInvocatorRunner {
     private final GeoJsonConfig config;
     private final AddressDataParser addressDataParser;
     private final PointDataParser pointDataParser;
-    private final RegionJpaRepository repository;
+    private final RegionService service;
 
     public RegionDataInvocatorRunner(
             GeoJsonConfig config,
             AddressDataParser addressDataParser,
             PointDataParser pointDataParser,
-            RegionJpaRepository repository
+            RegionService service
     ) {
         this.config = config;
         this.addressDataParser = addressDataParser;
         this.pointDataParser = pointDataParser;
-        this.repository = repository;
+        this.service = service;
     }
 
     public void invocateData() {
         SimpleFeatureIterator iterator = getSimpleFeatureIterator();
 
         while (iterator.hasNext()) {
-            Area area = getArea(iterator);
-            Address address = addressDataParser.parseData(area);
-            Point point = pointDataParser.parseData(address);
+            try {
+                Area area = getArea(iterator);
+                Address address = addressDataParser.parseData(area);
+                Point point = pointDataParser.parseData(address);
 
-            Region region = Region.of(area, address, point);
+                Region region = Region.of(area, address, point);
 
-            repository.save(region);
+                service.saveRegion(region);
+            } catch (Exception e) {
+                log.warn(String.valueOf(e));
+            }
         }
 
         iterator.close();
