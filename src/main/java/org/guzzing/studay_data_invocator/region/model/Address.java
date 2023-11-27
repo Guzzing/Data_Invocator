@@ -8,10 +8,13 @@ import static org.guzzing.studay_data_invocator.region.model.RegionUnit.UPMYEOND
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Objects;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @Embeddable
@@ -54,6 +57,7 @@ public class Address {
 
     private static void validateSplitLength(String[] split) {
         if (split.length < 3) {
+            log.info("Wrong data: {}", Arrays.toString(split));
             throw new IllegalArgumentException("유효하지 않은 주소입니다.");
         }
     }
@@ -65,6 +69,7 @@ public class Address {
         }
 
         if (!regionUnit.isMatched(value)) {
+            log.info("RegionUnit not matched: {}", value);
             String message = MessageFormat.format("{0}에 매칭되지 않는 지역 데이터입니다.", regionUnit);
             throw new IllegalArgumentException(message);
         }

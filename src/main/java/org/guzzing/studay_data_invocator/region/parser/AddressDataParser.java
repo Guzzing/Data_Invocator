@@ -31,8 +31,9 @@ public class AddressDataParser {
 
             return Address.of(addressResponse.admCodeNm());
         } catch (NullPointerException e) {
-            log.warn("area: {}", area);
-            log.warn("addressResponse: {}", addressResponse);
+            log.info("위경도 조회 실패!");
+            log.info("area: {}", area);
+            log.info("addressResponse: {}", addressResponse);
             throw e;
         }
     }
