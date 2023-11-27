@@ -24,17 +24,20 @@ public class ReviewCount {
     @Column(nullable = false, name = "kindness_count")
     private int kindnessCount;
 
-    @Column(nullable = false,name = "good_facility_count")
+    @Column(nullable = false, name = "good_facility_count")
     private int goodFacilityCount;
 
-    @Column(nullable = false, name="cheap_fee_count")
+    @Column(nullable = false, name = "cheap_fee_count")
     private int cheapFeeCount;
 
-    @Column(nullable = false, name="good_management_count")
+    @Column(nullable = false, name = "good_management_count")
     private int goodManagementCount;
 
-    @Column(nullable = false, name="lovely_teaching_count")
+    @Column(nullable = false, name = "lovely_teaching_count")
     private int lovelyTeachingCount;
+
+    @Column(nullable = false, name = "shuttle_availability_count")
+    private int shuttleAvailabilityCount;
 
     @Column(nullable = false, name = "reviewers_count")
     private int reviewersCount;
@@ -56,8 +59,7 @@ public class ReviewCount {
     }
 
     protected ReviewCount(int kindnessCount, int goodFacilityCount, int cheapFeeCount, int goodManagementCount,
-                          int lovelyTeachingCount, int reviewersCount, Academy academy) {
-
+                          int lovelyTeachingCount, int reviewersCount, int shuttleAvailabilityCount, Academy academy) {
         this.kindnessCount = kindnessCount;
         this.goodFacilityCount = goodFacilityCount;
         this.cheapFeeCount = cheapFeeCount;
@@ -65,10 +67,11 @@ public class ReviewCount {
         this.lovelyTeachingCount = lovelyTeachingCount;
         this.reviewersCount = reviewersCount;
         this.academy = academy;
+        this.shuttleAvailabilityCount = shuttleAvailabilityCount;
     }
 
     public static ReviewCount makeDefaultReviewCount(Academy academy) {
-        return new ReviewCount(INIT_VALUE, INIT_VALUE, INIT_VALUE, INIT_VALUE, INIT_VALUE, INIT_VALUE, academy);
+        return new ReviewCount(INIT_VALUE, INIT_VALUE, INIT_VALUE, INIT_VALUE, INIT_VALUE, INIT_VALUE, INIT_VALUE, academy);
     }
 
 }

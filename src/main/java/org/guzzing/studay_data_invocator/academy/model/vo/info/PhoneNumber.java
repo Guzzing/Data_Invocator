@@ -16,11 +16,11 @@ public class PhoneNumber {
     private final String REGEX = "^\\d{2,3}-\\d{3,4}-\\d{3,4}$";
 
     @Column(name = "phone_number", nullable = true)
-    private String phone_number;
+    private String phoneNumber;
 
-    public PhoneNumber(final String phone_number) {
-        validate(phone_number);
-        this.phone_number = phone_number;
+    public PhoneNumber(final String phoneNumber) {
+        validate(phoneNumber);
+        this.phoneNumber = phoneNumber;
     }
 
     protected PhoneNumber() {
@@ -43,12 +43,12 @@ public class PhoneNumber {
             return false;
         }
         PhoneNumber that = (PhoneNumber) o;
-        return Objects.equals(REGEX, that.REGEX) && Objects.equals(phone_number, that.phone_number);
+        return Objects.equals(REGEX, that.REGEX) && Objects.equals(phoneNumber, that.phoneNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(REGEX, phone_number);
+        return Objects.hash(REGEX, phoneNumber);
     }
 
 }

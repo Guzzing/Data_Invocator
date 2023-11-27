@@ -6,7 +6,9 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+
 import java.util.Objects;
+
 import lombok.Getter;
 import org.guzzing.studay_data_invocator.academy.model.vo.info.PhoneNumber;
 import org.guzzing.studay_data_invocator.academy.model.vo.info.ShuttleAvailability;
@@ -47,7 +49,7 @@ public class AcademyInfo {
     }
 
     public String getContact() {
-        return contact.getPhone_number();
+        return contact.getPhoneNumber();
     }
 
     public String getShuttle() {
