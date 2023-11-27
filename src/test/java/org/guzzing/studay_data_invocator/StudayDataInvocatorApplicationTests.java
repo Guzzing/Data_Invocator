@@ -33,7 +33,7 @@ class StudayDataInvocatorApplicationTests {
     @Test
     @DisplayName("경기도 원본 학원 데이터 파싱 실행기")
     void loadSourceAcademies() throws Exception {
-        sourceAcademyService.saveSourceAcademiesPerfect(fileLocation);
+        sourceAcademyService.saveGyeonggiSourceAcademies(fileLocation);
     }
 
     @Test
@@ -45,6 +45,18 @@ class StudayDataInvocatorApplicationTests {
     @Test
     void saveSeoulSourceAcademy() {
         sourceAcademyService.saveSeoulSourceAcademyAsync();
+    }
+
+    @Test
+    @DisplayName("경기도 2차 가공 데이터 파싱 실행기")
+    void saveEfficientGyeonggiAcademies() {
+        academyService.saveEfficientGyeonggiAcademies();
+    }
+
+    @Test
+    @DisplayName("아무런 카테고리에 속하지 않는 데이터들은 ETC에 속한다.")
+    void makeCategoryForNotHaveCategory() {
+        academyService.makeEtcCategory();
     }
 
 }
