@@ -9,10 +9,10 @@ public record Area(
 ) {
 
     public static Area of(String code, String name, Object geometry) {
-        return new Area(
-                Long.parseLong(code),
-                name,
-                (MultiPolygon) geometry);
+        MultiPolygon multiPolygon = (MultiPolygon) geometry;
+        multiPolygon.setSRID(4326);
+
+        return new Area(Long.parseLong(code), name, multiPolygon);
     }
 
 }

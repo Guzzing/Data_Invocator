@@ -71,7 +71,10 @@ public class PointDataParser {
 
         Coordinate coordinate = new Coordinate(latitude, longitude);
 
-        return geometryFactory.createPoint(coordinate);
+        Point point = geometryFactory.createPoint(coordinate);
+        point.setSRID(4326);
+
+        return point;
     }
 
 }
