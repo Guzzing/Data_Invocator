@@ -1,6 +1,5 @@
 package org.guzzing.studay_data_invocator.academy.service.source;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.guzzing.studay_data_invocator.academy.infra.api.ApiEndPointProvider;
 import org.guzzing.studay_data_invocator.academy.infra.api.ApiFetcher;
@@ -43,7 +42,7 @@ public class SourceAcademyService {
     }
 
     @Transactional
-    public void saveSourceAcademiesPerfect(String fileLocation) throws Exception {
+    public void saveGyeonggiSourceAcademies(String fileLocation) throws Exception {
 
         List<List<GyeonggiSourceAcademy>> parser = RowParser.parser(fileLocation);
 
