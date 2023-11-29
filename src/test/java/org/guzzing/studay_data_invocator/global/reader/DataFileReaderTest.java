@@ -1,7 +1,7 @@
 package org.guzzing.studay_data_invocator.global.reader;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.guzzing.studay_data_invocator.academy.data_parser.meta.AcademyDataFile.SEONGNAM;
+import static org.guzzing.studay_data_invocator.academyparser.AcademyDataFile.SEONGNAM;
 
 import java.io.IOException;
 import java.util.List;

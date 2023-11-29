@@ -1,6 +1,7 @@
 package org.guzzing.studay_data_invocator.academy.model;
 
 import lombok.Getter;
+import org.guzzing.studay_data_invocator.academy.model.source.GyeonggiSourceAcademy;
 import org.springframework.util.Assert;
 import java.util.Objects;
 import static jakarta.persistence.FetchType.LAZY;
@@ -33,7 +34,7 @@ public class Lesson {
     private String curriculum;
 
     @Column(name = "capacity")
-    private Integer capacity;
+    private Long capacity;
 
     @Column(name = "duration")
     private String duration;
@@ -45,7 +46,7 @@ public class Lesson {
             final Academy academy,
             final String subject,
             final String curriculum,
-            final Integer capacity,
+            final Long capacity,
             final String duration,
             final Long totalFee
     ) {
@@ -76,9 +77,22 @@ public class Lesson {
                 academy,
                 subject,
                 curriculum,
-                capacity.isBlank() ? null : Integer.parseInt(capacity),
+                capacity.isBlank() ? null : Long.parseLong(capacity),
                 duration,
                 totalFee.isBlank() ? null : Long.parseLong(totalFee)
+        );
+    }
+
+    public static Lesson of(
+            final Academy academy,
+            final GyeonggiSourceAcademy gyeonggiSourceAcademy) {
+        return new Lesson(
+                academy,
+                gyeonggiSourceAcademy.getLessonSubject(),
+                gyeonggiSourceAcademy.getLessonCurriculum(),
+                gyeonggiSourceAcademy.getLessonCapacity(), // 형태 고침
+                gyeonggiSourceAcademy.getLessonDuration(),
+                gyeonggiSourceAcademy.getTotalFee()
         );
     }
 
