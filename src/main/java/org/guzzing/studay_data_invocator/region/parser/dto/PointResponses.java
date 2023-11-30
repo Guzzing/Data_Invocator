@@ -8,4 +8,15 @@ public record PointResponses(
         String errorMessage
 ) {
 
+    public record PointResponse(
+            String roadAddress,
+            String jibunAddress,
+            String englishAddress,
+            String x,
+            String y,
+            double distance
+    ) {
+
+    }
+
 }

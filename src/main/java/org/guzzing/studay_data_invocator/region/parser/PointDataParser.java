@@ -1,56 +1,51 @@
 package org.guzzing.studay_data_invocator.region.parser;
 
-import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.guzzing.studay_data_invocator.global.config.GeocodeConfig;
-import org.guzzing.studay_data_invocator.global.exception.GeocoderException;
+import org.guzzing.studay_data_invocator.global.config.WebClientConfig;
 import org.guzzing.studay_data_invocator.region.model.Address;
 import org.guzzing.studay_data_invocator.region.parser.dto.PointResponses;
-import org.guzzing.studay_data_invocator.region.parser.dto.PointResponse;
+import org.guzzing.studay_data_invocator.region.parser.dto.PointResponses.PointResponse;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
 
 @Slf4j
 @Component
 public class PointDataParser {
 
     private final GeocodeConfig geocodeConfig;
+    private final WebClientConfig webClientConfig;
 
-    public PointDataParser(final GeocodeConfig geocodeConfig) {
+    public PointDataParser(final GeocodeConfig geocodeConfig, final WebClientConfig webClientConfig) {
         this.geocodeConfig = geocodeConfig;
+        this.webClientConfig = webClientConfig;
     }
 
     public Point parseData(final Address address) {
-        PointResponses response = requestData(address.getFullAddress());
+        try {
+            PointResponse pointResponse = requestData(address.getFullAddress())
+                    .addresses()
+                    .get(0);
 
             return getPoint(pointResponse);
         } catch (Exception e) {
             log.info("위경도 조회 실패 - address : {}", address);
             throw e;
         }
-
-        return extractLocationFromResponse(response);
     }
 
     private PointResponses requestData(String address) {
-        return WebClient.builder()
-                .baseUrl(geocodeConfig.getApiUrl())
-                .defaultHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
-                .defaultHeader(geocodeConfig.getClientIdProperty(), geocodeConfig.getClientId())
-                .defaultHeader(geocodeConfig.getClientSecretProperty(), geocodeConfig.getClientSecret())
-                .build()
+        return webClientConfig.webClient()
                 .get()
-                .uri(uriBuilder -> uriBuilder
-                        .queryParam("query", address)
-                        .build())
+                .uri(geocodeConfig.buildApiUrl(address))
+                .header(geocodeConfig.getClientIdProperty(), geocodeConfig.getClientId())
+                .header(geocodeConfig.getClientSecretProperty(), geocodeConfig.getClientSecret())
                 .retrieve()
                 .bodyToMono(PointResponses.class)
+                .doOnError(Throwable::getCause)
+                .doOnSuccess(this::validateResponse)
                 .block();
     }
 
@@ -58,10 +53,6 @@ public class PointDataParser {
         if (pointResponses == null || pointResponses.addresses() == null || pointResponses.addresses().isEmpty()) {
             throw new IllegalStateException("위치 정보 요청에 실패했습니다.");
         }
-
-        PointResponse pointResponse = addresses.get(0);
-
-        return getPoint(pointResponse);
     }
 
     private Point getPoint(PointResponse pointResponse) {
@@ -70,7 +61,7 @@ public class PointDataParser {
         double latitude = Double.parseDouble(pointResponse.y());
         double longitude = Double.parseDouble(pointResponse.x());
 
-        Coordinate coordinate = new Coordinate(latitude, longitude);
+        Coordinate coordinate = new Coordinate(longitude, latitude);
 
         Point point = geometryFactory.createPoint(coordinate);
         point.setSRID(4326);
