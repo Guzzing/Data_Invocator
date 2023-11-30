@@ -1,6 +1,5 @@
 package org.guzzing.studay_data_invocator.region.service;
 
-import jakarta.persistence.Transient;
 import org.guzzing.studay_data_invocator.region.model.Region;
 import org.guzzing.studay_data_invocator.region.repository.RegionJpaRepository;
 import org.springframework.stereotype.Service;
