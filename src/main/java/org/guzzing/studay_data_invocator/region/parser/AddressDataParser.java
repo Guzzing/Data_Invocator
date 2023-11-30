@@ -1,39 +1,50 @@
 package org.guzzing.studay_data_invocator.region.parser;
 
-import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
 import java.util.Objects;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.guzzing.studay_data_invocator.global.config.OpenApiConfig;
+import org.guzzing.studay_data_invocator.global.config.WebClientConfig;
 import org.guzzing.studay_data_invocator.region.model.Address;
 import org.guzzing.studay_data_invocator.region.model.Area;
 import org.guzzing.studay_data_invocator.region.parser.dto.AddressResponse;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.HttpClientErrorException;
 
 @Slf4j
 @Component
 public class AddressDataParser {
 
-    private final OpenApiConfig config;
+    private final OpenApiConfig openApiConfig;
+    private final WebClientConfig webClientConfig;
 
-    public AddressDataParser(OpenApiConfig config) {
-        this.config = config;
+    public AddressDataParser(
+            OpenApiConfig openApiConfig,
+            WebClientConfig webClientConfig
+    ) {
+        this.openApiConfig = openApiConfig;
+        this.webClientConfig = webClientConfig;
     }
 
     public Address parseData(Area area) {
-        AddressResponse addressResponse = requestData(area.code());
-
         try {
-            validateData(area, addressResponse);
+            AddressResponse addressResponse = requestData(area);
 
             return Address.of(addressResponse.admCodeNm());
         } catch (Exception e) {
             log.info("주소 정보 요청 실패 {}", e.getMessage());
             throw e;
         }
+    }
+
+    private AddressResponse requestData(Area area) {
+        return webClientConfig.webClient()
+                .get()
+                .uri(openApiConfig.buildApiUrl(area.code()))
+                .retrieve()
+                .bodyToMono(AddressResponse.class)
+                .doOnError(Throwable::getCause)
+                .doOnSuccess(addressResponse -> validateData(area, addressResponse))
+                .block();
     }
 
     private void validateData(Area area, AddressResponse addressResponse) {
@@ -54,18 +65,4 @@ public class AddressDataParser {
         }
     }
 
-    private AddressResponse requestData(long code) {
-        return WebClient.builder()
-                .baseUrl(config.getApiUrl())
-                .defaultHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
-                .build()
-                .get()
-                .uri(uriBuilder -> uriBuilder
-                        .queryParam("admCode", code)
-                        .queryParam("key", config.getApiKey())
-                        .build())
-                .retrieve()
-                .bodyToMono(AddressResponse.class)
-                .block();
-    }
 }

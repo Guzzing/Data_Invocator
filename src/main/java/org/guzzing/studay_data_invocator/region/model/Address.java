@@ -44,11 +44,9 @@ public class Address {
 
         validateSplitLength(split);
 
-        if (split[2].contains("구")) {
-            return new Address(split[0], split[1] + " " + split[2], split[3]);
-        }
-
-        return new Address(split[0], split[1], split[2]);
+        return split.length == 4
+                ? new Address(split[0], split[1] + " " + split[2], split[3])
+                : new Address(split[0], split[1], split[2]);
     }
 
     public String getFullAddress() {
@@ -57,7 +55,6 @@ public class Address {
 
     private static void validateSplitLength(String[] split) {
         if (split.length < 3) {
-            log.info("Wrong data: {}", Arrays.toString(split));
             throw new IllegalArgumentException("유효하지 않은 주소입니다.");
         }
     }
