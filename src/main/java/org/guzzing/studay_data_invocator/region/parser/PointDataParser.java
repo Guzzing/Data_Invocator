@@ -29,8 +29,10 @@ public class PointDataParser {
     public Point parseData(final Address address) {
         PointResponses response = requestData(address.getFullAddress());
 
-        if (response == null) {
-            throw new GeocoderException("위치 정보 요청에 실패했습니다.");
+            return getPoint(pointResponse);
+        } catch (Exception e) {
+            log.info("위경도 조회 실패 - address : {}", address);
+            throw e;
         }
 
         return extractLocationFromResponse(response);
@@ -52,10 +54,9 @@ public class PointDataParser {
                 .block();
     }
 
-    private Point extractLocationFromResponse(final PointResponses pointResponses) {
-        List<PointResponse> addresses = pointResponses.addresses();
-        if (addresses == null || addresses.isEmpty()) {
-            throw new GeocoderException("해당 주소에 매핑되는 위경도 값 요청에 실패했습니다.");
+    private void validateResponse(PointResponses pointResponses) {
+        if (pointResponses == null || pointResponses.addresses() == null || pointResponses.addresses().isEmpty()) {
+            throw new IllegalStateException("위치 정보 요청에 실패했습니다.");
         }
 
         PointResponse pointResponse = addresses.get(0);

@@ -30,10 +30,8 @@ public class AddressDataParser {
             validateData(area, addressResponse);
 
             return Address.of(addressResponse.admCodeNm());
-        } catch (NullPointerException e) {
-            log.info("위경도 조회 실패!");
-            log.info("area: {}", area);
-            log.info("addressResponse: {}", addressResponse);
+        } catch (Exception e) {
+            log.info("주소 정보 요청 실패 {}", e.getMessage());
             throw e;
         }
     }
