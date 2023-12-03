@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.1.5'
     id 'io.spring.dependency-management' version '1.1.3'
+//    id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 
 group = 'org.guzzing'
@@ -34,9 +35,6 @@ dependencies {
     // hibernate spatial
     implementation 'org.hibernate:hibernate-spatial:6.4.0.CR1'
 
-    // geojson
-    implementation 'org.geotools:gt-geojson:30.0'
-
     // lombok
     compileOnly 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
@@ -47,8 +45,30 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     runtimeOnly "io.netty:netty-resolver-dns-native-macos:4.1.94.Final:osx-aarch_64"
 
+    // jackson
+    implementation 'com.google.code.gson:gson'
+
+    // geojson
+    implementation 'org.geotools:gt-geojson:30.0'
+
     // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:3.12.4'
+
+    // spatial type
+    implementation 'org.hibernate:hibernate-spatial:6.3.1.Final'
+
+    //excel poi
+    implementation group: 'org.apache.poi', name: 'poi', version: '4.1.2'
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.2'
+    implementation group: 'org.apache.tika', name: 'tika-core', version: '2.3.0'
+
+    // spring-boot-starter-web-services
+    implementation 'org.springframework.boot:spring-boot-starter-web-services'
+
+    // apache httpclient5
+    implementation 'org.apache.httpcomponents.client5:httpclient5:5.2.1'
 
 }
 
