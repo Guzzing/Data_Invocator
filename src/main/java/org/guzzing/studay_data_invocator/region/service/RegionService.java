@@ -15,7 +15,7 @@ public class RegionService {
         this.repository = repository;
     }
 
-    public void saveRegion(Region region) {
-        repository.save(region);
+    public void saveRegions(List<Region> region) {
+        repository.saveAll(region);
     }
 }
