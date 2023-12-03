@@ -27,7 +27,7 @@ public class Geocoder {
     public Location addressToLocation(final String address) {
 
         WebClient webClient = WebClient.builder()
-                .baseUrl(geocodeConfig.getApiUrl())
+                .baseUrl(geocodeConfig.getBaseApiUrl())
                 .defaultHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
                 .defaultHeader(geocodeConfig.getClientIdProperty(), geocodeConfig.getClientId())
                 .defaultHeader(geocodeConfig.getClientSecretProperty(), geocodeConfig.getClientSecret())
