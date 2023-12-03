@@ -7,10 +7,12 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.locationtech.jts.geom.MultiPolygon;
 import org.locationtech.jts.geom.Point;
 
+@Getter
 @NoArgsConstructor(access = PROTECTED)
 @Entity
 @Table(name = "regions")
@@ -38,5 +40,17 @@ public class Region {
 
     public static Region of(Area area, Address address, Point point) {
         return new Region(area.code(), address, point, area.geometry());
+    }
+
+    public String getSido() {
+        return this.address.getSido();
+    }
+
+    public String getSigungu() {
+        return this.address.getSigungu();
+    }
+
+    public String getUpmyeondong() {
+        return this.address.getUpmyeondong();
     }
 }
