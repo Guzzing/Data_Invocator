@@ -1,38 +1,42 @@
 package org.guzzing.studay_data_invocator.region.model;
 
+import static lombok.AccessLevel.PROTECTED;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import org.guzzing.studay_data_invocator.global.location.Location;
-import org.guzzing.studay_data_invocator.region.model.vo.Address;
+import lombok.NoArgsConstructor;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Point;
 
+@NoArgsConstructor(access = PROTECTED)
 @Entity
 @Table(name = "regions")
 public class Region {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "code", nullable = false)
     private Long id;
 
     @Embedded
     private Address address;
 
-    @Embedded
-    private Location location;
+    @Column(name = "point", nullable = false)
+    private Point point;
 
-    protected Region() {
-    }
+    @Column(name = "area", nullable = true)
+    private MultiPolygon area;
 
-    protected Region(Address address, Location location) {
+    public Region(Long id, Address address, Point point, MultiPolygon area) {
+        this.id = id;
         this.address = address;
-        this.location = location;
+        this.point = point;
+        this.area = area;
     }
 
-    public static Region of(final Address address, final Location location) {
-        return new Region(address, location);
+    public static Region of(Area area, Address address, Point point) {
+        return new Region(area.code(), address, point, area.geometry());
     }
-
 }
