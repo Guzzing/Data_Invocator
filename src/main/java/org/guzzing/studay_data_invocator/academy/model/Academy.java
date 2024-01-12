@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import lombok.Getter;
 import org.guzzing.studay_data_invocator.academy.model.source.GyeonggiSourceAcademy;
+import org.guzzing.studay_data_invocator.academy.model.source.SeoulSourceAcademy;
 import org.guzzing.studay_data_invocator.academy.model.vo.AcademyInfo;
 import org.guzzing.studay_data_invocator.academy.model.vo.Address;
 import org.guzzing.studay_data_invocator.academy.model.vo.Location;
@@ -122,6 +123,23 @@ public class Academy extends BaseEntity {
                 point
         );
     }
+
+    public static Academy to(
+            SeoulSourceAcademy seoulSourceAcademy,
+            Location location,
+            Point point) {
+        return new Academy(
+                Long.valueOf(seoulSourceAcademy.getAcademyDesignationNumber()),
+                seoulSourceAcademy.getAcademyName(),
+                " ",
+                String.valueOf(0),
+                seoulSourceAcademy.getNameOfField(),
+                seoulSourceAcademy.getAddress()+seoulSourceAcademy.getDetailAddress(),
+                location,
+                point
+        );
+    }
+
 
     @Override
     public boolean equals(Object o) {
