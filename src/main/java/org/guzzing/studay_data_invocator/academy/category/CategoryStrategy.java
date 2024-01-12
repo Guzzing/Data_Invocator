@@ -1,8 +1,9 @@
-package org.guzzing.studay_data_invocator.academy.service.category;
+package org.guzzing.studay_data_invocator.academy.category;
 
+import org.guzzing.studay_data_invocator.academy.category.maker.*;
 import org.guzzing.studay_data_invocator.academy.model.source.GyeonggiSourceAcademy;
+import org.guzzing.studay_data_invocator.academy.model.source.SeoulSourceAcademy;
 import org.guzzing.studay_data_invocator.academy.model.vo.CategoryName;
-import org.guzzing.studay_data_invocator.academy.service.category.maker.*;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -27,5 +28,9 @@ public class CategoryStrategy {
 
     public boolean isContains(String categoryName, GyeonggiSourceAcademy gyeonggiSourceAcademy) {
         return categoryMakers.get(categoryName).isContains(gyeonggiSourceAcademy);
+    }
+
+    public boolean isContains(String categoryName, SeoulSourceAcademy seoulSourceAcademy) {
+        return categoryMakers.get(categoryName).isContains(seoulSourceAcademy);
     }
 }

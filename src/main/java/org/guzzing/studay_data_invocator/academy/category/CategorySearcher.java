@@ -1,6 +1,7 @@
-package org.guzzing.studay_data_invocator.academy.service.category;
+package org.guzzing.studay_data_invocator.academy.category;
 
 import org.guzzing.studay_data_invocator.academy.model.source.GyeonggiSourceAcademy;
+import org.guzzing.studay_data_invocator.academy.model.source.SeoulSourceAcademy;
 import org.guzzing.studay_data_invocator.academy.model.vo.CategoryName;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +30,23 @@ public class CategorySearcher {
 
         return ApplicableCategoryInfo.of(
                 Long.valueOf(gyeonggiSourceAcademy.getHashCodeValue()),
+                categoryIds
+        );
+    }
+
+    public ApplicableCategoryInfo getCategoryIds(SeoulSourceAcademy seoulSourceAcademy) {
+        List<Long> categoryIds = new ArrayList<>();
+        Arrays.stream(CategoryName.values()).forEach(
+                categoryName -> {
+                    if (categoryStrategy.isContains(
+                            categoryName.name(), seoulSourceAcademy)) {
+                        categoryIds.add(categoryName.getId());
+                    }
+                }
+        );
+
+        return ApplicableCategoryInfo.of(
+                Long.valueOf(seoulSourceAcademy.getAcademyDesignationNumber()),
                 categoryIds
         );
     }

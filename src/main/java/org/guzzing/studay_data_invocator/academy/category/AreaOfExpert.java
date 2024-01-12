@@ -1,4 +1,4 @@
-package org.guzzing.studay_data_invocator.academy.service.category;
+package org.guzzing.studay_data_invocator.academy.category;
 
 import lombok.Getter;
 
