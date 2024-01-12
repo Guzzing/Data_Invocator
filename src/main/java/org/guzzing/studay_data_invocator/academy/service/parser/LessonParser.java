@@ -9,7 +9,7 @@ public class LessonParser {
     public static List<SeoulLessonInfo> parseLessons(String input) {
         List<SeoulLessonInfo> seoulLessonInfos = new ArrayList<>();
 
-        String pattern = "([가-힣\\d]+)(?:\\(([^:)]+)\\))?(?::(\\d+))?";;  // 수정된 패턴
+        String pattern = "([가-힣\\d]+)(?:\\(([^:)]+)\\))?(?::(\\d+))?"; // 수정된 패턴
         Pattern regex = Pattern.compile(pattern);
         Matcher matcher = regex.matcher(input);
 
