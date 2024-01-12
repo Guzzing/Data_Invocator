@@ -3,13 +3,17 @@ package org.guzzing.studay_data_invocator.academy.service;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.guzzing.studay_data_invocator.academy.category.ApplicableCategoryInfo;
+import org.guzzing.studay_data_invocator.academy.category.CategorySearcher;
 import org.guzzing.studay_data_invocator.academy.model.AcademyCategory;
 import org.guzzing.studay_data_invocator.academy.model.vo.CategoryName;
 import org.guzzing.studay_data_invocator.academy.repository.AcademyCategoryRepository;
 import org.guzzing.studay_data_invocator.academy.repository.source.GyeonggiSourceAcademyRepository;
-import org.guzzing.studay_data_invocator.academy.service.category.*;
+import org.guzzing.studay_data_invocator.academy.repository.source.SeoulSourceAcademyRepository;
+import org.guzzing.studay_data_invocator.academy.service.parser.AcademiesAndLessonInfos;
 import org.guzzing.studay_data_invocator.academy.service.parser.AcademyAndLessonInfo;
 import org.guzzing.studay_data_invocator.academy.service.parser.GyeonggiAcademyParser;
+import org.guzzing.studay_data_invocator.academy.service.parser.SeoulAcademyParser;
 import org.guzzing.studay_data_invocator.academyparser.AcademyDataParser;
 import org.guzzing.studay_data_invocator.academyparser.AcademyDataFile;
 import org.guzzing.studay_data_invocator.academy.model.Academy;
@@ -33,9 +37,11 @@ public class AcademyService {
     private final ReviewCountJpaRepository reviewCountJpaRepository;
     private final AcademyCategoryRepository academyCategoryRepository;
     private final GyeonggiSourceAcademyRepository gyeonggiSourceAcademyRepository;
+    private final SeoulSourceAcademyRepository seoulSourceAcademyRepository;
     private final AcademyDataParser dataParser;
     private final GyeonggiAcademyParser gyeonggiAcademyParser;
     private final CategorySearcher categorySearcher;
+    private final SeoulAcademyParser seoulAcademyParser;
 
     public AcademyService(
             final AcademyRepository academyRepository,
@@ -43,17 +49,19 @@ public class AcademyService {
             final ReviewCountJpaRepository reviewCountJpaRepository,
             final AcademyCategoryRepository academyCategoryRepository,
             final GyeonggiSourceAcademyRepository gyeonggiSourceAcademyRepository,
-            final AcademyDataParser dataParser,
+            SeoulSourceAcademyRepository seoulSourceAcademyRepository, final AcademyDataParser dataParser,
             final GyeonggiAcademyParser gyeonggiAcademyParser,
-            final CategorySearcher categorySearcher) {
+            final CategorySearcher categorySearcher, SeoulAcademyParser seoulAcademyParser) {
         this.academyRepository = academyRepository;
         this.lessonRepository = lessonRepository;
         this.reviewCountJpaRepository = reviewCountJpaRepository;
         this.academyCategoryRepository = academyCategoryRepository;
         this.gyeonggiSourceAcademyRepository = gyeonggiSourceAcademyRepository;
+        this.seoulSourceAcademyRepository = seoulSourceAcademyRepository;
         this.dataParser = dataParser;
         this.gyeonggiAcademyParser = gyeonggiAcademyParser;
         this.categorySearcher = categorySearcher;
+        this.seoulAcademyParser = seoulAcademyParser;
     }
 
     public void importAllData() {
@@ -100,11 +108,11 @@ public class AcademyService {
         Map<Academy, List<Lesson>> dataMap = new ConcurrentHashMap<>();
         Map<Long, Set<Long>> categoriesPair = new ConcurrentHashMap<>();
 
-        findAcademiesAndCategory(dataMap, categoriesPair);
+        findGyeonggiAcademiesAndCategory(dataMap, categoriesPair);
         saveAcademiesAndLesson(dataMap, categoriesPair);
     }
 
-    private void findAcademiesAndCategory(
+    private void findGyeonggiAcademiesAndCategory(
             Map<Academy, List<Lesson>> dataMap,
             Map<Long, Set<Long>> categoriesPair) {
         gyeonggiSourceAcademyRepository.findAll()
@@ -166,5 +174,64 @@ public class AcademyService {
                                         CategoryName.ETC.getId()))
                 );
     }
+
+    public void makeCategory() {
+        List<Academy> academies = academyRepository.findAllNotCategory();
+        academies
+                .stream()
+                .parallel()
+                .forEach(
+                        academy -> {
+                            if (academy.getAcademyName().contains("음악")
+                                    || academy.getAcademyName().contains("미술")
+                                    || academy.getAcademyName().contains("피아노")
+                                    || academy.getAcademyName().contains("바이올린")) {
+                                academyCategoryRepository.save(
+                                        AcademyCategory.of(
+                                                academy,
+                                                CategoryName.ARTS_AND_PHYSICAL_EDUCATION.getId()));
+                            } else {
+                                academyCategoryRepository.save(
+                                        AcademyCategory.of(
+                                                academy,
+                                                CategoryName.ETC.getId()));
+                            }
+
+                        }
+                );
+    }
+
+    public void saveSeoulAcademy() {
+        seoulSourceAcademyRepository.findAllByNotNotNull()
+                .stream()
+                .parallel()
+                .forEach(
+                        seoulSourceAcademy -> {
+                            Optional<AcademiesAndLessonInfos> academiesAndLessonInfos
+                                    = seoulAcademyParser.parser(seoulSourceAcademy);
+                            if (academiesAndLessonInfos.isPresent()) {
+                                AcademiesAndLessonInfos existedAcademiesAndLessons = academiesAndLessonInfos.get();
+
+                                ApplicableCategoryInfo applicableCategoryInfo
+                                        = categorySearcher.getCategoryIds(seoulSourceAcademy);
+
+                                Academy savedAcademy = academyRepository.save(existedAcademiesAndLessons.academy());
+                                Long maxEducationFee = saveLessonsAndCalculateMaxFee(
+                                        savedAcademy, existedAcademiesAndLessons.lessons());
+
+                                savedAcademy.changeEducationFee(maxEducationFee);
+
+                                reviewCountJpaRepository.save(ReviewCount.makeDefaultReviewCount(savedAcademy));
+
+                                for (Long id : applicableCategoryInfo.categoryIds()) {
+                                    AcademyCategory academyCategory = AcademyCategory.of(savedAcademy, id);
+                                    academyCategoryRepository.save(academyCategory);
+                                }
+
+                            }
+                        }
+                );
+    }
+
 
 }
