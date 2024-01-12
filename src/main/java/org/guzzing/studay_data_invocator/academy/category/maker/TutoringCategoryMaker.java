@@ -1,12 +1,14 @@
-package org.guzzing.studay_data_invocator.academy.service.category.maker;
+package org.guzzing.studay_data_invocator.academy.category.maker;
 
+import org.guzzing.studay_data_invocator.academy.category.AreaOfExpert;
 import org.guzzing.studay_data_invocator.academy.model.source.GyeonggiSourceAcademy;
 import org.guzzing.studay_data_invocator.academy.model.source.SeoulSourceAcademy;
-import org.guzzing.studay_data_invocator.academy.service.category.AreaOfExpert;
+import org.guzzing.studay_data_invocator.academy.model.vo.CategoryName;
 
 import java.util.List;
 
 public class TutoringCategoryMaker implements CategoryMaker {
+
 
     public boolean isContains(GyeonggiSourceAcademy gyeonggiSourceAcademy) {
         if (CategoryFilter.isContains(
@@ -19,11 +21,16 @@ public class TutoringCategoryMaker implements CategoryMaker {
             return true;
         }
         if (CategoryFilter.isContains(
-                List.of("수학","과학","영어","국어"), gyeonggiSourceAcademy.getLessonCurriculum())) {
+                List.of(CategoryName.MATH.getValue(),
+                        CategoryName.SCIENCE.getValue(),
+                        CategoryName.ENGLISH.getValue(),
+                        CategoryName.KOREAN_LANGUAGE.getValue()),
+                gyeonggiSourceAcademy.getLessonCurriculum())) {
             return true;
         }
         if (CategoryFilter.isContains(
-                List.of("보습"), gyeonggiSourceAcademy.getAcademyName())) {
+                List.of(CategoryName.TUTORING_SCHOOL.getValue()),
+                gyeonggiSourceAcademy.getAcademyName())) {
             return true;
         }
 
@@ -31,7 +38,23 @@ public class TutoringCategoryMaker implements CategoryMaker {
     }
 
     public boolean isContains(SeoulSourceAcademy seoulSourceAcademy) {
-        if
+        if (CategoryFilter.isContains(
+                List.of(CategoryName.TUTORING_SCHOOL.getValue()),
+                seoulSourceAcademy.getInstructionalCourseListName())) {
+            return true;
+        }
+        if (CategoryFilter.isContains(
+                List.of(CategoryName.TUTORING_SCHOOL.getValue()),
+                seoulSourceAcademy.getNameOfTeachingCourse())) {
+            return true;
+        }
+        if (CategoryFilter.isContains(
+                List.of("보통교과"),
+                seoulSourceAcademy.getTeachingDivisionName())) {
+            return true;
+        }
+
+        return false;
     }
 
 }
