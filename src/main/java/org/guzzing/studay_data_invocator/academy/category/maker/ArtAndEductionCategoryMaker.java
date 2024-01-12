@@ -3,7 +3,6 @@ package org.guzzing.studay_data_invocator.academy.category.maker;
 import org.guzzing.studay_data_invocator.academy.model.source.GyeonggiSourceAcademy;
 import org.guzzing.studay_data_invocator.academy.category.AreaOfExpert;
 import org.guzzing.studay_data_invocator.academy.model.source.SeoulSourceAcademy;
-import org.guzzing.studay_data_invocator.academy.model.vo.CategoryName;
 
 import java.util.List;
 
