@@ -1,7 +1,8 @@
-package org.guzzing.studay_data_invocator.academy.service.category.maker;
+package org.guzzing.studay_data_invocator.academy.category.maker;
 
+import org.guzzing.studay_data_invocator.academy.category.AreaOfExpert;
 import org.guzzing.studay_data_invocator.academy.model.source.GyeonggiSourceAcademy;
-import org.guzzing.studay_data_invocator.academy.service.category.AreaOfExpert;
+import org.guzzing.studay_data_invocator.academy.model.source.SeoulSourceAcademy;
 
 import java.util.List;
 
@@ -25,4 +26,16 @@ public class EtcCategoryMaker implements CategoryMaker {
 
         return false;
     }
+
+    public boolean isContains(SeoulSourceAcademy seoulSourceAcademy) {
+        if (CategoryFilter.isContains(
+                List.of("산업", "경영", "인문사회", "간호보조기술", "문화관광"),
+                seoulSourceAcademy.getTeachingDivisionName()
+        )) {
+            return false;
+        }
+
+        return false;
+    }
+
 }

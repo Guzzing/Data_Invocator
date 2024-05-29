@@ -6,10 +6,13 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface SeoulSourceAcademyRepository {
+public interface SeoulSourceAcademyJpaRepository extends JpaRepository<SeoulSourceAcademy, Long>, SeoulSourceAcademyRepository {
 
+    @Query("SELECT sa " +
+            "FROM SeoulSourceAcademy as sa " +
+            "WHERE sa.contentsOfCourseFeePerPerson   IS NOT NULL " +
+            "AND sa.contentsOfCourseFeePerPerson <> '' ")
     List<SeoulSourceAcademy> findAllByNotNotNull();
 
     SeoulSourceAcademy save(SeoulSourceAcademy seoulSourceAcademy);
-
 }

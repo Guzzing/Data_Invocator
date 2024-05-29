@@ -2,9 +2,13 @@ package org.guzzing.studay_data_invocator.academy.model;
 
 import lombok.Getter;
 import org.guzzing.studay_data_invocator.academy.model.source.GyeonggiSourceAcademy;
+import org.guzzing.studay_data_invocator.academy.model.source.SeoulSourceAcademy;
 import org.springframework.util.Assert;
+
 import java.util.Objects;
+
 import static jakarta.persistence.FetchType.LAZY;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -62,6 +66,23 @@ public class Lesson {
         this.totalFee = totalFee;
     }
 
+    protected Lesson(
+            final String subject,
+            final String curriculum,
+            final Long capacity,
+            final String duration,
+            final Long totalFee
+    ) {
+        Assert.isTrue((capacity == null || capacity >= 0), "수강 가능 학생수 정보는 반드시 양수여야 합니다.");
+        Assert.isTrue((totalFee == null || totalFee >= 0), "교육비는 반드시 양수여야 합니다.");
+
+        this.subject = subject;
+        this.curriculum = curriculum;
+        this.capacity = capacity;
+        this.duration = duration;
+        this.totalFee = totalFee;
+    }
+
     protected Lesson() {
     }
 
@@ -93,6 +114,20 @@ public class Lesson {
                 gyeonggiSourceAcademy.getLessonCapacity(), // 형태 고침
                 gyeonggiSourceAcademy.getLessonDuration(),
                 gyeonggiSourceAcademy.getTotalFee()
+        );
+    }
+
+    public static Lesson of(
+            final SeoulSourceAcademy seoulSourceAcademy,
+            final String lessonName,
+            final String totalFee,
+            final String duration) {
+        return new Lesson(
+                seoulSourceAcademy.getNameOfTeachingCourse(),
+                lessonName,
+                seoulSourceAcademy.getTotalTemporaryCapacity(),// 형태 고침
+                duration,
+                Long.parseLong(totalFee)
         );
     }
 
